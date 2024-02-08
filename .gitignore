@@ -1,0 +1,12 @@
+# JetBrains stuff
+.idea/
+# VSCode stuff
+.vscode/
+.history/
+# Build stuff
+cmake-build-debug/
+build/
+# KDE directory metadata
+.directory
+# MacOS directory metadata
+.DS_Store
