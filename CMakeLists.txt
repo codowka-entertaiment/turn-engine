@@ -25,3 +25,12 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(Catch2)
+
+set(SOURCES
+    src/Engine.cpp
+    src/Engine.hpp)
+
+add_library(TurnEngine STATIC ${SOURCES})
+
+target_include_directories(TurnEngine PRIVATE src)
+target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static)
