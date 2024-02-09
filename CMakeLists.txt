@@ -45,5 +45,6 @@ file(GLOB_RECURSE MATH_TESTS_SOURCES
         "src/math/*.cpp"
         "tests/MathTests.cpp"
 )
+
 add_executable(MathTests ${MATH_TESTS_SOURCES})
 target_link_libraries(MathTests PRIVATE Catch2::Catch2WithMain)

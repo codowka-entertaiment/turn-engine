@@ -32,6 +32,6 @@ namespace math
         constexpr Vector operator-(const Vector &another) const { return operator+(-another); }
     };
 
-    // may have specific behavior, so let it inherit the vector
-    struct Position : public Vector {};
+    using Position = Vector;
+    using Dimensions = Vector;
 }
