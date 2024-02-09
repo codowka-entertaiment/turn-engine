@@ -2,18 +2,21 @@
 
 namespace math
 {
+    template <typename T>
+    concept Numeric = std::is_arithmetic_v<T>;
+
+    template <Numeric T>
     class Vector {
     public:
-        unsigned int x;
-        unsigned int y;
+        T x, y;
 
-        constexpr Vector(unsigned int x, unsigned int y) : x(x), y(y){};
+        constexpr Vector(T x, T y) : x(x), y(y){};
 
         constexpr bool operator==(const Vector &another) const { return this->x == another.x && this->y == another.y; }
 
         constexpr bool operator!=(const Vector &another) const { return !operator==(another); }
 
-        constexpr Vector operator*(unsigned int vi) const {
+        constexpr Vector operator*(T vi) const {
             return {
                 vi * this->x,
                 vi * this->y,
@@ -32,6 +35,13 @@ namespace math
         constexpr Vector operator-(const Vector &another) const { return operator+(-another); }
     };
 
-    using Position = Vector;
-    using Dimensions = Vector;
+    template <Numeric T>
+    using Position = Vector<T>;
+
+    template <Numeric T>
+    using Dimensions = Vector<T>;
+
+    using Vector2i = Vector<unsigned int>;
+    using Position2i = Position<unsigned int>;
+    using Dimensions2i = Dimensions<unsigned int>;
 }
