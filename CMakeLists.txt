@@ -34,5 +34,3 @@ add_library(TurnEngine STATIC ${SOURCES})
 
 target_include_directories(TurnEngine PRIVATE src)
 target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static)
-
-add_subdirectory(tunet)
