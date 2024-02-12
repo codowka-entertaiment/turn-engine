@@ -51,4 +51,19 @@ TEST_CASE("Test math::Rectangle") {
         auto rect = RectangleInt::init(PositionInt(2, 2), DimensionsInt(-1, -1));
         REQUIRE((!rect && rect.error() == ShapeError::WrongDimensions));
     }
+
+    auto region = RectangleInt::init(PositionInt(100, 150), PositionInt(400, 350));
+
+    std::vector<PositionInt> outside = {
+        {0, 0}, {50, 50}, {100, 100}, {450, 400}, {500, 450},
+    };
+    std::vector<PositionInt> inside = {
+        {100, 150}, {400, 150}, {400, 350}, {100, 350}, {250, 250},
+    };
+
+    for (auto &point : outside)
+        REQUIRE(!region->contains(point));
+
+    for (auto &point : inside)
+        REQUIRE(region->contains(point));
 }

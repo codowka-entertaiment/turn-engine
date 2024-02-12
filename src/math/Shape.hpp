@@ -41,7 +41,7 @@ namespace math
         }
 
         constexpr bool contains(const Position<T> &position) const override {
-            return m_pos1.x <= position.x && m_pos2.x <= position.x && m_pos1.y <= position.y && position.y <= m_pos2.y;
+            return m_pos1.x <= position.x && position.x <= m_pos2.x && m_pos1.y <= position.y && position.y <= m_pos2.y;
         }
     };
 
