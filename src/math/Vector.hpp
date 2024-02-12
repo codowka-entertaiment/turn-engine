@@ -38,12 +38,23 @@ namespace math
     };
 
     template <Numeric T>
-    struct Position : public Vector<T> {};
+    struct Dimensions : public Vector<T> {
+        constexpr Dimensions(T x, T y) : Vector<T>(x, y) {}
+    };
 
     template <Numeric T>
-    struct Dimensions : public Vector<T> {};
+    struct Position : public Vector<T> {
+        constexpr Position(T x, T y) : Vector<T>(x, y) {}
 
-    using Vector2i = Vector<int>;
-    using Position2i = Position<int>;
-    using Dimensions2i = Dimensions<int>;
+        constexpr Position operator+(const Dimensions<T> &dimensions) {
+            return {
+                this->x + dimensions.x,
+                this->y + dimensions.y,
+            };
+        }
+    };
+
+    using VectorInt = Vector<int>;
+    using PositionInt = Position<int>;
+    using DimensionsInt = Dimensions<int>;
 }

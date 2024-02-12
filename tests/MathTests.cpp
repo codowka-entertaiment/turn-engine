@@ -1,31 +1,54 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "../src/math/Vector.hpp"
+#include "../src/math/Shape.hpp"
 
-using math::Vector2i;
+using math::DimensionsInt;
+using math::PositionInt;
+using math::RectangleInt;
+using math::ShapeError;
+using math::VectorInt;
 
 TEST_CASE("Test math::Vector") {
     SECTION("constructor") {
-        auto vector = Vector2i(2, 3);
+        auto vector = VectorInt(2, 3);
         REQUIRE(vector.x == 2);
         REQUIRE(vector.y == 3);
     }
     SECTION("compare equals") {
-        REQUIRE(Vector2i(2, 3) == Vector2i(2, 3));
+        REQUIRE(VectorInt(2, 3) == VectorInt(2, 3));
     }
     SECTION("compare not equals") {
-        REQUIRE(Vector2i(2, 3) != Vector2i(3, 2));
+        REQUIRE(VectorInt(2, 3) != VectorInt(3, 2));
     }
     SECTION("unary minus") {
-        REQUIRE(-Vector2i(2, 3) == Vector2i(-2, -3));
+        REQUIRE(-VectorInt(2, 3) == VectorInt(-2, -3));
     }
     SECTION("numeric multiplication") {
-        REQUIRE(Vector2i(2, 8) * 4 == Vector2i(8, 32));
+        REQUIRE(VectorInt(2, 8) * 4 == VectorInt(8, 32));
     }
     SECTION("vector addition") {
-        REQUIRE(Vector2i(2, 8) + Vector2i(8, 2) == Vector2i(10, 10));
+        REQUIRE(VectorInt(2, 8) + VectorInt(8, 2) == VectorInt(10, 10));
     }
     SECTION("vector subtraction") {
-        REQUIRE(Vector2i(10, 10) - Vector2i(8, 2) == Vector2i(2, 8));
+        REQUIRE(VectorInt(10, 10) - VectorInt(8, 2) == VectorInt(2, 8));
+    }
+}
+
+TEST_CASE("Test math::Rectangle") {
+    SECTION("Test position-position ok init") {
+        auto rect = RectangleInt::init(PositionInt(1, 1), PositionInt(2, 2));
+        REQUIRE(rect);
+    }
+    SECTION("Test position-position error init") {
+        auto rect = RectangleInt::init(PositionInt(2, 2), PositionInt(1, 1));
+        REQUIRE((!rect && rect.error() == ShapeError::WrongPositions));
+    }
+    SECTION("Test position-dimensions ok init") {
+        auto rect = RectangleInt::init(PositionInt(1, 1), DimensionsInt(1, 1));
+        REQUIRE(rect);
+    }
+    SECTION("Test position-dimensions error init") {
+        auto rect = RectangleInt::init(PositionInt(2, 2), DimensionsInt(-1, -1));
+        REQUIRE((!rect && rect.error() == ShapeError::WrongDimensions));
     }
 }
