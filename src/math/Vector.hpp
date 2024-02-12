@@ -41,7 +41,7 @@ namespace math
     template <Numeric T>
     using Dimensions = Vector<T>;
 
-    using Vector2i = Vector<unsigned int>;
-    using Position2i = Position<unsigned int>;
-    using Dimensions2i = Dimensions<unsigned int>;
+    using Vector2i = Vector<int>;
+    using Position2i = Position<int>;
+    using Dimensions2i = Dimensions<int>;
 }
