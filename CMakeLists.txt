@@ -26,11 +26,25 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
-set(SOURCES
-    src/Engine.cpp
-    src/Engine.hpp)
+# Engine static target
+
+file(GLOB_RECURSE SOURCES
+        "src/*.hpp"
+        "src/*.cpp"
+)
 
 add_library(TurnEngine STATIC ${SOURCES})
 
 target_include_directories(TurnEngine PRIVATE src)
 target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static)
+
+# Math tests
+
+file(GLOB_RECURSE MATH_TESTS_SOURCES
+        "src/math/*.hpp"
+        "src/math/*.cpp"
+        "tests/MathTests.cpp"
+)
+
+add_executable(MathTests ${MATH_TESTS_SOURCES})
+target_link_libraries(MathTests PRIVATE Catch2::Catch2WithMain)
