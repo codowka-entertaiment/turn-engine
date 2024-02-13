@@ -9,16 +9,10 @@ namespace math
     class Vector {
     public:
         T x, y;
-
         constexpr Vector(T x, T y) : x(x), y(y){};
 
-        constexpr bool operator==(const Vector &another) const {
-            return this->x == another.x && this->y == another.y;
-        }
-
-        constexpr bool operator!=(const Vector &another) const {
-            return !operator==(another);
-        }
+        constexpr bool operator==(const Vector &another) const { return this->x == another.x && this->y == another.y; }
+        constexpr bool operator!=(const Vector &another) const { return !operator==(another); }
 
         constexpr Vector operator*(T vi) const {
             return {
@@ -36,9 +30,7 @@ namespace math
             };
         }
 
-        constexpr Vector operator-(const Vector &another) const {
-            return operator+(-another);
-        }
+        constexpr Vector operator-(const Vector &another) const { return operator+(-another); }
     };
 
     template <Numeric T>
