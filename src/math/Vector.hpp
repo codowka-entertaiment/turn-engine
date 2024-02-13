@@ -1,5 +1,6 @@
 #pragma once
 
+#include <expected>
 #include <type_traits>
 
 namespace math
@@ -44,12 +45,8 @@ namespace math
     };
 
     template <Numeric T>
-    struct Position : public Vector<T> {};
+    using Position = Vector<T>;
 
-    template <Numeric T>
-    struct Dimensions : public Vector<T> {};
-
-    using Vector2i = Vector<int>;
-    using Position2i = Position<int>;
-    using Dimensions2i = Dimensions<int>;
+    using VectorInt = Vector<int>;
+    using PositionInt = Position<int>;
 }
