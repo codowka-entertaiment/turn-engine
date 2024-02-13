@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "../src/math/Shape.hpp"
+#include "../src/math/Shapes.hpp"
 
 using math::HexagonInt;
 using math::HexagonShapeError;
@@ -54,7 +54,7 @@ TEST_CASE("Test math::Rectangle") {
     }
 
     SECTION("Test contains") {
-        auto region = RectangleInt::init(PositionInt(100, 150), PositionInt(400, 350));
+        auto region = RectangleInt::init(PositionInt(100, 150), PositionInt(400, 350)).value();
 
         std::initializer_list<PositionInt> outside = {
             {0, 0}, {50, 50}, {100, 100}, {450, 400}, {500, 450},
@@ -64,14 +64,12 @@ TEST_CASE("Test math::Rectangle") {
         };
 
         for (auto &point : outside)
-            REQUIRE(!region->contains(point));
+            REQUIRE(!region.contains(point));
 
         for (auto &point : inside)
-            REQUIRE(region->contains(point));
+            REQUIRE(region.contains(point));
     }
 }
-
-#include <iostream>
 
 TEST_CASE("Test math::Hexagon") {
     SECTION("Test position-dimension ok init") {
@@ -84,7 +82,7 @@ TEST_CASE("Test math::Hexagon") {
     }
 
     SECTION("Test contains") {
-        auto region = math::HexagonInt::init(math::PositionInt(5, 4), 2).value();
+        auto region = HexagonInt::init(PositionInt(5, 4), 2).value();
 
         std::initializer_list<math::PositionInt> outside = {
             {3, 2}, {4, 1}, {6, 1}, {7, 2}, {8, 4}, {7, 6}, {6, 7}, {4, 7}, {3, 6}, {2, 4},
