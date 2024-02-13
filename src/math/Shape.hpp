@@ -21,9 +21,7 @@ namespace math
     class Rectangle : public Shape<T> {
     private:
         Position<T> m_pos1, m_pos2;
-
         constexpr Rectangle(Position<T> pos1, Position<T> pos2) : m_pos1(pos1), m_pos2(pos2) {}
-        constexpr Rectangle(Position<T> pos1, Dimensions<T> dims) : m_pos1(pos1), m_pos2(pos1 + dims) {}
 
     public:
         constexpr static std::expected<Rectangle<T>, ShapeError> init(Position<T> pos1, Position<T> pos2) {
@@ -33,11 +31,11 @@ namespace math
                 return Rectangle(pos1, pos2);
         }
 
-        constexpr static std::expected<Rectangle<T>, ShapeError> init(Position<T> pos1, Dimensions<T> dims) {
+        constexpr static std::expected<Rectangle<T>, ShapeError> init(Position<T> pos1, Vector<T> dims) {
             if (dims.x <= 0 || dims.y <= 0)
                 return std::unexpected(ShapeError::WrongDimensions);
             else
-                return Rectangle(pos1, dims);
+                return Rectangle(pos1, pos1 + dims);
         }
 
         constexpr bool contains(const Position<T> &position) const override {

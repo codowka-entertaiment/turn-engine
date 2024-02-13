@@ -1,5 +1,6 @@
 #pragma once
 
+#include <expected>
 #include <type_traits>
 
 namespace math
@@ -38,23 +39,18 @@ namespace math
     };
 
     template <Numeric T>
-    struct Dimensions : public Vector<T> {
-        constexpr Dimensions(T x, T y) : Vector<T>(x, y) {}
-    };
-
-    template <Numeric T>
     struct Position : public Vector<T> {
         constexpr Position(T x, T y) : Vector<T>(x, y) {}
+        constexpr explicit Position(const Vector<T> &vector) : Vector<T>(vector) {}
 
-        constexpr Position operator+(const Dimensions<T> &dimensions) {
+        constexpr Position<T> operator+(const Vector<T> &vector) {
             return {
-                this->x + dimensions.x,
-                this->y + dimensions.y,
+                this->x + vector.x,
+                this->y + vector.y,
             };
         }
     };
 
     using VectorInt = Vector<int>;
     using PositionInt = Position<int>;
-    using DimensionsInt = Dimensions<int>;
 }
