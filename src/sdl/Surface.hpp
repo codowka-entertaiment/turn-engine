@@ -1,6 +1,12 @@
 #pragma once
 
+#include "SDL.h"
+#include "SDL_image.h"
+
 namespace sdl
 {
-    class Surface {};
+    class Surface {
+    private:
+    public:
+    };
 }

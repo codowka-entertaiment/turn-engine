@@ -3,7 +3,7 @@
 #include <string_view>
 #include "../math/Shape.hpp"
 #include "../math/Vector.hpp"
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 namespace sdl
 {
