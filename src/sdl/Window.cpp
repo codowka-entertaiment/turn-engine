@@ -12,8 +12,8 @@ namespace sdl
     SDL_Window *Window::getWindow() const {
         return window;
     }
-    math::Dimensions2i Window::getWindowSize() {
-        math::Dimensions2i dimensions(0, 0);
+    math::VectorInt Window::getWindowSize() {
+        math::VectorInt dimensions(0, 0);
         SDL_GetWindowSize(window, &dimensions.x, &dimensions.y);
         return dimensions;
     }
