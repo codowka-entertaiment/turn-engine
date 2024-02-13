@@ -1,20 +1,12 @@
 #pragma once
 
-#include "Vector.hpp"
-
-#include <cinttypes>
-#include <expected>
+#include "Shape.hpp"
 
 namespace math
 {
     enum class RectangleShapeError : std::uint8_t {
         WrongVertices,
-        NegativeDimensions,
-    };
-
-    template <Numeric T>
-    struct Shape {
-        virtual bool contains(const Position<T> &position) const = 0;
+        WrongDimensions,
     };
 
     template <Numeric T>
@@ -33,7 +25,7 @@ namespace math
 
         constexpr static std::expected<Rectangle<T>, RectangleShapeError> init(Position<T> vertex, T width, T height) {
             if (width <= 0 || height <= 0)
-                return std::unexpected(RectangleShapeError::NegativeDimensions);
+                return std::unexpected(RectangleShapeError::WrongDimensions);
             else
                 return Rectangle(vertex, vertex + Position<T>(width, height));
         }
