@@ -43,11 +43,11 @@ TEST_CASE("Test math::Rectangle") {
         REQUIRE((!rect && rect.error() == ShapeError::WrongPositions));
     }
     SECTION("Test position-dimensions ok init") {
-        auto rect = RectangleInt::init(PositionInt(1, 1), VectorInt(1, 1));
+        auto rect = RectangleInt::init(PositionInt(1, 1), 2, 2);
         REQUIRE(rect);
     }
     SECTION("Test position-dimensions error init") {
-        auto rect = RectangleInt::init(PositionInt(2, 2), VectorInt(-1, -1));
+        auto rect = RectangleInt::init(PositionInt(2, 2), 0, 0);
         REQUIRE((!rect && rect.error() == ShapeError::WrongDimensions));
     }
 

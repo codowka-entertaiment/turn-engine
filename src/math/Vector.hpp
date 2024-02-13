@@ -39,17 +39,7 @@ namespace math
     };
 
     template <Numeric T>
-    struct Position : public Vector<T> {
-        constexpr Position(T x, T y) : Vector<T>(x, y) {}
-        constexpr explicit Position(const Vector<T> &vector) : Vector<T>(vector) {}
-
-        constexpr Position<T> operator+(const Vector<T> &vector) {
-            return {
-                this->x + vector.x,
-                this->y + vector.y,
-            };
-        }
-    };
+    using Position = Vector<T>;
 
     using VectorInt = Vector<int>;
     using PositionInt = Position<int>;

@@ -31,11 +31,11 @@ namespace math
                 return Rectangle(pos1, pos2);
         }
 
-        constexpr static std::expected<Rectangle<T>, ShapeError> init(Position<T> pos1, Vector<T> dims) {
-            if (dims.x <= 0 || dims.y <= 0)
+        constexpr static std::expected<Rectangle<T>, ShapeError> init(Position<T> pos1, T width, T height) {
+            if (width <= 0 || height <= 0)
                 return std::unexpected(ShapeError::WrongDimensions);
             else
-                return Rectangle(pos1, pos1 + dims);
+                return Rectangle(pos1, pos1 + Position<T>(width, height));
         }
 
         constexpr bool contains(const Position<T> &position) const override {
