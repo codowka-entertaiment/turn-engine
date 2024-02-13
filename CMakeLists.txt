@@ -42,16 +42,7 @@ file(GLOB_RECURSE SOURCES
         "src/*.cpp"
 )
 
-add_library(TurnEngine STATIC ${SOURCES}
-        src/sdl/SDL.hpp
-        src/sdl/Window.cpp
-        src/sdl/Window.hpp
-        src/sdl/Renderer.cpp
-        src/sdl/Renderer.hpp
-        src/sdl/Surface.cpp
-        src/sdl/Surface.hpp
-        src/sdl/Texture.cpp
-        src/sdl/Texture.hpp)
+add_library(TurnEngine STATIC ${SOURCES})
 
 target_include_directories(TurnEngine PRIVATE src)
 target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
