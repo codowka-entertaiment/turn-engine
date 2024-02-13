@@ -4,7 +4,7 @@
 
 using math::PositionInt;
 using math::RectangleInt;
-using math::ShapeError;
+using math::RectangleShapeError;
 using math::VectorInt;
 
 TEST_CASE("Test math::Vector") {
@@ -40,7 +40,7 @@ TEST_CASE("Test math::Rectangle") {
     }
     SECTION("Test position-position error init") {
         auto rect = RectangleInt::init(PositionInt(2, 2), PositionInt(1, 1));
-        REQUIRE((!rect && rect.error() == ShapeError::WrongPositions));
+        REQUIRE((!rect && rect.error() == RectangleShapeError::WrongVertices));
     }
     SECTION("Test position-dimensions ok init") {
         auto rect = RectangleInt::init(PositionInt(1, 1), 2, 2);
@@ -48,7 +48,7 @@ TEST_CASE("Test math::Rectangle") {
     }
     SECTION("Test position-dimensions error init") {
         auto rect = RectangleInt::init(PositionInt(2, 2), 0, 0);
-        REQUIRE((!rect && rect.error() == ShapeError::WrongDimensions));
+        REQUIRE((!rect && rect.error() == RectangleShapeError::NegativeDimensions));
     }
 
     auto region = RectangleInt::init(PositionInt(100, 150), PositionInt(400, 350));
