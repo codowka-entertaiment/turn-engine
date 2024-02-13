@@ -43,13 +43,13 @@ file(GLOB_RECURSE SOURCES
 )
 
 add_library(TurnEngine STATIC ${SOURCES}
+        src/sdl/SDL.hpp
         src/sdl/Window.cpp
         src/sdl/Window.hpp
         src/sdl/Renderer.cpp
         src/sdl/Renderer.hpp
         src/sdl/Surface.cpp
         src/sdl/Surface.hpp
-        src/sdl/sdl.hpp
         src/sdl/Texture.cpp
         src/sdl/Texture.hpp)
 

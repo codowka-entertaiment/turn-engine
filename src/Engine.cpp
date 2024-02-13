@@ -1,3 +1,4 @@
+#include "sdl/SDL.hpp"
 #include "sdl/Window.hpp"
 
 int main() {
