@@ -2,12 +2,7 @@
 
 #include "../src/math/Shapes.hpp"
 
-using math::HexagonInt;
-using math::HexagonShapeError;
-using math::PositionInt;
-using math::RectangleInt;
-using math::RectangleShapeError;
-using math::VectorInt;
+using namespace math;
 
 TEST_CASE("Test math::Vector") {
     SECTION("constructor") {
