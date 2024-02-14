@@ -30,7 +30,7 @@ namespace math
                 return Rectangle(vertex, vertex + Position<T>(width, height));
         }
 
-        constexpr bool contains(const Position<T> &position) const override {
+        constexpr bool contains(const Position<T> &position) const noexcept override {
             return (m_vertex1.x <= position.x && position.x <= m_vertex2.x) &&
                    (m_vertex1.y <= position.y && position.y <= m_vertex2.y);
         }
