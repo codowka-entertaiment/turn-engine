@@ -16,7 +16,7 @@ namespace sdl
         SDL_GetWindowSize(window, &dimensions.x, &dimensions.y);
         return dimensions;
     }
-    SDL_Surface *Window::getWindowSurface() {
-        return SDL_GetWindowSurface(window);
+    Surface Window::getWindowSurface() {
+        return Surface(SDL_GetWindowSurface(window));
     }
 }

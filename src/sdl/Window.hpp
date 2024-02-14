@@ -4,6 +4,7 @@
 #include "../math/Vector.hpp"
 #include "../math/shapes/Shape.hpp"
 #include "SDL.h"
+#include "sdl/Surface.hpp"
 
 namespace sdl
 {
@@ -17,8 +18,7 @@ namespace sdl
         ~Window();
         [[nodiscard]] SDL_Window *getWindow() const;
         math::VectorInt getWindowSize();
-        //todo: change SDL_Surface to Surface class
-        SDL_Surface *getWindowSurface();
+        Surface getWindowSurface();
     };
 
 }

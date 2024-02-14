@@ -14,9 +14,9 @@ namespace sdl
     class Surface {
     private:
         SDL_Surface *image;
-        explicit Surface(SDL_Surface *surface);
 
     public:
+        explicit Surface(SDL_Surface *surface);
         static std::expected<Surface, SurfaceError> init(std::string_view filename);
         ~Surface();
     };
