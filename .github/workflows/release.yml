@@ -1,18 +1,55 @@
-name: Release
+name: release
 
-on: 
+on:
   push:
     tags:
-    - '*'
+      - "v*"
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+  tagged-release:
+    name: "release"
+    runs-on: "ubuntu-latest"
+
     steps:
     - uses: actions/checkout@v3
-    - uses: ncipollo/release-action@v1
+
+    - name: Update apt
+      run: sudo apt update
+      
+    - name: Install Software Properties Common Package
+      run: sudo apt install software-properties-common
+
+    - name: Add toolchain repository
+      run: sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+      
+    - name: Install g++-12
+      run: sudo apt install gcc-12 g++-12
+
+    - name: Set default gcc and g++
+      run: sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+
+    - name: Check g++ version
+      run: g++ --version
+      
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/cmake-build-debug -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/cmake-build-debug --config ${{env.BUILD_TYPE}}
+
+    - name: Tar Xz source code
+      run: tar c src/ tests/ .clang-format CMakeLists.txt LICENSE README.md | xz > source.tar.xz
+
+    - name: Tar Xz source code
+      run: tar c src/ tests/ .clang-format CMakeLists.txt LICENSE README.md | xz > source.tar.xz
+
+    - name: Zip source code
+      run: zip -r source.zip src/ tests/ .clang-format CMakeLists.txt LICENSE README.md
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        artifacts: "release.tar.gz,foo/*.txt"
-        body: ""
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        files: |
+          ./source.tar.xz
+          ./source.zip
