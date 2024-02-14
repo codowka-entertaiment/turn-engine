@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "release"
+      
+env:
+  BUILD_TYPE: Release
 
 jobs:
   tagged-release:
@@ -36,9 +39,6 @@ jobs:
 
     - name: Build
       run: cmake --build ${{github.workspace}}/cmake-build-debug --config ${{env.BUILD_TYPE}}
-
-    - name: Tar Xz source code
-      run: tar c src/ tests/ .clang-format CMakeLists.txt LICENSE README.md | xz > source.tar.xz
 
     - name: Tar Xz source code
       run: tar c src/ tests/ .clang-format CMakeLists.txt LICENSE README.md | xz > source.tar.xz
