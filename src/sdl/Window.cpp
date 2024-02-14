@@ -3,10 +3,6 @@
 namespace sdl
 {
 
-    //todo: wait while rectangle will be fixed and make window work on it
-    Window::Window(std::string_view title, const math::Rectangle<int> &rectangle, Uint32 flags) {
-        // window = SDL_CreateWindow(title.data(), rectangle., y, w, h, flags);
-    }
     Window::~Window() {
         SDL_DestroyWindow(window);
     }
@@ -17,6 +13,16 @@ namespace sdl
     }
     Surface Window::getWindowSurface() {
         return Surface(SDL_GetWindowSurface(window));
+    }
+    Window::Window(SDL_Window *window) : window(window) {}
+    std::expected<Window, WindowError> Window::init(std::string_view title, const math::Rectangle<int> &rectangle,
+                                                    Uint32 flags) {
+        SDL_Window *window = SDL_CreateWindow(title.data(), rectangle.vertex().x, rectangle.vertex().y, rectangle.width(),
+                                              rectangle.height(), flags);
+        if (window != nullptr)
+            return Window(window);
+        else
+            return std::unexpected(WindowError::WindowCreationError);
     }
 
 }

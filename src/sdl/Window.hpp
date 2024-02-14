@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cinttypes>
+#include <expected>
 #include <string_view>
 #include "../math/Vector.hpp"
 #include "../math/shapes/Rectangle.hpp"
@@ -10,15 +12,17 @@
 
 namespace sdl
 {
-
+    enum class WindowError : std::uint8_t { WindowCreationError };
     class Window {
         friend class Renderer;
 
     private:
         SDL_Window *window;
+        explicit Window(SDL_Window *window);
 
     public:
-        Window(std::string_view title, const math::Rectangle<int> &rectangle, Uint32 flags);
+        static std::expected<Window, WindowError> init(std::string_view title, const math::Rectangle<int> &rectangle,
+                                                       Uint32 flags);
         ~Window();
         math::VectorInt getWindowSize();
         Surface getWindowSurface();
