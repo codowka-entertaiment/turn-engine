@@ -4,11 +4,13 @@
 #include "../math/Vector.hpp"
 #include "SDL.h"
 #include "Window.hpp"
+#include "sdl/Texture.hpp"
 
 namespace sdl
 {
     enum class RendererError : std::uint8_t { WindowDestroyed };
     class Renderer {
+        friend class Texture;
 
     private:
         SDL_Renderer *renderer;

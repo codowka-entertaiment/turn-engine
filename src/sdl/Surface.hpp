@@ -5,6 +5,7 @@
 #include <fstream>
 #include "SDL.h"
 #include "SDL_image.h"
+#include "sdl/Texture.hpp"
 #include "string_view"
 
 namespace sdl
@@ -12,6 +13,8 @@ namespace sdl
     enum class SurfaceError : std::uint8_t { WrongFilename, CantLoadSurface };
 
     class Surface {
+        friend class Texture;
+
     private:
         SDL_Surface *surface;
 
