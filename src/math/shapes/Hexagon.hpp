@@ -23,7 +23,7 @@ namespace math
                 return Hexagon(center, side);
         }
 
-        constexpr bool contains(const Position<T> &position) const override {
+        constexpr bool contains(const Position<T> &position) const noexcept override {
             // check point under/upper sides
             auto pos = position - m_center;
 
