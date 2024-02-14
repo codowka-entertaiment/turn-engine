@@ -40,7 +40,7 @@ namespace math
         constexpr static Rectangle<T> init_uncheck(Position<T> vertex, T width, T height) {
             return Rectangle(vertex, width, height);
         }
-        
+
         constexpr const Position<T> &vertex() const { return m_vertex; }
         constexpr const T &width() const { return m_width; }
         constexpr const T &height() const { return m_height; }
