@@ -2,8 +2,7 @@
 
 namespace sdl
 {
-    Window::Window(std::string_view title, int x, int y, int w, int h,
-                   Uint32 flags) {
+    Window::Window(std::string_view title, int x, int y, int w, int h, Uint32 flags) {
         window = SDL_CreateWindow(title.data(), x, y, w, h, flags);
     }
     Window::~Window() {

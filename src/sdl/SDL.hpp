@@ -15,7 +15,6 @@ namespace sdl
             std::cerr << "IMG_Init: " << IMG_GetError() << "\n";
             SDL_Quit();
             return -1;
-            // handle error
         }
         return 0;
     }
