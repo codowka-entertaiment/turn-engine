@@ -33,6 +33,10 @@ namespace math
                 return Rectangle(vertex, width, height);
         }
 
+        constexpr const Position<T> &vertex() const { return m_vertex; }
+        constexpr const T &width() const { return m_width; }
+        constexpr const T &height() const { return m_height; }
+
         constexpr bool contains(const Position<T> &position) const noexcept override {
             auto pos = position - m_vertex;
             return (pos.x >= 0 && pos.x <= m_width) && (pos.y >= 0 && pos.y <= m_height);
