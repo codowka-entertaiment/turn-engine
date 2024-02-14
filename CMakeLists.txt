@@ -19,6 +19,15 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(SDL2)
 
 FetchContent_Declare(
+        SDL2_Image
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_image
+        GIT_TAG release-2.8.2
+        GIT_PROGRESS TRUE
+)
+
+FetchContent_MakeAvailable(SDL2_Image)
+
+FetchContent_Declare(
         Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
         GIT_TAG v3.5.2
@@ -26,11 +35,25 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
-set(SOURCES
-    src/Engine.cpp
-    src/Engine.hpp)
+# Engine static target
+
+file(GLOB_RECURSE SOURCES
+        "src/*.hpp"
+        "src/*.cpp"
+)
 
 add_library(TurnEngine STATIC ${SOURCES})
 
 target_include_directories(TurnEngine PRIVATE src)
-target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static)
+target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
+
+# Math tests
+
+file(GLOB_RECURSE MATH_TESTS_SOURCES
+        "src/math/*.hpp"
+        "src/math/*.cpp"
+        "tests/MathTests.cpp"
+)
+
+add_executable(MathTests ${MATH_TESTS_SOURCES})
+target_link_libraries(MathTests PRIVATE Catch2::Catch2WithMain)
