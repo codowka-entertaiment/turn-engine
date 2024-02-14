@@ -8,8 +8,8 @@
 namespace sdl
 {
     enum class RendererError : std::uint8_t { WindowDestroyed };
-
     class Renderer {
+
     private:
         SDL_Renderer *renderer;
         std::shared_ptr<Window> window;

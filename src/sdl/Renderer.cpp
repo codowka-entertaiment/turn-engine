@@ -8,7 +8,7 @@ namespace sdl
     int Renderer::setScale(float scaleX, float scaleY) {
         return SDL_RenderSetScale(renderer, scaleX, scaleY);
     }
-    
+
     math::Vector<float> Renderer::getScale() {
         math::Vector<float> scale(0, 0);
         SDL_RenderGetScale(renderer, &scale.x, &scale.y);
@@ -16,7 +16,7 @@ namespace sdl
     }
     std::expected<Renderer, RendererError> Renderer::init(const std::shared_ptr<Window> &window, int index, Uint32 flags) {
         if (!window)
-            return Renderer(window, SDL_CreateRenderer(window->getWindow(), index, flags));
+            return Renderer(window, SDL_CreateRenderer(window->window, index, flags));
         else
             return std::unexpected(RendererError::WindowDestroyed);
     }

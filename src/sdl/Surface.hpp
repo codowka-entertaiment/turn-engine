@@ -13,7 +13,7 @@ namespace sdl
 
     class Surface {
     private:
-        SDL_Surface *image;
+        SDL_Surface *surface;
 
     public:
         explicit Surface(SDL_Surface *surface);
