@@ -8,6 +8,8 @@ on:
 env:
   BUILD_TYPE: Release
 
+permissions: write-all
+
 jobs:
   tagged-release:
     name: "release"
@@ -40,16 +42,19 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/cmake-build-debug --config ${{env.BUILD_TYPE}}
 
-    - name: Tar Xz source code
-      run: tar c src/ tests/ .clang-format CMakeLists.txt LICENSE README.md | xz > source.tar.xz
-
-    - name: Zip source code
-      run: zip -r source.zip src/ tests/ .clang-format CMakeLists.txt LICENSE README.md
+#    - name: Tar Xz source code
+#      run: tar c src/ tests/ .clang-format CMakeLists.txt LICENSE README.md | xz > source.tar.xz
+#
+#    - name: Zip source code
+#      run: zip -r source.zip src/ tests/ .clang-format CMakeLists.txt LICENSE README.md
 
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        title: "Development Build"
         prerelease: false
         files: |
-          ./source.tar.xz
-          ./source.zip
+          LICENSE
+#          ./source.tar.xz
+#          ./source.zip
