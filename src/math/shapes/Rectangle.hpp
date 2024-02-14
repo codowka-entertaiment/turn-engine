@@ -12,27 +12,42 @@ namespace math
     template <Numeric T>
     class Rectangle : public Shape<T> {
     private:
-        Position<T> m_vertex1, m_vertex2;
-        constexpr Rectangle(Position<T> vertex1, Position<T> vertex2) : m_vertex1(vertex1), m_vertex2(vertex2) {}
+        Position<T> m_vertex;
+        T m_width, m_height;
+
+        constexpr Rectangle(Position<T> vertex, Position<T> dims) : m_vertex(vertex), m_width(dims.x), m_height(dims.y) {}
+        constexpr Rectangle(Position<T> vertex, T width, T height) : m_vertex(vertex), m_width(width), m_height(height) {}
 
     public:
         constexpr static std::expected<Rectangle<T>, RectangleShapeError> init(Position<T> vertex1, Position<T> vertex2) {
             if (vertex2.x <= vertex1.x || vertex2.y <= vertex1.y)
                 return std::unexpected(RectangleShapeError::WrongVertices);
             else
-                return Rectangle(vertex1, vertex2);
+                return Rectangle(vertex1, vertex2 - vertex1);
         }
 
         constexpr static std::expected<Rectangle<T>, RectangleShapeError> init(Position<T> vertex, T width, T height) {
             if (width <= 0 || height <= 0)
                 return std::unexpected(RectangleShapeError::WrongDimensions);
             else
-                return Rectangle(vertex, vertex + Position<T>(width, height));
+                return Rectangle(vertex, width, height);
         }
 
+        constexpr static Rectangle<T> init_uncheck(Position<T> vertex1, Position<T> vertex2) {
+            return Rectangle(vertex1, vertex2 - vertex1);
+        }
+
+        constexpr static Rectangle<T> init_uncheck(Position<T> vertex, T width, T height) {
+            return Rectangle(vertex, width, height);
+        }
+
+        constexpr const Position<T> &vertex() const { return m_vertex; }
+        constexpr const T &width() const { return m_width; }
+        constexpr const T &height() const { return m_height; }
+
         constexpr bool contains(const Position<T> &position) const noexcept override {
-            return (m_vertex1.x <= position.x && position.x <= m_vertex2.x) &&
-                   (m_vertex1.y <= position.y && position.y <= m_vertex2.y);
+            auto pos = position - m_vertex;
+            return (pos.x >= 0 && pos.x <= m_width) && (pos.y >= 0 && pos.y <= m_height);
         }
     };
 
