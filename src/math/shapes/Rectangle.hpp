@@ -33,6 +33,14 @@ namespace math
                 return Rectangle(vertex, width, height);
         }
 
+        constexpr static Rectangle<T> init_uncheck(Position<T> vertex1, Position<T> vertex2) {
+            return Rectangle(vertex1, vertex2 - vertex1);
+        }
+
+        constexpr static Rectangle<T> init_uncheck(Position<T> vertex, T width, T height) {
+            return Rectangle(vertex, width, height);
+        }
+        
         constexpr const Position<T> &vertex() const { return m_vertex; }
         constexpr const T &width() const { return m_width; }
         constexpr const T &height() const { return m_height; }

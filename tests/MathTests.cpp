@@ -49,7 +49,7 @@ TEST_CASE("Test math::Rectangle") {
     }
 
     SECTION("Test contains") {
-        auto region = RectangleInt::init(PositionInt(100, 150), PositionInt(400, 350)).value();
+        auto region = RectangleInt::init_uncheck(PositionInt(100, 150), PositionInt(400, 350));
 
         std::initializer_list<PositionInt> outside = {
             {0, 0}, {50, 50}, {100, 100}, {450, 400}, {500, 450},
@@ -77,7 +77,7 @@ TEST_CASE("Test math::Hexagon") {
     }
 
     SECTION("Test contains") {
-        auto region = HexagonInt::init(PositionInt(5, 4), 2).value();
+        auto region = HexagonInt::init_uncheck(PositionInt(5, 4), 2);
 
         std::initializer_list<math::PositionInt> outside = {
             {3, 2}, {4, 1}, {6, 1}, {7, 2}, {8, 4}, {7, 6}, {6, 7}, {4, 7}, {3, 6}, {2, 4},
