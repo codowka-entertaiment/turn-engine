@@ -10,6 +10,6 @@ namespace math
 {
     template <Numeric T>
     struct Shape {
-        virtual bool contains(const Position<T> &position) const = 0;
+        constexpr virtual bool contains(const Position<T> &position) const noexcept = 0;
     };
 }
