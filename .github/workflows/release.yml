@@ -26,5 +26,5 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/TurnEngine-src.zip
+          file: build/turnengine-src.zip
           tag: ${{ github.ref }}
