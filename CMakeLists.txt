@@ -49,46 +49,45 @@ file(GLOB_RECURSE
         include/*.cpp
 )
 
-add_library(TurnEngine STATIC ${SOURCES})
+add_library(TurnEngine ${SOURCES} ${INCLUDES})
+add_library(TurnEngine::TurnEngine ALIAS TurnEngine)
 
-target_sources(TurnEngine PRIVATE ${SOURCES})
+set(package_files include/ src/ CMakeLists.txt LICENSE)
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip
+        COMMAND ${CMAKE_COMMAND} -E tar c ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip --format=zip -- ${package_files}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        DEPENDS ${package_files})
 
-set(public_headers include/turn-engine/TurnEngine.hpp)
+add_custom_target(TurnEngine_package DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip)
 
-set_target_properties(TurnEngine PROPERTIES PUBLIC_HEADER "${public_headers}")
-
+include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
-install(
-        TARGETS TurnEngine SDL2main SDL2-static SDL2_image
-        EXPORT TurnEngineConfig
-)
+install(TARGETS TurnEngine SDL2main SDL2-static SDL2_image
+        EXPORT TurnEngineTargets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-install(
-        EXPORT TurnEngineConfig
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine
+install(EXPORT TurnEngineTargets
         NAMESPACE TurnEngine::
-)
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine")
 
-install(
-        DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/TurnEngine
+configure_package_config_file(
+        cmake/TurnEngineConfig.cmake.in
+        "${PROJECT_BINARY_DIR}/TurnEngineConfig.cmake"
+        INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine")
+
+install(FILES "${PROJECT_BINARY_DIR}/TurnEngineConfig.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine")
+
+install(FILES "${PROJECT_BINARY_DIR}/TurnEngineConfigVersion.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine")
+
+install(DIRECTORY include/turn-engine
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-install(
-        FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/README.md
-        ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
-        DESTINATION ${CMAKE_INSTALL_DOCDIR}
-)
-
-target_include_directories(TurnEngine
-        PRIVATE
-        src
-        PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/TurnEngine>
-        $<INSTALL_INTERFACE:/include/TurnEngine>
-)
+        FILES_MATCHING
+        PATTERN "*.hpp")
 
 target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
 
