@@ -51,7 +51,27 @@ file(GLOB_RECURSE
 
 add_library(TurnEngine STATIC ${SOURCES} ${INCLUDES})
 
-target_include_directories(TurnEngine PRIVATE src PUBLIC include)
+target_sources(TurnEngine PRIVATE ${SOURCES})
+
+set(public_headers include/turn-engine/TurnEngine.hpp)
+
+set_target_properties(TurnEngine PROPERTIES PUBLIC_HEADER "${public_headers}")
+
+include(GNUInstallDirs)
+
+install(TARGETS TurnEngine
+        EXPORT "TurnEngineTargets"
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/TurnEngine
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+target_include_directories(TurnEngine
+        PRIVATE
+        src
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+
 target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
 
 # Math tests
