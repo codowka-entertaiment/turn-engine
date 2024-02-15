@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Shape.hpp"
+
 namespace math
 {
     enum class HexagonShapeError : std::uint8_t {
