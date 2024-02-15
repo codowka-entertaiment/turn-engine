@@ -49,7 +49,7 @@ file(GLOB_RECURSE
         include/*.cpp
 )
 
-add_library(TurnEngine STATIC ${SOURCES} ${INCLUDES})
+add_library(TurnEngine STATIC ${SOURCES})
 
 target_sources(TurnEngine PRIVATE ${SOURCES})
 
@@ -59,17 +59,35 @@ set_target_properties(TurnEngine PROPERTIES PUBLIC_HEADER "${public_headers}")
 
 include(GNUInstallDirs)
 
-install(TARGETS TurnEngine
-        EXPORT "TurnEngineTargets"
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/TurnEngine
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+install(
+        TARGETS TurnEngine SDL2main SDL2-static SDL2_image
+        EXPORT TurnEngineConfig
+)
+
+install(
+        EXPORT TurnEngineConfig
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine
+        NAMESPACE TurnEngine::
+)
+
+install(
+        DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/TurnEngine
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(
+        FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/README.md
+        ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}
 )
 
 target_include_directories(TurnEngine
         PRIVATE
         src
         PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/TurnEngine>
+        $<INSTALL_INTERFACE:/include/TurnEngine>
 )
 
 target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
