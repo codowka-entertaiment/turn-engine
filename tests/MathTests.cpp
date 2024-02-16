@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "turn-engine/math/Shapes.hpp"
+#include "../include/turn-engine/math/Shapes.hpp"
 
 using namespace math;
 
