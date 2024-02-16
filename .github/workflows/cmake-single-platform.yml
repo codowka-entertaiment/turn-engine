@@ -32,6 +32,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Restore cache
+      uses: actions/cache/restore@v3
+      id: cache
+      with:
+        path: ${{github.workspace}}/cmake-build-debug
+        key: ${{ runner.os }}-${{ hashFiles('**/') }}
+
     - name: Update apt
       run: sudo apt update
       
@@ -56,12 +63,12 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/cmake-build-debug --config ${{env.BUILD_TYPE}}
 
-    - name: Cache cmake-build-debug folder
-      uses: actions/cache@v3
+    - name: Save cache
+      uses: actions/cache/save@v3
+      id: cache
       with:
-        path: |
-          {{github.workspace}}/cmake-build-debug/
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+        path: ${{github.workspace}}/cmake-build-debug
+        key: ${{ runner.os }}-${{ hashFiles('**/') }}
 
     - name: MathTests
       working-directory: ${{github.workspace}}/cmake-build-debug
