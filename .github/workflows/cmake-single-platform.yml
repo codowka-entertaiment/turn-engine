@@ -65,6 +65,6 @@ jobs:
         buildDirectory: '${{ github.workspace }}/build'
 
     - name: MathTests
-      working-directory: ${{github.workspace}}/cmake-build-debug
-      run: ${{github.workspace}}/cmake-build-debug/MathTests
+      working-directory: ${{github.workspace}}/build
+      run: ${{github.workspace}}/build/MathTests
 
