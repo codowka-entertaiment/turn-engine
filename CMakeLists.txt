@@ -52,7 +52,7 @@ target_include_directories(TurnEngine PUBLIC
 )
 
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-    cmake_minimum_required(VERSION 3.28)
+    cmake_minimum_required(VERSION 3.26.4)
 
     option(TURN_ENGINE_BUILD_PACKAGE "whether or not the package should build" ON)
     option(TURN_ENGINE_ENABLE_INSTALL "whether or not to enable the install rule" ON)
