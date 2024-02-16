@@ -32,13 +32,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Restore cache
-      uses: actions/cache/restore@v3
-      id: cache
-      with:
-        path: ${{github.workspace}}/cmake-build-debug
-        key: ${{ runner.os }}-${{ hashFiles('**/') }}
-
     - name: Update apt
       run: sudo apt update
       
@@ -56,21 +49,22 @@ jobs:
 
     - name: Check g++ version
       run: g++ --version
-      
-    - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/cmake-build-debug -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} # Ninja?
 
-    - name: Build
-      run: cmake --build ${{github.workspace}}/cmake-build-debug --config ${{env.BUILD_TYPE}}
-
-    - name: Save cache
-      uses: actions/cache/save@v3
-      id: cache
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1.2.11
       with:
-        path: ${{github.workspace}}/cmake-build-debug
-        key: ${{ runner.os }}-${{ hashFiles('**/') }}
+        key: ${{ matrix.os }}-${{ matrix.type }}
+
+    - name: Build with cmake
+      uses: lukka/run-cmake@v3
+      with:
+        cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
+        cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+        cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=${{ matrix.type }} -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache'
+        buildWithCMake: true
+        buildDirectory: '${{ github.workspace }}/build'
 
     - name: MathTests
-      working-directory: ${{github.workspace}}/cmake-build-debug
-      run: ${{github.workspace}}/cmake-build-debug/MathTests
+      working-directory: ${{github.workspace}}/build
+      run: ${{github.workspace}}/build/MathTests
 
