@@ -56,6 +56,13 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/cmake-build-debug --config ${{env.BUILD_TYPE}}
 
+    - name: Cache cmake-build-debug folder
+      uses: actions/cache@v3
+      with:
+        path: |
+          {{github.workspace}}/cmake-build-debug/
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
     - name: MathTests
       working-directory: ${{github.workspace}}/cmake-build-debug
       run: ${{github.workspace}}/cmake-build-debug/MathTests
