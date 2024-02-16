@@ -65,7 +65,6 @@ jobs:
 
     - name: Save cache
       uses: actions/cache/save@v3
-      id: cache
       with:
         path: ${{github.workspace}}/cmake-build-debug
         key: ${{ runner.os }}-${{ hashFiles('**/') }}
