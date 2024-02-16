@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.26.4)
-project(turn-engine)
+project(turn-engine VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -37,66 +37,81 @@ FetchContent_MakeAvailable(Catch2)
 
 # Engine static target
 
-file(GLOB_RECURSE
-        SOURCES
-        src/*.hpp
-        src/*.cpp
+file(GLOB_RECURSE SOURCES
+        "src/*.cpp"
 )
 
-file(GLOB_RECURSE
-        INCLUDES
-        include/*.hpp
-        include/*.cpp
-)
-
-add_library(TurnEngine ${SOURCES} ${INCLUDES})
-add_library(TurnEngine::TurnEngine ALIAS TurnEngine)
-
-set(package_files include/ src/ CMakeLists.txt LICENSE)
-add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip
-        COMMAND ${CMAKE_COMMAND} -E tar c ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip --format=zip -- ${package_files}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        DEPENDS ${package_files})
-
-add_custom_target(TurnEngine_package DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip)
-
-include(CMakePackageConfigHelpers)
-include(GNUInstallDirs)
-
-install(TARGETS TurnEngine SDL2main SDL2-static SDL2_image
-        EXPORT TurnEngineTargets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-install(EXPORT TurnEngineTargets
-        NAMESPACE TurnEngine::
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine")
-
-configure_package_config_file(
-        cmake/TurnEngineConfig.cmake.in
-        "${PROJECT_BINARY_DIR}/TurnEngineConfig.cmake"
-        INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine")
-
-install(FILES "${PROJECT_BINARY_DIR}/TurnEngineConfig.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine")
-
-install(FILES "${PROJECT_BINARY_DIR}/TurnEngineConfigVersion.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/TurnEngine")
-
-install(DIRECTORY include/turn-engine
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-        FILES_MATCHING
-        PATTERN "*.hpp")
-
+add_library(TurnEngine STATIC ${SOURCES})
 target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
+
+target_include_directories(TurnEngine PRIVATE src)
+
+target_include_directories(TurnEngine PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    cmake_minimum_required(VERSION 3.28)
+
+    option(TURN_ENGINE_BUILD_PACKAGE "whether or not the package should build" ON)
+    option(TURN_ENGINE_ENABLE_INSTALL "whether or not to enable the install rule" ON)
+
+    if (TURN_ENGINE_BUILD_PACKAGE)
+        set(PKG_FILES include/ src/ cmake/ CMakeLists.txt)
+
+        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip
+                COMMAND ${CMAKE_COMMAND} -E tar c ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip --format=zip -- ${PKG_FILES}
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                DEPENDS ${PKG_FILES})
+
+        add_custom_target(TURN_ENGINE_PKG DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/TurnEngine-src.zip)
+    endif ()
+
+    if (TURN_ENGINE_ENABLE_INSTALL)
+        include(CMakePackageConfigHelpers)
+        include(GNUInstallDirs)
+
+        install(TARGETS TurnEngine SDL2main SDL2-static SDL2_image
+                EXPORT ${PROJECT_NAME}Targets
+                RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+        install(EXPORT ${PROJECT_NAME}Targets
+                NAMESPACE codowka::
+                DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+
+        configure_package_config_file(
+                cmake/TurnEngineConfig.cmake.in
+                "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+                INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+
+        install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+                DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+
+        # YYYY.MM.N1 is compatible with YYYY.MM.N2.
+        write_basic_package_version_file(
+                "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+                COMPATIBILITY SameMinorVersion)
+
+        install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+                DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+
+        install(DIRECTORY include
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+                FILES_MATCHING
+                PATTERN "*.hpp")
+    endif ()
+endif ()
 
 # Math tests
 
 file(GLOB_RECURSE MATH_TESTS_SOURCES
+        "src/math/*.hpp"
+        "src/math/*.cpp"
         "tests/MathTests.cpp"
 )
 
 add_executable(MathTests ${MATH_TESTS_SOURCES})
-target_include_directories(MathTests PUBLIC include)
 target_link_libraries(MathTests PRIVATE Catch2::Catch2WithMain)
