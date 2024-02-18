@@ -1,24 +1,35 @@
 #include "Renderer.hpp"
 
-namespace sdl
-{
-    Renderer::~Renderer() {
-        SDL_DestroyRenderer(renderer);
-    }
-    int Renderer::setScale(float scaleX, float scaleY) {
-        return SDL_RenderSetScale(renderer, scaleX, scaleY);
-    }
+sdl::Renderer::Renderer(SDL_Renderer *renderer) : m_renderer(renderer) {}
 
-    math::Vector<float> Renderer::getScale() {
-        math::Vector<float> scale(0, 0);
-        SDL_RenderGetScale(renderer, &scale.x, &scale.y);
-        return scale;
+sdl::Renderer::~Renderer() {
+    SDL_DestroyRenderer(m_renderer);
+}
+
+int sdl::Renderer::setScale(float scaleX, float scaleY) {
+    return SDL_RenderSetScale(m_renderer, scaleX, scaleY);
+}
+
+math::Vector<float> sdl::Renderer::getScale() {
+    math::Vector<float> scale(0, 0);
+    SDL_RenderGetScale(m_renderer, &scale.x, &scale.y);
+    return scale;
+}
+
+std::expected<sdl::Renderer, sdl::RendererError> sdl::Renderer::init(const sdl::Window &window, int index, Uint32 flags) {
+    SDL_Renderer *renderer = SDL_CreateRenderer(window.m_window, index, flags);
+    if (!renderer)
+        return std::unexpected(sdl::RendererError::RendererCreationError);
+    else {
+        return sdl::Renderer(renderer);
     }
-    std::expected<Renderer, RendererError> Renderer::init(const std::shared_ptr<Window> &window, int index, Uint32 flags) {
-        if (!window)
-            return Renderer(window, SDL_CreateRenderer(window->window, index, flags));
-        else
-            return std::unexpected(RendererError::WindowDestroyed);
-    }
-    Renderer::Renderer(const std::weak_ptr<Window> &window, SDL_Renderer *renderer) : window(window), renderer(renderer) {}
+}
+void sdl::Renderer::copy(sdl::Texture &texture) {
+    SDL_RenderCopy(m_renderer, texture.m_texture, nullptr, nullptr);
+}
+void sdl::Renderer::clear() {
+    SDL_RenderClear(m_renderer);
+}
+void sdl::Renderer::present() {
+    SDL_RenderPresent(m_renderer);
 }

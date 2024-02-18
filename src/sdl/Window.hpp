@@ -6,18 +6,19 @@
 #include "../math/Vector.hpp"
 #include "../math/shapes/Rectangle.hpp"
 #include "../math/shapes/Shape.hpp"
+#include "Renderer.hpp"
 #include "SDL.h"
-#include "sdl/Renderer.hpp"
-#include "sdl/Surface.hpp"
+#include "Surface.hpp"
 
 namespace sdl
 {
+    class Surface;
     enum class WindowError : std::uint8_t { WindowCreationError };
     class Window {
         friend class Renderer;
 
     private:
-        SDL_Window *window;
+        SDL_Window *m_window;
         explicit Window(SDL_Window *window);
 
     public:

@@ -1,26 +1,29 @@
 #pragma once
 
-#include <memory>
 #include "../math/Vector.hpp"
 #include "SDL.h"
+#include "Texture.hpp"
 #include "Window.hpp"
-#include "sdl/Texture.hpp"
 
 namespace sdl
 {
-    enum class RendererError : std::uint8_t { WindowDestroyed };
+    enum class RendererError { RendererCreationError };
+    class Window;
+    class Texture;
     class Renderer {
         friend class Texture;
 
     private:
-        SDL_Renderer *renderer;
-        std::shared_ptr<Window> window;
-        Renderer(const std::weak_ptr<Window> &window, SDL_Renderer *renderer);
+        SDL_Renderer *m_renderer;
+        explicit Renderer(SDL_Renderer *renderer);
 
     public:
-        static std::expected<Renderer, RendererError> init(const std::shared_ptr<Window> &window, int index, Uint32 flags);
+        static std::expected<Renderer, RendererError> init(const sdl::Window &window, int index, Uint32 flags);
         int setScale(float scaleX, float scaleY);
         math::Vector<float> getScale();
+        void copy(Texture &texture);
+        void clear();
+        void present();
         ~Renderer();
     };
 }
