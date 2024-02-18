@@ -6,7 +6,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "Texture.hpp"
-#include "Window.hpp"
+#include "Surface.hpp"
 #include "string_view"
 
 namespace sdl
@@ -22,6 +22,8 @@ namespace sdl
         explicit Surface(SDL_Surface *surface);
 
     public:
+        Surface(const Surface& other);
+        Surface(Surface&& other) noexcept;
         static std::expected<Surface, SurfaceError> init(std::string_view filename);
         ~Surface();
     };

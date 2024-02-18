@@ -1,4 +1,4 @@
-#include "../../include/turn-engine/sdl/Texture.hpp"
+#include <turn-engine/sdl/Texture.hpp>
 
 sdl::Texture::Texture(SDL_Texture *texture) : m_texture(texture) {}
 
@@ -12,3 +12,10 @@ std::expected<sdl::Texture, sdl::TextureError> sdl::Texture::init(Renderer &rend
     else
         return std::unexpected(TextureError::CantLoadTexture);
 }
+
+sdl::Texture::Texture(sdl::Texture &&other) noexcept {
+    m_texture = other.m_texture;
+    other.m_texture = nullptr;
+}
+
+sdl::Texture::Texture(const sdl::Texture &other) : m_texture(other.m_texture){}

@@ -20,6 +20,8 @@ namespace sdl
         explicit Texture(SDL_Texture *texture);
 
     public:
+        Texture(const Texture& other);
+        Texture(Texture&& other) noexcept;
         static std::expected<Texture, TextureError> init(Renderer &renderer, Surface &surface);
         ~Texture();
     };

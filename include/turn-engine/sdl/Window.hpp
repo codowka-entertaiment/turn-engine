@@ -9,6 +9,7 @@
 #include "Renderer.hpp"
 #include "SDL.h"
 #include "Surface.hpp"
+#include <iostream>
 
 namespace sdl
 {
@@ -24,6 +25,8 @@ namespace sdl
     public:
         static std::expected<Window, WindowError> init(std::string_view title, const math::Rectangle<int> &rectangle,
                                                        Uint32 flags);
+        Window(const Window& other);
+        Window(Window&& other) noexcept;
         ~Window();
         math::VectorInt getWindowSize();
         Surface getWindowSurface();

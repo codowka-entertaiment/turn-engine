@@ -2,6 +2,7 @@
 
 #include "../math/Vector.hpp"
 #include "Texture.hpp"
+#include "Renderer.hpp"
 #include "Window.hpp"
 
 namespace sdl
@@ -17,7 +18,9 @@ namespace sdl
         explicit Renderer(SDL_Renderer *renderer);
 
     public:
-        static std::expected<Renderer, RendererError> init(const sdl::Window &window, int index, Uint32 flags);
+        Renderer(const Renderer& other);
+        Renderer(Renderer&& other) noexcept;
+        static std::expected<Renderer, RendererError> init(const Window &window, int index, Uint32 flags);
         int setScale(float scaleX, float scaleY);
         math::Vector<float> getScale();
         void copy(Texture &texture);

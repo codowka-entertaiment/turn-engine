@@ -1,4 +1,4 @@
-#include "../../include/turn-engine/sdl/Window.hpp"
+#include <turn-engine/sdl/Window.hpp>
 
 sdl::Window::~Window() {
     SDL_DestroyWindow(m_window);
@@ -21,3 +21,10 @@ std::expected<sdl::Window, sdl::WindowError> sdl::Window::init(std::string_view 
     else
         return std::unexpected(WindowError::WindowCreationError);
 }
+
+sdl::Window::Window(sdl::Window &&other) noexcept {
+    m_window = other.m_window;
+    other.m_window = nullptr;
+}
+
+sdl::Window::Window(const sdl::Window &other) : m_window(other.m_window){}

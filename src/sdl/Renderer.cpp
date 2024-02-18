@@ -1,4 +1,4 @@
-#include "../../include/turn-engine/sdl/Renderer.hpp"
+#include <turn-engine/sdl/Renderer.hpp>
 
 sdl::Renderer::Renderer(SDL_Renderer *renderer) : m_renderer(renderer) {}
 
@@ -24,6 +24,7 @@ std::expected<sdl::Renderer, sdl::RendererError> sdl::Renderer::init(const sdl::
         return sdl::Renderer(renderer);
     }
 }
+
 void sdl::Renderer::copy(sdl::Texture &texture) {
     SDL_RenderCopy(m_renderer, texture.m_texture, nullptr, nullptr);
 }
@@ -33,3 +34,10 @@ void sdl::Renderer::clear() {
 void sdl::Renderer::present() {
     SDL_RenderPresent(m_renderer);
 }
+
+sdl::Renderer::Renderer(sdl::Renderer &&other) noexcept {
+    m_renderer = other.m_renderer;
+    other.m_renderer = nullptr;
+}
+
+sdl::Renderer::Renderer(const sdl::Renderer &other) : m_renderer(other.m_renderer){}

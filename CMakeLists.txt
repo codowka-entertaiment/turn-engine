@@ -115,3 +115,15 @@ file(GLOB_RECURSE MATH_TESTS_SOURCES
 
 add_executable(MathTests ${MATH_TESTS_SOURCES})
 target_link_libraries(MathTests PRIVATE Catch2::Catch2WithMain)
+
+file(GLOB_RECURSE SDL_TESTS_SOURCES
+        "src/math/*.hpp"
+        "src/math/*.cpp"
+        "src/sdl/*.hpp"
+        "src/sdl/*.cpp"
+        "include/sdl/*.hpp"
+        "tests/SdlTests.cpp"
+)
+
+add_executable(Sdl_Tests ${SDL_TESTS_SOURCES})
+target_link_libraries(Sdl_Tests PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static TurnEngine)
