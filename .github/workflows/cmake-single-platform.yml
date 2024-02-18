@@ -1,0 +1,70 @@
+name: CMake on a single platform
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  formatting-check:
+  
+    name: Formatting Check
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - uses: actions/checkout@v3
+    
+    - name: Run clang-format style check for C/C++/Protobuf programs.
+    
+      uses: jidicula/clang-format-action@v4.11.0
+      
+      with:
+        clang-format-version: '13'
+        check-path: 'src'
+        
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Update apt
+      run: sudo apt update
+      
+    - name: Install Software Properties Common Package
+      run: sudo apt install software-properties-common
+
+    - name: Add toolchain repository
+      run: sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+      
+    - name: Install g++-12
+      run: sudo apt install gcc-12 g++-12
+
+    - name: Set default gcc and g++
+      run: sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+
+    - name: Check g++ version
+      run: g++ --version
+
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1.2.11
+      with:
+        key: ${{ matrix.os }}-${{ matrix.type }}
+
+    - name: Build with cmake
+      uses: lukka/run-cmake@v3
+      with:
+        cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
+        cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+        cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=${{ matrix.type }} -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache'
+        buildWithCMake: true
+        buildDirectory: '${{ github.workspace }}/build'
+
+    - name: MathTests
+      working-directory: ${{github.workspace}}/build
+      run: ${{github.workspace}}/build/MathTests
+
