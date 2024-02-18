@@ -1,4 +1,4 @@
-#include "Texture.hpp"
+#include "../../include/turn-engine/sdl/Texture.hpp"
 
 sdl::Texture::Texture(SDL_Texture *texture) : m_texture(texture) {}
 

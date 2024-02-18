@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../math/Vector.hpp"
-#include "SDL.h"
 #include "Texture.hpp"
 #include "Window.hpp"
 
