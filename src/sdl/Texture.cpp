@@ -19,3 +19,9 @@ sdl::Texture::Texture(sdl::Texture &&other) noexcept {
 }
 
 sdl::Texture::Texture(const sdl::Texture &other) : m_texture(other.m_texture){}
+
+std::expected<sdl::Texture, sdl::TextureError> sdl::Texture::load(Renderer &renderer, std::string_view filename) {
+    auto tempSurface = sdl::Surface::load(filename);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer.m_renderer, tempSurface->m_surface);
+    return Texture(texture);
+}

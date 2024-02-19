@@ -23,6 +23,7 @@ namespace sdl
         Texture(const Texture& other);
         Texture(Texture&& other) noexcept;
         static std::expected<Texture, TextureError> init(Renderer &renderer, Surface &surface);
+        static std::expected<Texture, TextureError> load(Renderer &renderer, std::string_view filename);
         ~Texture();
     };
 }
