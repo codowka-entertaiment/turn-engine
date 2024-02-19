@@ -3,12 +3,12 @@
 sdl::Window::~Window() {
     SDL_DestroyWindow(m_window);
 }
-math::VectorInt sdl::Window::getWindowSize() {
-    math::VectorInt dimensions(0, 0);
+math::VectorInt sdl::Window::getSize() {
+    math::Vector<int> dimensions(0, 0);
     SDL_GetWindowSize(m_window, &dimensions.x, &dimensions.y);
     return dimensions;
 }
-sdl::Surface sdl::Window::getWindowSurface() {
+sdl::Surface sdl::Window::getSurface() {
     return Surface(SDL_GetWindowSurface(m_window));
 }
 sdl::Window::Window(SDL_Window *window) : m_window(window) {}
@@ -28,3 +28,12 @@ sdl::Window::Window(sdl::Window &&other) noexcept {
 }
 
 sdl::Window::Window(const sdl::Window &other) : m_window(other.m_window){}
+
+void sdl::Window::setIcon(std::string_view filename) {
+    auto icon = Surface::init(filename);
+    SDL_SetWindowIcon(m_window,icon->m_surface);
+}
+void sdl::Window::raise() {
+    SDL_FlashWindow(m_window,SDL_FLASH_UNTIL_FOCUSED);
+    SDL_RaiseWindow(m_window);
+}

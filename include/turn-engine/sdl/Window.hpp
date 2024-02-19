@@ -28,8 +28,10 @@ namespace sdl
         Window(const Window& other);
         Window(Window&& other) noexcept;
         ~Window();
-        math::VectorInt getWindowSize();
-        Surface getWindowSurface();
+        math::VectorInt getSize();
+        Surface getSurface();
+        void raise();
+        void setIcon(std::string_view filename);
     };
 
 }
