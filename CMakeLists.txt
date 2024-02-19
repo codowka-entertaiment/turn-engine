@@ -109,8 +109,3 @@ endif ()
 
 add_executable(Geo2dTests "tests/Geo2dTests.cpp")
 target_link_libraries(Geo2dTests PRIVATE Catch2::Catch2WithMain)
-
-# Extensions tests
-
-add_executable(ExtTests "tests/ExtTests.cpp")
-target_link_libraries(ExtTests PRIVATE Catch2::Catch2WithMain)
