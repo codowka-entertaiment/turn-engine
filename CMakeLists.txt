@@ -107,5 +107,5 @@ endif ()
 
 # Geometry tests
 
-add_executable(GeomTests "tests/Geo2dTests.cpp")
-target_link_libraries(GeomTests PRIVATE Catch2::Catch2WithMain)
+add_executable(Geo2dTests "tests/Geo2dTests.cpp")
+target_link_libraries(Geo2dTests PRIVATE Catch2::Catch2WithMain)
