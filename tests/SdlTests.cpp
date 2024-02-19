@@ -10,7 +10,7 @@ int main()
     sdl::SDLLibInit(SDL_INIT_EVERYTHING,0);
     auto window = sdl::Window::init("test", math::RectangleInt::init_uncheck(math::PositionInt(0,0),800,600),0);
     auto renderer = sdl::Renderer::init(window.value(),-1,0);
-    auto surface = sdl::Surface::init("picture.jpg");
+    auto surface = sdl::Surface::load("picture.jpg");
     auto texture = sdl::Texture::init(renderer.value(),surface.value());
     renderer->clear();
     renderer->copy(texture.value());

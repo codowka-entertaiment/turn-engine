@@ -30,7 +30,7 @@ sdl::Window::Window(sdl::Window &&other) noexcept {
 sdl::Window::Window(const sdl::Window &other) : m_window(other.m_window){}
 
 void sdl::Window::setIcon(std::string_view filename) {
-    auto icon = Surface::init(filename);
+    auto icon = Surface::load(filename);
     SDL_SetWindowIcon(m_window,icon->m_surface);
 }
 void sdl::Window::raise() {
