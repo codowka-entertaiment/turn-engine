@@ -1,4 +1,3 @@
 #pragma once
 
-#include <turn-engine/ext/Types.hpp>
-#include <turn-engine/geom/Shapes.hpp>
+#include "geo2d/Shapes.hpp"
