@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../../ext/Math.hpp"
 #include "Shape.hpp"
 
-namespace math
+namespace geo2d
 {
     enum class HexagonShapeError : std::uint8_t {
         WrongSide,
@@ -34,7 +35,7 @@ namespace math
             // check point under/upper sides
             auto pos = position - m_center;
 
-            constexpr auto const1 = math::sqrt(3);
+            constexpr auto const1 = ext::math::sqrt(3);
             constexpr auto const2 = const1 / 2.0;
 
             return (pos.y <= +const2 * m_side) &&            // F1

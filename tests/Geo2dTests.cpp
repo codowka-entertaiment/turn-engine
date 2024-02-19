@@ -1,10 +1,10 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "../include/turn-engine/math/Shapes.hpp"
+#include "../include/turn-engine/geo2d/Shapes.hpp"
 
-using namespace math;
+using namespace geo2d;
 
-TEST_CASE("Test math::Vector") {
+TEST_CASE("Test geo2d::Vector") {
     SECTION("constructor") {
         auto vector = VectorInt(2, 3);
         REQUIRE(vector.x == 2);
@@ -30,7 +30,7 @@ TEST_CASE("Test math::Vector") {
     }
 }
 
-TEST_CASE("Test math::Rectangle") {
+TEST_CASE("Test geo2d::Rectangle") {
     SECTION("Test position-position ok init") {
         auto rect = RectangleInt::init(PositionInt(1, 1), PositionInt(2, 2));
         REQUIRE(rect);
@@ -66,7 +66,7 @@ TEST_CASE("Test math::Rectangle") {
     }
 }
 
-TEST_CASE("Test math::Hexagon") {
+TEST_CASE("Test geo2d::Hexagon") {
     SECTION("Test position-dimension ok init") {
         auto hexagon = HexagonInt::init(PositionInt(0, 0), 2);
         REQUIRE(hexagon);
@@ -79,10 +79,10 @@ TEST_CASE("Test math::Hexagon") {
     SECTION("Test contains") {
         auto region = HexagonInt::init_uncheck(PositionInt(5, 4), 2);
 
-        std::initializer_list<math::PositionInt> outside = {
+        std::initializer_list<PositionInt> outside = {
             {3, 2}, {4, 1}, {6, 1}, {7, 2}, {8, 4}, {7, 6}, {6, 7}, {4, 7}, {3, 6}, {2, 4},
         };
-        std::initializer_list<math::PositionInt> inside = {
+        std::initializer_list<PositionInt> inside = {
             {4, 3}, {5, 3}, {6, 3}, {4, 4}, {5, 4}, {6, 4}, {4, 5}, {5, 5}, {6, 5},
         };
 

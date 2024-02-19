@@ -1,12 +1,11 @@
 #pragma once
 
-#include "../Math.hpp"
 #include "../Vector.hpp"
 
 #include <cinttypes>
 #include <expected>
 
-namespace math
+namespace geo2d
 {
     template <Numeric T>
     struct Shape {

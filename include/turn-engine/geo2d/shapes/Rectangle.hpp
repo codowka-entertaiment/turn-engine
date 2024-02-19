@@ -2,7 +2,7 @@
 
 #include "Shape.hpp"
 
-namespace math
+namespace geo2d
 {
     enum class RectangleShapeError : std::uint8_t {
         WrongVertices,
