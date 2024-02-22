@@ -10,8 +10,8 @@ int sdl::Renderer::setScale(float scaleX, float scaleY) {
     return SDL_RenderSetScale(m_renderer, scaleX, scaleY);
 }
 
-math::Vector<float> sdl::Renderer::getScale() {
-    math::Vector<float> scale(0, 0);
+geo2d::Vector<float> sdl::Renderer::getScale() {
+    geo2d::Vector<float> scale(0, 0);
     SDL_RenderGetScale(m_renderer, &scale.x, &scale.y);
     return scale;
 }

@@ -3,8 +3,8 @@
 sdl::Window::~Window() {
     SDL_DestroyWindow(m_window);
 }
-math::VectorInt sdl::Window::getSize() {
-    math::Vector<int> dimensions(0, 0);
+geo2d::VectorInt sdl::Window::getSize() {
+    geo2d::Vector<int> dimensions(0, 0);
     SDL_GetWindowSize(m_window, &dimensions.x, &dimensions.y);
     return dimensions;
 }
@@ -12,7 +12,7 @@ sdl::Surface sdl::Window::getSurface() {
     return Surface(SDL_GetWindowSurface(m_window));
 }
 sdl::Window::Window(SDL_Window *window) : m_window(window) {}
-std::expected<sdl::Window, sdl::WindowError> sdl::Window::init(std::string_view title, const math::Rectangle<int> &rectangle,
+std::expected<sdl::Window, sdl::WindowError> sdl::Window::init(std::string_view title, const geo2d::Rectangle<int> &rectangle,
                                                                Uint32 flags) {
     SDL_Window *window = SDL_CreateWindow(title.data(), rectangle.vertex().x, rectangle.vertex().y, rectangle.width(),
                                           rectangle.height(), flags);

@@ -3,7 +3,7 @@
 #include <functional>
 #include <limits>
 
-namespace math
+namespace ext::math
 {
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "misc-no-recursion"

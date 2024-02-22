@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-namespace math
+namespace geo2d
 {
     template <typename T>
     concept Numeric = std::is_arithmetic_v<T>;

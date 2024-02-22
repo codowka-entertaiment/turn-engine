@@ -3,9 +3,8 @@
 #include <cinttypes>
 #include <expected>
 #include <string_view>
-#include "../math/Vector.hpp"
-#include "../math/shapes/Rectangle.hpp"
-#include "../math/shapes/Shape.hpp"
+#include "../geo2d/Shapes.hpp"
+#include "../geo2d/Vector.hpp"
 #include "Renderer.hpp"
 #include "SDL.h"
 #include "Surface.hpp"
@@ -23,12 +22,12 @@ namespace sdl
         explicit Window(SDL_Window *window);
 
     public:
-        static std::expected<Window, WindowError> init(std::string_view title, const math::Rectangle<int> &rectangle,
+        static std::expected<Window, WindowError> init(std::string_view title, const geo2d::Rectangle<int> &rectangle,
                                                        Uint32 flags);
         Window(const Window& other);
         Window(Window&& other) noexcept;
         ~Window();
-        math::VectorInt getSize();
+        geo2d::VectorInt getSize();
         Surface getSurface();
         void raise();
         void setIcon(std::string_view filename);
