@@ -11,7 +11,7 @@ namespace geo2d
 
     template <Numeric T>
     class Rectangle : public Shape<T> {
-    private:
+    protected:
         Position<T> m_vertex;
         T m_width, m_height;
 

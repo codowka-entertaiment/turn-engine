@@ -25,12 +25,20 @@ std::expected<sdl::Renderer, sdl::RendererError> sdl::Renderer::init(const sdl::
     }
 }
 
-void sdl::Renderer::copy(sdl::Texture &texture) {
-    SDL_RenderCopy(m_renderer, texture.m_texture, nullptr, nullptr);
+void sdl::Renderer::copy(sdl::Texture &texture,const sdl::Rect& srcrect, const sdl::Rect& dstrect) {
+    SDL_Rect a ,b;
+    a = srcrect;
+    b =  dstrect;
+    SDL_RenderCopy(m_renderer, texture.m_texture,
+        (&a),
+        (&b)
+    );
 }
+
 void sdl::Renderer::clear() {
     SDL_RenderClear(m_renderer);
 }
+
 void sdl::Renderer::present() {
     SDL_RenderPresent(m_renderer);
 }
@@ -41,3 +49,17 @@ sdl::Renderer::Renderer(sdl::Renderer &&other) noexcept {
 }
 
 sdl::Renderer::Renderer(const sdl::Renderer &other) : m_renderer(other.m_renderer){}
+
+void sdl::Renderer::copy(sdl::Texture &texture, const sdl::Rect &dstrect) {
+    SDL_Rect a = dstrect;
+    SDL_RenderCopy(m_renderer, texture.m_texture,
+                   nullptr,
+                   (&a)
+    );
+}
+void sdl::Renderer::copy(sdl::Texture &texture) {
+    SDL_RenderCopy(m_renderer, texture.m_texture,
+                   nullptr,
+                   nullptr
+    );
+}
