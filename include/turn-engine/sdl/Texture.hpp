@@ -2,8 +2,10 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+
 #include <cinttypes>
 #include <expected>
+
 #include "Renderer.hpp"
 #include "Surface.hpp"
 
@@ -20,10 +22,12 @@ namespace sdl
         explicit Texture(SDL_Texture *texture);
 
     public:
-        Texture(const Texture& other);
-        Texture(Texture&& other) noexcept;
-        static std::expected<Texture, TextureError> init(Renderer &renderer, Surface &surface);
-        static std::expected<Texture, TextureError> load(Renderer &renderer, std::string_view filename);
+        Texture(const Texture &other);
+        Texture(Texture &&other) noexcept;
+        static std::expected<Texture, TextureError>
+        init(Renderer &renderer, Surface &surface);
+        static std::expected<Texture, TextureError>
+        load(Renderer &renderer, std::string_view filename);
         ~Texture();
     };
 }

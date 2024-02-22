@@ -1,13 +1,15 @@
 #pragma once
 
+#include <SDL.h>
+#include <SDL_image.h>
+
 #include <cinttypes>
 #include <expected>
 #include <fstream>
-#include "SDL.h"
-#include "SDL_image.h"
-#include "Texture.hpp"
+#include <string_view>
+
 #include "Surface.hpp"
-#include "string_view"
+#include "Texture.hpp"
 
 namespace sdl
 {
@@ -22,9 +24,11 @@ namespace sdl
         explicit Surface(SDL_Surface *surface);
 
     public:
-        Surface(const Surface& other);
-        Surface(Surface&& other) noexcept;
-        static std::expected<Surface, SurfaceError> load(std::string_view filename);
+        Surface(const Surface &other);
+        Surface(Surface &&other) noexcept;
+        static std::expected<Surface, SurfaceError> load(
+            std::string_view filename
+        );
         ~Surface();
     };
 }
