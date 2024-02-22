@@ -106,8 +106,8 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif ()
 
 
-add_executable(Sdl_Tests "uitests/SdlTests.cpp")
-target_link_libraries(Sdl_Tests PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static TurnEngine)
+add_executable(SdlTests "uitests/SdlTests.cpp")
+target_link_libraries(SdlTests PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static TurnEngine)
 
 # Geometry tests
 
