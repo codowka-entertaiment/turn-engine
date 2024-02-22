@@ -42,7 +42,7 @@ file(GLOB_RECURSE SOURCES
 )
 
 add_library(TurnEngine STATIC ${SOURCES})
-target_link_libraries(TurnEngine PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
+target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
 
 target_include_directories(TurnEngine PRIVATE src)
 
@@ -105,11 +105,12 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     endif ()
 endif ()
 
-
-add_executable(SdlTests "uitests/SdlTests.cpp")
-target_link_libraries(SdlTests PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static TurnEngine)
-
 # Geometry tests
 
 add_executable(Geo2dTests "tests/Geo2dTests.cpp")
 target_link_libraries(Geo2dTests PRIVATE Catch2::Catch2WithMain)
+
+# SDL Graphics wrapper test
+
+add_executable(SdlGraphicsTest "tests_ui/SdlGraphicsTest.cpp")
+target_link_libraries(SdlGraphicsTest PRIVATE TurnEngine)

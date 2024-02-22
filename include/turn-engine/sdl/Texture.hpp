@@ -11,9 +11,10 @@
 
 namespace sdl
 {
-    class Surface;
     class Renderer;
+
     enum class TextureError : std::uint8_t { CantLoadTexture };
+
     class Texture {
         friend class Renderer;
 
@@ -24,10 +25,10 @@ namespace sdl
     public:
         Texture(const Texture &other);
         Texture(Texture &&other) noexcept;
-        static std::expected<Texture, TextureError>
-        init(Renderer &renderer, Surface &surface);
-        static std::expected<Texture, TextureError>
-        load(Renderer &renderer, std::string_view filename);
+
         ~Texture();
+
+        static std::expected<Texture, TextureError> init(Renderer &renderer, Surface &surface);
+        static std::expected<Texture, TextureError> load(Renderer &renderer, std::string_view filename);
     };
 }

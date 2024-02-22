@@ -1,6 +1,8 @@
 #include <turn-engine/sdl/Window.hpp>
 
-sdl::Window::~Window() { SDL_DestroyWindow(m_window); }
+sdl::Window::~Window() {
+    SDL_DestroyWindow(m_window);
+}
 
 geo2d::VectorInt sdl::Window::getSize() {
     geo2d::Vector<int> dimensions(0, 0);
@@ -13,19 +15,9 @@ sdl::Surface sdl::Window::getSurface() {
 }
 
 sdl::Window::Window(SDL_Window *window) : m_window(window) {}
-std::expected<sdl::Window, sdl::WindowError> sdl::Window::init(
-    std::string_view title,
-    const geo2d::Rectangle<int> &rectangle,
-    Uint32 flags
-) {
-    SDL_Window *window = SDL_CreateWindow(
-        title.data(),
-        rectangle.vertex().x,
-        rectangle.vertex().y,
-        rectangle.width(),
-        rectangle.height(),
-        flags
-    );
+std::expected<sdl::Window, sdl::WindowError> sdl::Window::init(std::string_view title, const geo2d::Rectangle<int> &rect,
+                                                               Uint32 flags) {
+    SDL_Window *window = SDL_CreateWindow(title.data(), rect.vertex().x, rect.vertex().y, rect.width(), rect.height(), flags);
     if (window != nullptr)
         return Window(window);
     else
@@ -37,6 +29,7 @@ sdl::Window::Window(sdl::Window &&other) noexcept {
     other.m_window = nullptr;
 }
 
+// todo: !!!
 sdl::Window::Window(const sdl::Window &other) : m_window(other.m_window) {}
 
 void sdl::Window::setIcon(std::string_view filename) {

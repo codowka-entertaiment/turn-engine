@@ -3,7 +3,11 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include <iostream>
+#include "Rect.hpp"
+#include "Renderer.hpp"
+#include "Surface.hpp"
+#include "Texture.hpp"
+#include "Window.hpp"
 
 namespace sdl
 {

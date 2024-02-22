@@ -8,9 +8,6 @@
 #include <fstream>
 #include <string_view>
 
-#include "Surface.hpp"
-#include "Texture.hpp"
-
 namespace sdl
 {
     enum class SurfaceError : std::uint8_t { WrongFilename, CantLoadSurface };
@@ -26,9 +23,9 @@ namespace sdl
     public:
         Surface(const Surface &other);
         Surface(Surface &&other) noexcept;
-        static std::expected<Surface, SurfaceError> load(
-            std::string_view filename
-        );
+
+        static std::expected<Surface, SurfaceError> load(std::string_view filename);
+
         ~Surface();
     };
 }

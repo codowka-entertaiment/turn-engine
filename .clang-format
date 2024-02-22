@@ -1,21 +1,21 @@
 Language: Cpp
 BasedOnStyle: Google
 AccessModifierOffset: -4
-AlignAfterOpenBracket: BlockIndent
+AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: None
 AlignOperands: Align
+AllowAllArgumentsOnNextLine: true
 AllowAllConstructorInitializersOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
-AllowAllParametersOfDeclarationOnNextLine: false
-AllowAllArgumentsOnNextLine: false
+AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: Never  # To avoid conflict, set this "Never" and each "if statement" should include brace when coding
+AllowShortLambdasOnASingleLine: Inline
 AllowShortLoopsOnASingleLine: false
-AllowShortLambdasOnASingleLine: None
+AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: Yes
-BinPackArguments: false
-BinPackParameters: false
-ExperimentalAutoDetectBinPacking: false
+BinPackArguments: true
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel: false
@@ -34,11 +34,11 @@ BraceWrapping:
   SplitEmptyFunction: false
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
-LambdaBodyIndentation: Signature
 BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeColon
 BreakInheritanceList: BeforeColon
+ColumnLimit: 128
 CompactNamespaces: false
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true

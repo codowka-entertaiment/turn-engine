@@ -14,8 +14,8 @@
 
 namespace sdl
 {
-    class Surface;
     enum class WindowError : std::uint8_t { WindowCreationError };
+    
     class Window {
         friend class Renderer;
 
@@ -24,14 +24,13 @@ namespace sdl
         explicit Window(SDL_Window *window);
 
     public:
-        static std::expected<Window, WindowError> init(
-            std::string_view title,
-            const geo2d::Rectangle<int> &rectangle,
-            Uint32 flags
-        );
         Window(const Window &other);
         Window(Window &&other) noexcept;
+
         ~Window();
+
+        static std::expected<Window, WindowError> init(std::string_view title, const geo2d::Rectangle<int> &rect, Uint32 flags);
+
         geo2d::VectorInt getSize();
         Surface getSurface();
         void raise();
