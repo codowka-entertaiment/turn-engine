@@ -105,19 +105,11 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     endif ()
 endif ()
 
-# Geometry tests
 
-
-file(GLOB_RECURSE SDL_TESTS_SOURCES
-        "src/sdl/*.hpp"
-        "src/sdl/*.cpp"
-        "include/sdl/*.hpp"
-        "include/turn-engine/geo2d/*.hpp"
-        "uitests/SdlTests.cpp"
-)
-
-add_executable(Sdl_Tests ${SDL_TESTS_SOURCES})
+add_executable(Sdl_Tests "uitests/SdlTests.cpp")
 target_link_libraries(Sdl_Tests PRIVATE SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static TurnEngine)
+
+# Geometry tests
 
 add_executable(Geo2dTests "tests/Geo2dTests.cpp")
 target_link_libraries(Geo2dTests PRIVATE Catch2::Catch2WithMain)
