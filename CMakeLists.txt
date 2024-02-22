@@ -113,7 +113,7 @@ file(GLOB_RECURSE SDL_TESTS_SOURCES
         "src/sdl/*.cpp"
         "include/sdl/*.hpp"
         "include/turn-engine/geo2d/*.hpp"
-        "tests/SdlTests.cpp"
+        "uitests/SdlTests.cpp"
 )
 
 add_executable(Sdl_Tests ${SDL_TESTS_SOURCES})
