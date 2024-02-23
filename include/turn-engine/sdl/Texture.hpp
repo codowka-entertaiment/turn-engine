@@ -23,7 +23,6 @@ namespace sdl
         explicit Texture(SDL_Texture *texture);
 
     public:
-        Texture(const Texture &other);
         Texture(Texture &&other) noexcept;
 
         ~Texture();

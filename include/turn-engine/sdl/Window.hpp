@@ -15,7 +15,7 @@
 namespace sdl
 {
     enum class WindowError : std::uint8_t { WindowCreationError };
-    
+
     class Window {
         friend class Renderer;
 
@@ -24,7 +24,6 @@ namespace sdl
         explicit Window(SDL_Window *window);
 
     public:
-        Window(const Window &other);
         Window(Window &&other) noexcept;
 
         ~Window();

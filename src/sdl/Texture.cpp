@@ -20,9 +20,6 @@ sdl::Texture::Texture(sdl::Texture &&other) noexcept {
     other.m_texture = nullptr;
 }
 
-// todo: !!!
-sdl::Texture::Texture(const sdl::Texture &other) : m_texture(other.m_texture) {}
-
 std::expected<sdl::Texture, sdl::TextureError> sdl::Texture::load(Renderer &renderer, std::string_view filename) {
     auto tempSurface = sdl::Surface::load(filename);
     // todo: ???

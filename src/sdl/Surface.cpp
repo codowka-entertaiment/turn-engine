@@ -24,6 +24,3 @@ sdl::Surface::Surface(sdl::Surface &&other) noexcept {
     m_surface = other.m_surface;
     other.m_surface = nullptr;
 }
-
-// todo: !!!
-sdl::Surface::Surface(const sdl::Surface &other) : m_surface(other.m_surface) {}

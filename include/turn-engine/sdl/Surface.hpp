@@ -21,7 +21,6 @@ namespace sdl
         explicit Surface(SDL_Surface *surface);
 
     public:
-        Surface(const Surface &other);
         Surface(Surface &&other) noexcept;
 
         static std::expected<Surface, SurfaceError> load(std::string_view filename);

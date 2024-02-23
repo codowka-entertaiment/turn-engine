@@ -46,9 +46,6 @@ sdl::Renderer::Renderer(sdl::Renderer &&other) noexcept {
     other.m_renderer = nullptr;
 }
 
-// todo: !!!
-sdl::Renderer::Renderer(const sdl::Renderer &other) : m_renderer(other.m_renderer) {}
-
 void sdl::Renderer::copy(sdl::Texture &texture, const sdl::Rect &dstrect) {
     SDL_Rect a = dstrect;
     SDL_RenderCopy(m_renderer, texture.m_texture, nullptr, (&a));
