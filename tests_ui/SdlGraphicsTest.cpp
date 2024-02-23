@@ -1,7 +1,7 @@
 #include "turn-engine/sdl/SDL.hpp"
 
 int main() {
-    sdl::SDLInit(SDL_INIT_EVERYTHING, 0);
+    sdl::sdl_init(SDL_INIT_EVERYTHING, 0);
 
     auto window = sdl::Window::init("test", geo2d::RectangleInt::init_uncheck(geo2d::PositionInt(0, 0), 800, 600), 0);
 
@@ -20,5 +20,5 @@ int main() {
     renderer->present();
     //todo: add event loop
     while (true) {}
-    sdl::SDLClose();
+    sdl::sdl_close();
 }

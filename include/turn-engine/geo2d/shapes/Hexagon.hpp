@@ -11,7 +11,7 @@ namespace geo2d
 
     template <Numeric T>
     class Hexagon : public Shape<T> {
-    private:
+    protected:
         Position<T> m_center;
         T m_side;
         constexpr Hexagon(Position<T> center, T side) : m_center(center), m_side(side) {}

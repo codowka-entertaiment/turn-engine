@@ -1,9 +1,6 @@
-#include <iostream>
-
 #include "turn-engine/sdl/SDL.hpp"
 
-// todo: !!!
-int sdl::SDLInit(Uint32 SDLFlags, int SDLIMGFlags) {
+int sdl::sdl_init(Uint32 SDLFlags, int SDLIMGFlags) {
     if (SDL_Init(SDLFlags) < 0)
         return -1;
 
@@ -14,7 +11,7 @@ int sdl::SDLInit(Uint32 SDLFlags, int SDLIMGFlags) {
     return 0;
 }
 
-void sdl::SDLClose() {
+void sdl::sdl_close() {
     SDL_Quit();
     IMG_Quit();
 }
