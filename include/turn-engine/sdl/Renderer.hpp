@@ -22,7 +22,6 @@ namespace sdl
         explicit Renderer(SDL_Renderer *renderer);
 
     public:
-        Renderer(const Renderer &other);
         Renderer(Renderer &&other) noexcept;
 
         ~Renderer();
