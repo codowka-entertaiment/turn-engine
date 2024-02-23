@@ -11,6 +11,11 @@
 
 namespace sdl
 {
-    int SDLLibInit(Uint32 SDLFlags, int SDLIMGFlags);
-    void SDLLibClose();
+    ///SDLInit - инициализация билиотек SDL
+    /// \param SDLFlags - флаги для библиотеки SDL
+    /// \param SDLIMGFlags - флаги для библииотеки SDLImage
+    /// \return возращает 0 при успешной инициализации -1 при ошибке
+    int SDLInit(Uint32 SDLFlags, int SDLIMGFlags);
+    ///Очистка библиотек SDL
+    void SDLClose();
 }

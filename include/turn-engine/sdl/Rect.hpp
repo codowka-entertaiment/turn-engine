@@ -11,5 +11,6 @@ namespace sdl
     public:
         Rect(geo2d::PositionInt vertex, int width, int height);
         operator SDL_Rect() const;
+        SDL_Rect operator=(const Rect &);
     };
 }

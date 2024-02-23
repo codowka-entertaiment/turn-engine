@@ -29,10 +29,16 @@ namespace sdl
         ~Window();
 
         static std::expected<Window, WindowError> init(std::string_view title, const geo2d::Rectangle<int> &rect, Uint32 flags);
-
+        /// getSize
+        /// \return возращает текущий размер окна
         geo2d::VectorInt getSize();
+        /// getSurface
+        /// \return возращает поверхность текщего окна
         Surface getSurface();
+        ///raise - разворачивает окно и даёт ему фокус
         void raise();
+        /// setIcon - устанавливает иконку окна
+        /// \param filename - имя файла для иконки
         void setIcon(std::string_view filename);
     };
 

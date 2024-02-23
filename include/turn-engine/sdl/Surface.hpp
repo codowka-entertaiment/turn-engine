@@ -23,6 +23,9 @@ namespace sdl
     public:
         Surface(Surface &&other) noexcept;
 
+        /// load - загрузка поверхности из файла
+        /// \param filename - имя файла
+        /// \return возращает объектк Surface
         static std::expected<Surface, SurfaceError> load(std::string_view filename);
 
         ~Surface();
