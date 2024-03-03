@@ -3,7 +3,7 @@
 namespace TurnEngine::core {
     class Object {
     public:
-        Object();
+        Object() = default;
         ~Object();
         virtual void update() = 0;
     };
