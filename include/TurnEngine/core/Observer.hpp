@@ -6,7 +6,7 @@
 namespace TurnEngine::core {
     class Observer {
     public:
-        virtual ~Observer();
+        Observer();
         virtual void onNotify(const Object& obj, Event event) = 0;
     };
 }

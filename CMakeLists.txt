@@ -37,7 +37,7 @@ file(GLOB_RECURSE INCLUDES
 )
 
 add_executable(TurnEngine main.cpp ${SOURCES} ${INCLUDES}
-        src/core/Responsible.cpp)
+        src/core/Observer.cpp)
 
 target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
 

@@ -25,6 +25,19 @@
 #include "core/Responsible.hpp"
 #include "core/event/Event.hpp"
 
-class Engine {
+#include "render/Drawer.hpp"
 
-};
+namespace TurnEngine {
+    class Engine {
+    private:
+        Window* window;
+        render::Drawer* drawer;
+    public:
+        bool initSDL(SDLInitFlags sdl_flags);
+        bool createWindow(const std::string& title, int width = 800, int height = 600);
+        bool createDrawer(RendererFlags renderer_init_flags);
+        Window* getWindow();
+        Renderer* getRenderer();
+        render::Drawer* getDrawer();
+    };
+}
