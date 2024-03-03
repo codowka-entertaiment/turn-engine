@@ -27,33 +27,16 @@ FetchContent_MakeAvailable(SDL2_Image)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(TurnEngine main.cpp
-        include/TurnEngine/TurnEngine.hpp
-        include/TurnEngine/wrapper/Window.hpp
-        include/TurnEngine/wrapper/Color.hpp
-        include/TurnEngine/wrapper/Enums.hpp
-        include/TurnEngine/wrapper/Event.hpp
-        include/TurnEngine/wrapper/Init.hpp
-        include/TurnEngine/wrapper/MessageBox.hpp
-        include/TurnEngine/wrapper/Pixel.hpp
-        include/TurnEngine/wrapper/Renderer.hpp
-        include/TurnEngine/wrapper/Shapes.hpp
-        include/TurnEngine/wrapper/Surface.hpp
-        include/TurnEngine/wrapper/Texture.hpp
-        include/TurnEngine/wrapper/Utils.hpp
-        include/TurnEngine/ext/Math.hpp
-        src/wrapper/Event.cpp
-        src/wrapper/MessageBox.cpp
-        src/wrapper/Renderer.cpp
-        src/wrapper/Surface.cpp
-        src/wrapper/Texture.cpp
-        src/wrapper/Window.cpp
-        src/core/Object.cpp
-        include/TurnEngine/core/Object.hpp
-        include/TurnEngine/core/Object2D.hpp
-        include/TurnEngine/core/Observer.hpp
-        include/TurnEngine/core/Subject.hpp
-        src/core/Subject.cpp)
+file(GLOB_RECURSE SOURCES
+        "src/*.cpp"
+        "src/*.hpp"
+)
+
+file(GLOB_RECURSE INCLUDES
+        "include/*.hpp"
+)
+
+add_executable(TurnEngine main.cpp ${SOURCES} ${INCLUDES})
 
 target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
 
