@@ -1,15 +1,18 @@
 #pragma once
 
+#include <vector>
+
 #include "Observer.hpp"
-#include "queue"
+#include "Object.hpp"
+#include "event/Event.hpp"
 
 namespace TurnEngine::core {
     class Subject {
     private:
-        std::queue<Observer*> observers;
+        std::vector<Observer*> observers; // TODO: Investigate if it the fastest way to notify observers
     public:
         void appendObserver(Observer* observer);
         void removeObserver(Observer* observer);
-        void notify(); // TODO: Parameters must be const Entity& entity, Event event. Add implementation
+        void notify(const Object& obj, Event event);
     };
 }

@@ -5,7 +5,7 @@
 
 #include "Enums.hpp"
 #include "Shapes.hpp"
-#include "surface.hpp"
+#include "Surface.hpp"
 #include "Utils.hpp"
 
 #include <array>

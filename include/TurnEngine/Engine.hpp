@@ -17,3 +17,12 @@
 
 #include "geo2d/Vector.hpp"
 #include "geo2d/Shapes.hpp"
+
+#include "core/Object.hpp"
+#include "core/Object2D.hpp"
+#include "core/Observer.hpp"
+#include "core/event/Event.hpp"
+
+class Engine {
+
+};

@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Observer.hpp"
+
 namespace TurnEngine::core {
-    class Object {
+    class Object: Observer {
     public:
         Object();
         ~Object();
