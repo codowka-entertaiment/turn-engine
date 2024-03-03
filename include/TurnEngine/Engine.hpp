@@ -21,6 +21,8 @@
 #include "core/Object.hpp"
 #include "core/Object2D.hpp"
 #include "core/Observer.hpp"
+#include "core/Subject.hpp"
+#include "core/Responsible.hpp"
 #include "core/event/Event.hpp"
 
 class Engine {

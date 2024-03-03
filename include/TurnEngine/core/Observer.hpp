@@ -1,9 +1,12 @@
 #pragma once
 
+#include "Object.hpp"
+#include "event/Event.hpp"
+
 namespace TurnEngine::core {
     class Observer {
     public:
         virtual ~Observer();
-        virtual void onNotify() = 0; // TODO: Params must be: const Entity& entity, Event event
+        virtual void onNotify(const Object& obj, Event event) = 0;
     };
 }

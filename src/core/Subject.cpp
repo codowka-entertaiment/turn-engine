@@ -11,7 +11,7 @@ namespace TurnEngine::core {
 
     void Subject::notify(const Object &obj, Event event) {
         for (auto observer : observers) {
-            observer->onNotify();
+            observer->onNotify(obj, event);
         }
     }
 }
