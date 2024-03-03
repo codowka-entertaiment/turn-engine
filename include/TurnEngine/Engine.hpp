@@ -32,10 +32,19 @@ namespace TurnEngine {
     private:
         Window* window;
         render::Drawer* drawer;
+        int fps;
+        Uint32 ticks;
+        void poll();
+        bool isQuited;
     public:
+        ~Engine();
         bool initSDL(SDLInitFlags sdl_flags);
         bool createWindow(const std::string& title, int width = 800, int height = 600);
         bool createDrawer(RendererFlags renderer_init_flags);
+        void onPollEvents();
+        void onUpdate();
+        void onDraw();
+        void start();
         Window* getWindow();
         Renderer* getRenderer();
         render::Drawer* getDrawer();

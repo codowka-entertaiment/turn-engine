@@ -13,8 +13,10 @@ namespace TurnEngine::render {
 
     }
 
-    void Drawer::drawPoints() {
-
+    void Drawer::drawPoints(std::vector<Point<int>> points) {
+        std::span<Point<int> const> const span = std::span<Point<int>>(points);
+        this->renderer->set_draw_color(Color::green);
+        this->renderer->draw_points(span);
     }
 
     void Drawer::renderAll() {
@@ -27,5 +29,9 @@ namespace TurnEngine::render {
 
     Renderer* Drawer::getRenderer() {
         return this->renderer;
+    }
+
+    void Drawer::destroy() {
+        this->renderer->destroy();
     }
 }

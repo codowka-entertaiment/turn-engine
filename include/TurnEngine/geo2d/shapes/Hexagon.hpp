@@ -3,7 +3,7 @@
 #include "../../ext/Math.hpp"
 #include "Shape.hpp"
 
-namespace geo2d
+namespace TurnEngine::geo2d
 {
     enum class HexagonShapeError : std::uint8_t {
         WrongSide,

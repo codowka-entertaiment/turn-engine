@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-namespace geo2d
+namespace TurnEngine::geo2d
 {
     template <typename T>
     concept Numeric = std::is_arithmetic_v<T>;

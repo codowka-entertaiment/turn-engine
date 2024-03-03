@@ -2,7 +2,7 @@
 
 #include "Shape.hpp"
 
-namespace geo2d
+namespace TurnEngine::geo2d
 {
     enum class RectangleShapeError : std::uint8_t {
         WrongVertices,

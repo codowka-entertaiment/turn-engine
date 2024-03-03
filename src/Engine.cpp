@@ -23,6 +23,26 @@ namespace TurnEngine {
         return true;
     }
 
+    void Engine::poll() {
+        Uint32 currentTicks = SDL_GetTicks();
+        onPollEvents();
+        onUpdate();
+        if (currentTicks - this->ticks > 1000 / this->fps) {
+            onDraw();
+            getRenderer()->clear();
+            this->ticks = currentTicks;
+            getRenderer()->present();
+        }
+    }
+
+    void Engine::start() {
+        this->ticks = 0;
+        this->fps = 60;
+        while (!isQuited) {
+            poll();
+        }
+    }
+
     Window* Engine::getWindow() {
         return this->window;
     }
@@ -33,5 +53,10 @@ namespace TurnEngine {
 
     render::Drawer* Engine::getDrawer() {
         return this->drawer;
+    }
+
+    Engine::~Engine() {
+        window->destroy();
+        drawer->destroy();
     }
 }

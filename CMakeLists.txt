@@ -14,8 +14,6 @@ FetchContent_Declare(
         GIT_PROGRESS TRUE
 )
 
-FetchContent_MakeAvailable(SDL2)
-
 FetchContent_Declare(
         SDL2_Image
         GIT_REPOSITORY https://github.com/libsdl-org/SDL_image
@@ -23,7 +21,21 @@ FetchContent_Declare(
         GIT_PROGRESS TRUE
 )
 
-FetchContent_MakeAvailable(SDL2_Image)
+FetchContent_Declare(
+        SDL2_ttf
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf
+        GIT_TAG release-2.22.0
+        GIT_PROGRESS TRUE
+)
+
+FetchContent_Declare(
+        SDL2_mixer
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_mixer
+        GIT_TAG release-2.8.0
+        GIT_PROGRESS TRUE
+)
+
+FetchContent_MakeAvailable(SDL2 SDL2_Image SDL2_ttf SDL2_mixer)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -36,12 +48,9 @@ file(GLOB_RECURSE INCLUDES
         "include/*.hpp"
 )
 
-add_executable(TurnEngine main.cpp ${SOURCES} ${INCLUDES}
-        src/core/Observer.cpp
-        include/TurnEngine/core/event/Command.hpp
-        src/core/event/Command.cpp)
+add_executable(TurnEngine main.cpp ${SOURCES} ${INCLUDES})
 
-target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
+target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static SDL2_ttf SDL2_mixer)
 
 target_include_directories(TurnEngine PRIVATE src)
 
