@@ -11,19 +11,19 @@
 namespace TurnEngine {
 
     template<bool Const>
-    class basic_palette_view {
+    class BasicPaletteView {
         SDL_Palette* palette_;
 
     public:
         template<class P>
         requires std::same_as<SDL_Palette, std::remove_cvref_t<P>>
-        constexpr basic_palette_view(P&& palette) noexcept
+        constexpr BasicPaletteView(P&& palette) noexcept
                 : palette_(std::addressof(palette)) {}
 
-        constexpr basic_palette_view(basic_palette_view const&) noexcept = default;
-        constexpr basic_palette_view(basic_palette_view&&) noexcept = default;
-        constexpr basic_palette_view& operator=(basic_palette_view const&) noexcept = default;
-        constexpr basic_palette_view& operator=(basic_palette_view&&) noexcept = default;
+        constexpr BasicPaletteView(BasicPaletteView const&) noexcept = default;
+        constexpr BasicPaletteView(BasicPaletteView&&) noexcept = default;
+        constexpr BasicPaletteView& operator=(BasicPaletteView const&) noexcept = default;
+        constexpr BasicPaletteView& operator=(BasicPaletteView&&) noexcept = default;
 
         constexpr SDL_Palette* native_handle() const noexcept { return palette_; }
 
@@ -38,39 +38,39 @@ namespace TurnEngine {
         }
     };
 
-    basic_palette_view(SDL_Palette&) -> basic_palette_view<false>;
-    basic_palette_view(SDL_Palette const&) -> basic_palette_view<true>;
+    BasicPaletteView(SDL_Palette&) -> BasicPaletteView<false>;
+    BasicPaletteView(SDL_Palette const&) -> BasicPaletteView<true>;
 
-    using palette_view = basic_palette_view<false>;
-    using const_palette_view = basic_palette_view<true>;
+    using palette_view = BasicPaletteView<false>;
+    using const_palette_view = BasicPaletteView<true>;
 
-    class pixel_format {
+    class PixelFormat {
         SDL_PixelFormat* fmt_;
 
     public:
-        pixel_format(pixel_format_enum const fmt) noexcept
+        PixelFormat(PixelFormatEnum const fmt) noexcept
                 : fmt_{SDL_AllocFormat(static_cast<std::uint32_t>(fmt))}
         {}
 
-        constexpr pixel_format(SDL_PixelFormat* fmt) noexcept
+        constexpr PixelFormat(SDL_PixelFormat* fmt) noexcept
                 : fmt_{fmt} {}
 
-        ~pixel_format() noexcept {
+        ~PixelFormat() noexcept {
             if (fmt_)
                 SDL_FreeFormat(fmt_);
         }
 
-        constexpr pixel_format(pixel_format&& other) noexcept
+        constexpr PixelFormat(PixelFormat&& other) noexcept
                 : fmt_(std::exchange(other.fmt_, nullptr))
         {}
 
-        pixel_format(pixel_format const&) = delete;
-        pixel_format& operator=(pixel_format const&) = delete;
-        pixel_format& operator=(pixel_format&&) = delete;
+        PixelFormat(PixelFormat const&) = delete;
+        PixelFormat& operator=(PixelFormat const&) = delete;
+        PixelFormat& operator=(PixelFormat&&) = delete;
 
         constexpr SDL_PixelFormat* native_handle() const noexcept { return fmt_; }
 
-        constexpr pixel_format_enum format() const noexcept { return static_cast<pixel_format_enum>(fmt_->format); }
+        constexpr PixelFormatEnum format() const noexcept { return static_cast<PixelFormatEnum>(fmt_->format); }
 
         constexpr bool has_palette() const noexcept { return fmt_->palette != nullptr; }
 
@@ -91,30 +91,30 @@ namespace TurnEngine {
     };
 
     template<bool Const>
-    class basic_pixel_format_view {
+    class BasicPixelFormatView {
         SDL_PixelFormat* fmt_;
 
     public:
         template<class PF>
         requires std::same_as<SDL_PixelFormat, std::remove_cvref_t<PF>>
-        constexpr basic_pixel_format_view(PF* fmt) noexcept
+        constexpr BasicPixelFormatView(PF* fmt) noexcept
                 : fmt_{fmt} {}
 
         template<class PF>
-        requires std::same_as<pixel_format, std::remove_cvref_t<PF>>
-        constexpr basic_pixel_format_view(PF&& fmt) noexcept
+        requires std::same_as<PixelFormat, std::remove_cvref_t<PF>>
+        constexpr BasicPixelFormatView(PF&& fmt) noexcept
                 : fmt_(fmt.native_handle()) {}
 
-        basic_pixel_format_view(std::nullptr_t) = delete;
+        BasicPixelFormatView(std::nullptr_t) = delete;
 
-        constexpr basic_pixel_format_view(basic_pixel_format_view const&) = default;
-        constexpr basic_pixel_format_view(basic_pixel_format_view&&) = default;
-        constexpr basic_pixel_format_view& operator=(basic_pixel_format_view const&) = default;
-        constexpr basic_pixel_format_view& operator=(basic_pixel_format_view&&) = default;
+        constexpr BasicPixelFormatView(BasicPixelFormatView const&) = default;
+        constexpr BasicPixelFormatView(BasicPixelFormatView&&) = default;
+        constexpr BasicPixelFormatView& operator=(BasicPixelFormatView const&) = default;
+        constexpr BasicPixelFormatView& operator=(BasicPixelFormatView&&) = default;
 
         constexpr SDL_PixelFormat* native_handle() const noexcept { return fmt_; }
 
-        constexpr pixel_format_enum format() const noexcept { return static_cast<pixel_format_enum>(fmt_->format); }
+        constexpr PixelFormatEnum format() const noexcept { return static_cast<PixelFormatEnum>(fmt_->format); }
 
         constexpr bool has_palette() const noexcept {
             return fmt_->palette != nullptr;
@@ -140,44 +140,44 @@ namespace TurnEngine {
         constexpr std::uint32_t amask() const noexcept { return fmt_->Amask; }
     };
 
-    basic_pixel_format_view(SDL_PixelFormat*) -> basic_pixel_format_view<false>;
-    basic_pixel_format_view(SDL_PixelFormat const*) -> basic_pixel_format_view<true>;
-    basic_pixel_format_view(pixel_format&) -> basic_pixel_format_view<false>;
-    basic_pixel_format_view(pixel_format const&) -> basic_pixel_format_view<true>;
+    BasicPixelFormatView(SDL_PixelFormat*) -> BasicPixelFormatView<false>;
+    BasicPixelFormatView(SDL_PixelFormat const*) -> BasicPixelFormatView<true>;
+    BasicPixelFormatView(PixelFormat&) -> BasicPixelFormatView<false>;
+    BasicPixelFormatView(PixelFormat const&) -> BasicPixelFormatView<true>;
 
-    using pixel_format_view = basic_pixel_format_view<false>;
-    using const_pixel_format_view = basic_pixel_format_view<true>;
+    using pixel_format_view = BasicPixelFormatView<false>;
+    using const_pixel_format_view = BasicPixelFormatView<true>;
 
-    class surface;
+    class Surface;
 
-    class pixel_value {
+    class PixelValue {
         std::uint32_t col_;
-        friend class surface;
+        friend class Surface;
 
     public:
-        constexpr explicit pixel_value(std::uint32_t const col) noexcept : col_(col) {}
+        constexpr explicit PixelValue(std::uint32_t const col) noexcept : col_(col) {}
 
         constexpr operator std::uint32_t() const noexcept { return col_; }
         constexpr std::uint32_t value() const noexcept { return col_; }
 
-        explicit pixel_value(pixel_format const& fmt, rgb<std::uint8_t> const rgb) noexcept
+        explicit PixelValue(PixelFormat const& fmt, rgb<std::uint8_t> const rgb) noexcept
                 : col_(SDL_MapRGB(fmt.native_handle(), rgb.r, rgb.g, rgb.b)) {}
 
-        explicit pixel_value(pixel_format const& fmt, rgba<std::uint8_t> const rgba) noexcept
+        explicit PixelValue(PixelFormat const& fmt, rgba<std::uint8_t> const rgba) noexcept
                 : col_(SDL_MapRGBA(fmt.native_handle(), rgba.r, rgba.g, rgba.b, rgba.a)) {}
 
-        constexpr pixel_value(pixel_value const&) noexcept = default;
-        constexpr pixel_value(pixel_value&&) noexcept = default;
-        constexpr pixel_value& operator=(pixel_value const&) noexcept = default;
-        constexpr pixel_value& operator=(pixel_value&&) noexcept = default;
+        constexpr PixelValue(PixelValue const&) noexcept = default;
+        constexpr PixelValue(PixelValue&&) noexcept = default;
+        constexpr PixelValue& operator=(PixelValue const&) noexcept = default;
+        constexpr PixelValue& operator=(PixelValue&&) noexcept = default;
 
-        rgb<std::uint8_t> as_rgb(pixel_format const& fmt) const noexcept {
+        rgb<std::uint8_t> as_rgb(PixelFormat const& fmt) const noexcept {
             rgb<std::uint8_t> _rgb{};
             SDL_GetRGB(col_, fmt.native_handle(), &_rgb.r, &_rgb.g, &_rgb.b);
             return _rgb;
         }
 
-        rgba<std::uint8_t> as_rgba(pixel_format const& fmt) const noexcept {
+        rgba<std::uint8_t> as_rgba(PixelFormat const& fmt) const noexcept {
             rgba<std::uint8_t> _rgba{};
             SDL_GetRGBA(col_, fmt.native_handle(), &_rgba.r, &_rgba.g, &_rgba.b, &_rgba.a);
             return _rgba;

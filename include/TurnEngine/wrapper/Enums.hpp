@@ -7,7 +7,7 @@
 
 namespace TurnEngine {
 
-    enum class sdl2_init_flags : std::uint32_t {
+    enum class SDLInitFlags : std::uint32_t {
         TIMER = SDL_INIT_TIMER,
         AUDIO = SDL_INIT_AUDIO,
         VIDEO = SDL_INIT_VIDEO,
@@ -19,11 +19,11 @@ namespace TurnEngine {
         NOPARACHUTE = SDL_INIT_NOPARACHUTE,
     };
 
-    inline constexpr sdl2_init_flags operator|(sdl2_init_flags const& a, sdl2_init_flags const& b) noexcept {
-        return static_cast<sdl2_init_flags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
+    inline constexpr SDLInitFlags operator|(SDLInitFlags const& a, SDLInitFlags const& b) noexcept {
+        return static_cast<SDLInitFlags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
     }
 
-    enum class img_init_flags : int {
+    enum class IMGInitFlags : int {
         JPG = IMG_INIT_JPG,
         PNG = IMG_INIT_PNG,
         TIF = IMG_INIT_TIF,
@@ -31,17 +31,17 @@ namespace TurnEngine {
         ALL = JPG | PNG | TIF | WEBP,
     };
 
-    inline constexpr img_init_flags operator|(img_init_flags const& a, img_init_flags const& b) noexcept {
-        return static_cast<img_init_flags>(static_cast<int>(a) | static_cast<int>(b));
+    inline constexpr IMGInitFlags operator|(IMGInitFlags const& a, IMGInitFlags const& b) noexcept {
+        return static_cast<IMGInitFlags>(static_cast<int>(a) | static_cast<int>(b));
     }
 
-    enum class message_box_flags : std::uint32_t {
+    enum class MessageBoxFlags : std::uint32_t {
         ERROR = SDL_MESSAGEBOX_ERROR,
         WARNING = SDL_MESSAGEBOX_WARNING,
         INFORMATION = SDL_MESSAGEBOX_INFORMATION,
     };
 
-    enum class window_flags : std::uint32_t {
+    enum class WindowFlags : std::uint32_t {
         NONE = 0,
         FULLSCREEN = SDL_WINDOW_FULLSCREEN,
         FULLSCREEN_DESKTOP = SDL_WINDOW_FULLSCREEN_DESKTOP,
@@ -56,30 +56,30 @@ namespace TurnEngine {
         ALLOW_HIGHDPI = SDL_WINDOW_ALLOW_HIGHDPI,
     };
 
-    inline constexpr window_flags operator|(window_flags const& a, window_flags const& b) noexcept {
-        return static_cast<window_flags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
+    inline constexpr WindowFlags operator|(WindowFlags const& a, WindowFlags const& b) noexcept {
+        return static_cast<WindowFlags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
     }
 
-    inline constexpr bool operator&(window_flags const& a, window_flags const& b) noexcept {
+    inline constexpr bool operator&(WindowFlags const& a, WindowFlags const& b) noexcept {
         return static_cast<bool>(static_cast<std::uint32_t>(a) & static_cast<std::uint32_t>(b));
     }
 
-    enum class renderer_flags : std::uint32_t  {
+    enum class RendererFlags : std::uint32_t  {
         SOFTWARE = SDL_RENDERER_SOFTWARE,
         ACCELERATED = SDL_RENDERER_ACCELERATED,
         PRESENTVSYNC = SDL_RENDERER_PRESENTVSYNC,
         TARGETTEXTURE = SDL_RENDERER_TARGETTEXTURE,
     };
 
-    inline constexpr renderer_flags operator|(renderer_flags const& a, renderer_flags const& b) noexcept {
-        return static_cast<renderer_flags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
+    inline constexpr RendererFlags operator|(RendererFlags const& a, RendererFlags const& b) noexcept {
+        return static_cast<RendererFlags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
     }
 
-    inline constexpr bool operator&(renderer_flags const& a, renderer_flags const& b) noexcept {
+    inline constexpr bool operator&(RendererFlags const& a, RendererFlags const& b) noexcept {
         return static_cast<bool>(static_cast<std::uint32_t>(a) & static_cast<std::uint32_t>(b));
     }
 
-    enum class blend_mode : int {
+    enum class BlendMode : int {
         INVALID = SDL_BLENDMODE_INVALID,
         NONE = SDL_BLENDMODE_NONE,
         BLEND = SDL_BLENDMODE_BLEND,
@@ -88,19 +88,19 @@ namespace TurnEngine {
         MUL = SDL_BLENDMODE_MUL,
     };
 
-    enum class fullscreen_flags : std::uint32_t {
+    enum class FullscreenFlags : std::uint32_t {
         WINDOWED = 0,
         FULLSCREEN = SDL_WINDOW_FULLSCREEN,
         FULLSCREEN_DESKTOP = SDL_WINDOW_FULLSCREEN_DESKTOP
     };
 
-    enum class texture_access : int {
+    enum class TextureAccess : int {
         STATIC = SDL_TEXTUREACCESS_STATIC,
         STREAMING = SDL_TEXTUREACCESS_STREAMING,
         TARGET = SDL_TEXTUREACCESS_TARGET,
     };
 
-    enum class pixel_format_enum : std::uint32_t {
+    enum class PixelFormatEnum : std::uint32_t {
         UNKNOWN = SDL_PIXELFORMAT_UNKNOWN,
         INDEX1LSB = SDL_PIXELFORMAT_INDEX1LSB,
         INDEX1MSB = SDL_PIXELFORMAT_INDEX1MSB,
@@ -145,7 +145,7 @@ namespace TurnEngine {
         NV21 = SDL_PIXELFORMAT_NV21,
     };
 
-    enum class pixel_type : std::uint32_t {
+    enum class PixelType : std::uint32_t {
         UNKNOWN = SDL_PIXELTYPE_UNKNOWN,
         INDEX1 = SDL_PIXELTYPE_INDEX1,
         INDEX4 = SDL_PIXELTYPE_INDEX4,
@@ -160,7 +160,7 @@ namespace TurnEngine {
         ARRAYF32 = SDL_PIXELTYPE_ARRAYF32,
     };
 
-    enum class pixel_order : std::uint32_t {
+    enum class PixelOrder : std::uint32_t {
         BITMAP_NONE = SDL_BITMAPORDER_NONE,
         BITMAP_4321 = SDL_BITMAPORDER_4321,
         BITMAP_1234 = SDL_BITMAPORDER_1234,
@@ -182,7 +182,7 @@ namespace TurnEngine {
         ARRAY_ABGR = SDL_ARRAYORDER_ABGR,
     };
 
-    enum class pixel_layout : std::uint32_t {
+    enum class PixelLayout : std::uint32_t {
         NONE = SDL_PACKEDLAYOUT_NONE,
         PACKED_332 = SDL_PACKEDLAYOUT_332,
         PACKED_444 = SDL_PACKEDLAYOUT_4444,
@@ -194,47 +194,47 @@ namespace TurnEngine {
         PACKED_1010102 = SDL_PACKEDLAYOUT_1010102,
     };
 
-    inline constexpr TurnEngine::pixel_type pixel_type_for(pixel_format_enum const& format) noexcept {
-        return static_cast<pixel_type>(SDL_PIXELTYPE(static_cast<std::uint32_t>(format)));
+    inline constexpr TurnEngine::PixelType pixel_type_for(PixelFormatEnum const& format) noexcept {
+        return static_cast<PixelType>(SDL_PIXELTYPE(static_cast<std::uint32_t>(format)));
     }
 
-    inline constexpr pixel_order pixel_order_for(pixel_format_enum const& format) noexcept {
-        return static_cast<pixel_order>(SDL_PIXELORDER(static_cast<std::uint32_t>(format)));
+    inline constexpr PixelOrder pixel_order_for(PixelFormatEnum const& format) noexcept {
+        return static_cast<PixelOrder>(SDL_PIXELORDER(static_cast<std::uint32_t>(format)));
     }
 
-    inline constexpr pixel_layout pixel_layout_for(pixel_format_enum const& format) noexcept {
-        return static_cast<pixel_layout>(SDL_PIXELORDER(static_cast<std::uint32_t>(format)));
+    inline constexpr PixelLayout pixel_layout_for(PixelFormatEnum const& format) noexcept {
+        return static_cast<PixelLayout>(SDL_PIXELORDER(static_cast<std::uint32_t>(format)));
     }
 
-    inline constexpr std::uint32_t bits_per_pixel_for(pixel_format_enum const& format) noexcept {
+    inline constexpr std::uint32_t bits_per_pixel_for(PixelFormatEnum const& format) noexcept {
         return SDL_BITSPERPIXEL(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr std::uint32_t bytes_per_pixel_for(pixel_format_enum const& format) noexcept {
+    inline constexpr std::uint32_t bytes_per_pixel_for(PixelFormatEnum const& format) noexcept {
         return SDL_BYTESPERPIXEL(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr bool is_pixel_format_indexed(pixel_format_enum const& format) noexcept {
+    inline constexpr bool is_pixel_format_indexed(PixelFormatEnum const& format) noexcept {
         return SDL_ISPIXELFORMAT_INDEXED(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr bool is_pixel_format_alpha(pixel_format_enum const& format) noexcept {
+    inline constexpr bool is_pixel_format_alpha(PixelFormatEnum const& format) noexcept {
         return SDL_ISPIXELFORMAT_ALPHA(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr bool is_pixel_format_four_cc(pixel_format_enum const& format) noexcept {
+    inline constexpr bool is_pixel_format_four_cc(PixelFormatEnum const& format) noexcept {
         return SDL_ISPIXELFORMAT_FOURCC(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr bool is_pixel_format_array(pixel_format_enum const& format) noexcept {
+    inline constexpr bool is_pixel_format_array(PixelFormatEnum const& format) noexcept {
         return SDL_ISPIXELFORMAT_ARRAY(static_cast<std::uint32_t>(format));
     }
 
-    inline std::string_view pixel_format_name_for(pixel_format_enum const& format) noexcept {
+    inline std::string_view pixel_format_name_for(PixelFormatEnum const& format) noexcept {
         return SDL_GetPixelFormatName(static_cast<std::uint32_t>(format));
     }
 
-    enum class renderer_flip {
+    enum class RendererFlip {
         NONE = SDL_FLIP_NONE,
         HORIZONTAL = SDL_FLIP_HORIZONTAL,
         VERTICAL = SDL_FLIP_VERTICAL,

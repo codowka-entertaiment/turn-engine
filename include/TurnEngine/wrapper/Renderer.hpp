@@ -12,9 +12,9 @@
 
 namespace TurnEngine {
 
-    class texture;
+    class Texture;
 
-    class renderer_info {
+    class RendererInfo {
         SDL_RendererInfo info_{};
 
     public:
@@ -24,36 +24,36 @@ namespace TurnEngine {
 
         constexpr std::string_view name() const noexcept { return info_.name; }
 
-        constexpr renderer_flags flags() const noexcept { return static_cast<renderer_flags>(info_.flags); }
+        constexpr RendererFlags flags() const noexcept { return static_cast<RendererFlags>(info_.flags); }
 
-        std::span<pixel_format_enum const> texture_formats() const noexcept;
+        std::span<PixelFormatEnum const> texture_formats() const noexcept;
 
         constexpr int max_texture_width() const noexcept { return info_.max_texture_width; }
 
         constexpr int max_texture_height() const noexcept { return info_.max_texture_height; }
     };
 
-    class renderer {
+    class Renderer {
         SDL_Renderer* renderer_;
 
     public:
-        constexpr explicit renderer(SDL_Renderer* r) noexcept
+        constexpr explicit Renderer(SDL_Renderer* r) noexcept
                 : renderer_{r} {}
 
-        renderer(renderer const&) = delete;
+        Renderer(Renderer const&) = delete;
 
-        renderer& operator=(renderer const&) = delete;
+        Renderer& operator=(Renderer const&) = delete;
 
-        renderer& operator=(renderer&&) = delete;
+        Renderer& operator=(Renderer&&) = delete;
 
-        constexpr renderer(renderer&& other) noexcept
+        constexpr Renderer(Renderer&& other) noexcept
                 : renderer_(std::exchange(other.renderer_, nullptr)) {}
 
-        renderer(window& win, renderer_flags flags, int device_index = -1) noexcept;
+        Renderer(Window& win, RendererFlags flags, int device_index = -1) noexcept;
 
-        explicit renderer(surface& s) noexcept;
+        explicit Renderer(Surface& s) noexcept;
 
-        ~renderer() noexcept;
+        ~Renderer() noexcept;
 
         void destroy() noexcept;
 
@@ -63,11 +63,11 @@ namespace TurnEngine {
 
         constexpr bool is_ok() const noexcept { return renderer_ != nullptr; }
 
-        blend_mode draw_blend_mode() const noexcept;
+        BlendMode draw_blend_mode() const noexcept;
 
         rgba<> draw_color() const noexcept;
 
-        renderer_info info() const noexcept;
+        RendererInfo info() const noexcept;
 
         wh<> output_size() const noexcept;
 
@@ -77,57 +77,57 @@ namespace TurnEngine {
 
         bool clear() noexcept;
 
-        bool copy(rect<int> const& render_rect, texture const& txr, rect<int> const& txr_rect) noexcept;
+        bool copy(Rect<int> const& render_rect, Texture const& txr, Rect<int> const& txr_rect) noexcept;
 
-        bool copy(texture const& txr, rect<int> const& txr_rect) noexcept;
+        bool copy(Texture const& txr, Rect<int> const& txr_rect) noexcept;
 
-        bool copy(rect<int> const& render_rect, texture const& txr) noexcept;
+        bool copy(Rect<int> const& render_rect, Texture const& txr) noexcept;
 
-        bool copy(texture const& txr) noexcept;
+        bool copy(Texture const& txr) noexcept;
 
-        bool copy_ex(rect<int> const& render_rect, texture const& txr, rect<int> const& txr_rect, double const angle, point<int> const& center, renderer_flip flip = renderer_flip::NONE) noexcept;
+        bool copy_ex(Rect<int> const& render_rect, Texture const& txr, Rect<int> const& txr_rect, double const angle, Point<int> const& center, RendererFlip flip = RendererFlip::NONE) noexcept;
 
-        bool copy_ex(texture const& txr, rect<int> const& txr_rect, double angle, point<int> const& center, renderer_flip flip = renderer_flip::NONE) noexcept;
+        bool copy_ex(Texture const& txr, Rect<int> const& txr_rect, double angle, Point<int> const& center, RendererFlip flip = RendererFlip::NONE) noexcept;
 
-        bool copy_ex(rect<int> const& render_rect, texture const& txr, double angle, point<int> const& center, renderer_flip flip = renderer_flip::NONE) noexcept;
+        bool copy_ex(Rect<int> const& render_rect, Texture const& txr, double angle, Point<int> const& center, RendererFlip flip = RendererFlip::NONE) noexcept;
 
-        bool copy_ex(texture const& txr, double angle, point<int> const& center, renderer_flip flip = renderer_flip::NONE) noexcept;
+        bool copy_ex(Texture const& txr, double angle, Point<int> const& center, RendererFlip flip = RendererFlip::NONE) noexcept;
 
-        bool copy_ex(texture const& txr, rect<int> const& txr_rect, double angle = 0.0, renderer_flip flip = renderer_flip::NONE) noexcept;
+        bool copy_ex(Texture const& txr, Rect<int> const& txr_rect, double angle = 0.0, RendererFlip flip = RendererFlip::NONE) noexcept;
 
-        bool copy_ex(rect<int> const& render_rect, texture const& txr, double angle = 0.0, renderer_flip flip = renderer_flip::NONE) noexcept;
+        bool copy_ex(Rect<int> const& render_rect, Texture const& txr, double angle = 0.0, RendererFlip flip = RendererFlip::NONE) noexcept;
 
-        bool copy_ex(texture const& txr, double angle = 0.0, renderer_flip flip = renderer_flip::NONE) noexcept;
-
-        template<class Rep>
-        bool draw_line(point<Rep> const& from, point<Rep> const& to) noexcept;
+        bool copy_ex(Texture const& txr, double angle = 0.0, RendererFlip flip = RendererFlip::NONE) noexcept;
 
         template<class Rep>
-        bool draw_lines(std::span<point<Rep> const> points) noexcept;
+        bool draw_line(Point<Rep> const& from, Point<Rep> const& to) noexcept;
 
         template<class Rep>
-        bool draw_point(point<Rep> const& p) noexcept;
+        bool draw_lines(std::span<Point<Rep> const> points) noexcept;
 
         template<class Rep>
-        bool draw_points(std::span<point<Rep> const> points) noexcept;
+        bool draw_point(Point<Rep> const& p) noexcept;
 
         template<class Rep>
-        bool draw_rect(rect<Rep> const& r) noexcept;
+        bool draw_points(std::span<Point<Rep> const> points) noexcept;
+
+        template<class Rep>
+        bool draw_rect(Rect<Rep> const& r) noexcept;
 
         bool draw_outline() noexcept;
 
         template<class Rep>
-        bool draw_rects(std::span<rect<Rep> const> rs) noexcept;
+        bool draw_rects(std::span<Rect<Rep> const> rs) noexcept;
 
         template<class Rep>
-        bool fill_rect(rect<Rep> const& r) noexcept;
+        bool fill_rect(Rect<Rep> const& r) noexcept;
 
         bool fill_target() noexcept;
 
         template<class Rep>
-        bool fill_rects(std::span<rect<Rep> const> rs) noexcept;
+        bool fill_rects(std::span<Rect<Rep> const> rs) noexcept;
 
-        rect<int> clip_rect() const noexcept;
+        Rect<int> clip_rect() const noexcept;
 
         bool integer_scale() const noexcept;
 
@@ -135,21 +135,21 @@ namespace TurnEngine {
 
         xy<float> scale() const noexcept;
 
-        rect<int> viewport() const noexcept;
+        Rect<int> viewport() const noexcept;
 
         bool is_clip_enabled() const noexcept;
 
         void present() const noexcept;
 
-        bool read_pixels(rect<int> const& r, pixel_format_enum fmt, void* pixels, int pitch) const noexcept;
+        bool read_pixels(Rect<int> const& r, PixelFormatEnum fmt, void* pixels, int pitch) const noexcept;
 
-        bool read_pixels(pixel_format_enum fmt, void* pixels, int const pitch) const noexcept;
+        bool read_pixels(PixelFormatEnum fmt, void* pixels, int const pitch) const noexcept;
 
-        bool read_pixels(rect<int> const& r, void* pixels, int pitch) const noexcept;
+        bool read_pixels(Rect<int> const& r, void* pixels, int pitch) const noexcept;
 
         bool read_pixels(void* pixels, int pitch) const noexcept;
 
-        bool set_clip_rect(rect<int> const& clip) noexcept;
+        bool set_clip_rect(Rect<int> const& clip) noexcept;
 
         bool disable_clipping() noexcept;
 
@@ -159,25 +159,25 @@ namespace TurnEngine {
 
         bool set_scale(xy<float> const& scale) noexcept;
 
-        bool set_viewport(rect<int> const& r) noexcept;
+        bool set_viewport(Rect<int> const& r) noexcept;
 
         bool reset_viewport() noexcept;
 
-        static bool target_supported(renderer const& r) noexcept;
+        static bool target_supported(Renderer const& r) noexcept;
 
-        bool set_draw_blend_mode(blend_mode mode) noexcept;
+        bool set_draw_blend_mode(BlendMode mode) noexcept;
 
         bool set_draw_color(rgba<> color) noexcept;
 
-        bool set_render_target(texture const& t) noexcept;
+        bool set_render_target(Texture const& t) noexcept;
 
         bool reset_render_target() noexcept;
     };
 
-    inline std::pair<window, renderer> create_window_and_renderer(wh<int> wh, window_flags flags) noexcept;
+    inline std::pair<Window, Renderer> create_window_and_renderer(wh<int> wh, WindowFlags flags) noexcept;
 
     template<class Rep>
-    bool renderer::draw_line(point<Rep> const& from, point<Rep> const& to) noexcept {
+    bool Renderer::draw_line(Point<Rep> const& from, Point<Rep> const& to) noexcept {
         if constexpr (std::is_same_v<Rep, int>)
             return SDL_RenderDrawLine(renderer_, from.x(), from.y(), to.x(), to.y()) == 0;
         else
@@ -185,7 +185,7 @@ namespace TurnEngine {
     }
 
     template<class Rep>
-    bool renderer::draw_lines(std::span<point<Rep> const> const points) noexcept {
+    bool Renderer::draw_lines(std::span<Point<Rep> const> const points) noexcept {
     if constexpr (std::is_same_v<Rep, int>)
     return SDL_RenderDrawLines(renderer_, points.data()->native_handle(), static_cast<int>(points.size())) == 0;
     else
@@ -193,7 +193,7 @@ namespace TurnEngine {
 }
 
 template<class Rep>
-bool renderer::draw_point(point<Rep> const& p) noexcept {
+bool Renderer::draw_point(Point<Rep> const& p) noexcept {
     if constexpr (std::is_same_v<Rep, int>)
         return SDL_RenderDrawPoint(renderer_, p.x(), p.y()) == 0;
     else
@@ -201,7 +201,7 @@ bool renderer::draw_point(point<Rep> const& p) noexcept {
 }
 
 template<class Rep>
-bool renderer::draw_points(std::span<point<Rep> const> const points) noexcept {
+bool Renderer::draw_points(std::span<Point<Rep> const> const points) noexcept {
 if constexpr (std::is_same_v<Rep, int>)
 return SDL_RenderDrawPoints(renderer_, points.data()->native_handle(), static_cast<int>(points.size())) == 0;
 else
@@ -209,7 +209,7 @@ return SDL_RenderDrawPointsF(renderer_, points.data()->native_handle(), static_c
 }
 
 template<class Rep>
-bool renderer::draw_rect(rect<Rep> const& r) noexcept {
+bool Renderer::draw_rect(Rect<Rep> const& r) noexcept {
     if constexpr (std::is_same_v<Rep, int>)
         return SDL_RenderDrawRect(renderer_, r.native_handle()) == 0;
     else
@@ -217,7 +217,7 @@ bool renderer::draw_rect(rect<Rep> const& r) noexcept {
 }
 
 template<class Rep>
-bool renderer::draw_rects(std::span<rect<Rep> const> const r) noexcept {
+bool Renderer::draw_rects(std::span<Rect<Rep> const> const r) noexcept {
 if constexpr (std::is_same_v<Rep, int>)
 return SDL_RenderDrawRects(renderer_, r.data().native_handle(), static_cast<int>(r.size())) == 0;
 else
@@ -225,7 +225,7 @@ return SDL_RenderDrawRectsF(renderer_, r.data().native_handle(), static_cast<int
 }
 
 template<class Rep>
-bool renderer::fill_rect(rect<Rep> const& r) noexcept {
+bool Renderer::fill_rect(Rect<Rep> const& r) noexcept {
     if constexpr (std::is_same_v<Rep, int>)
         return SDL_RenderFillRect(renderer_, r.native_handle()) == 0;
     else
@@ -233,7 +233,7 @@ bool renderer::fill_rect(rect<Rep> const& r) noexcept {
 }
 
 template<class Rep>
-bool renderer::fill_rects(std::span<rect<Rep> const> const r) noexcept {
+bool Renderer::fill_rects(std::span<Rect<Rep> const> const r) noexcept {
 if constexpr (std::is_same_v<Rep, int>)
 return SDL_RenderFillRects(renderer_, r.data().native_handle(), static_cast<int>(r.size())) == 0;
 else

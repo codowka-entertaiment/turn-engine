@@ -88,7 +88,7 @@ bool keyboard_t::has_screen_support() noexcept {
     return SDL_HasScreenKeyboardSupport() == SDL_TRUE;
 }
 
-bool keyboard_t::is_screen_shown(window const& win) noexcept {
+bool keyboard_t::is_screen_shown(Window const& win) noexcept {
     return SDL_IsScreenKeyboardShown(win.native_handle()) == SDL_TRUE;
 }
 

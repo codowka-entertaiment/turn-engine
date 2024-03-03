@@ -13,29 +13,29 @@
 
 namespace TurnEngine {
 
-    class message_box {
+    class MessageBox {
         SDL_MessageBoxData data_;
 
     public:
-        constexpr message_box(message_box_flags flgs, std::span<SDL_MessageBoxButtonData const> buttons, null_term_string title,
-                              null_term_string message) noexcept;
+        constexpr MessageBox(MessageBoxFlags flgs, std::span<SDL_MessageBoxButtonData const> buttons, null_term_string title,
+                             null_term_string message) noexcept;
 
-        constexpr message_box(message_box_flags flgs, std::span<SDL_MessageBoxButtonData const> buttons, null_term_string consttitle,
-                              null_term_string message, window const& win) noexcept;
+        constexpr MessageBox(MessageBoxFlags flgs, std::span<SDL_MessageBoxButtonData const> buttons, null_term_string consttitle,
+                             null_term_string message, Window const& win) noexcept;
 
-        constexpr message_box(message_box_flags flgs, std::span<SDL_MessageBoxButtonData const> buttons, null_term_string title,
-                              null_term_string message, std::span<SDL_MessageBoxColorScheme const> scheme) noexcept;
+        constexpr MessageBox(MessageBoxFlags flgs, std::span<SDL_MessageBoxButtonData const> buttons, null_term_string title,
+                             null_term_string message, std::span<SDL_MessageBoxColorScheme const> scheme) noexcept;
 
         template<std::size_t N>
-        constexpr message_box(message_box_flags flgs, std::span<SDL_MessageBoxButtonData const, N> buttons, null_term_string title,
-                              null_term_string message, window const& win, std::span<SDL_MessageBoxColorScheme const, N> scheme) noexcept;
+        constexpr MessageBox(MessageBoxFlags flgs, std::span<SDL_MessageBoxButtonData const, N> buttons, null_term_string title,
+                             null_term_string message, Window const& win, std::span<SDL_MessageBoxColorScheme const, N> scheme) noexcept;
 
         constexpr auto native_handle() const noexcept { return data_; }
 
-        constexpr message_box_flags flags() const noexcept { return static_cast<message_box_flags>(data_.flags); }
-        constexpr void set_flats(message_box_flags const flag) noexcept { data_.flags = static_cast<std::uint32_t>(flag); }
+        constexpr MessageBoxFlags flags() const noexcept { return static_cast<MessageBoxFlags>(data_.flags); }
+        constexpr void set_flats(MessageBoxFlags const flag) noexcept { data_.flags = static_cast<std::uint32_t>(flag); }
 
-        constexpr void set_window(window& win) noexcept { data_.window = win.native_handle(); }
+        constexpr void set_window(Window& win) noexcept { data_.window = win.native_handle(); }
         constexpr void remove_window() noexcept { data_.window = nullptr; }
         constexpr bool has_window() const noexcept { return data_.window != nullptr; }
 

@@ -15,25 +15,25 @@
 #include <string_view>
 
 namespace TurnEngine {
-    class window {
+    class Window {
         SDL_Window *window_;
     public:
 
-        constexpr explicit window(SDL_Window *window) noexcept
+        constexpr explicit Window(SDL_Window *window) noexcept
                 : window_(window) {}
 
-        window(window const &) = delete;
+        Window(Window const &) = delete;
 
-        window &operator=(window const &) = delete;
+        Window &operator=(Window const &) = delete;
 
-        window &operator=(window &&) = delete;
+        Window &operator=(Window &&) = delete;
 
-        constexpr window(window &&other) noexcept
+        constexpr Window(Window &&other) noexcept
                 : window_(std::exchange(other.window_, nullptr)) {}
 
-        window(null_term_string title, xy<int> xy, wh<int> wh, window_flags flgs) noexcept;
+        Window(null_term_string title, xy<int> xy, wh<int> wh, WindowFlags flgs) noexcept;
 
-        ~window() noexcept;
+        ~Window() noexcept;
 
         void destroy() noexcept;
 
@@ -47,7 +47,7 @@ namespace TurnEngine {
 
         static constexpr xy<int> pos_undefined{SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED};
 
-        static window copy(window const &other) noexcept;
+        static Window copy(Window const &other) noexcept;
 
         std::optional<tlbr<int>> borders_size() noexcept;
 
@@ -57,7 +57,7 @@ namespace TurnEngine {
 
         std::optional<SDL_DisplayMode> display_mode() const noexcept;
 
-        window_flags flags() const noexcept;
+        WindowFlags flags() const noexcept;
 
         rgb<std::array<std::uint16_t, 256>> gamma_ramp() const noexcept;
 
@@ -71,7 +71,7 @@ namespace TurnEngine {
 
         float opacity() const noexcept;
 
-        pixel_format_enum pixel_format() const noexcept;
+        PixelFormatEnum pixel_format() const noexcept;
 
         xy<int> position() const noexcept;
 
@@ -99,7 +99,7 @@ namespace TurnEngine {
 
         bool set_display_mode() noexcept;
 
-        bool set_fullscreen(fullscreen_flags const flags) noexcept;
+        bool set_fullscreen(FullscreenFlags const flags) noexcept;
 
         bool set_gamma_ramp(std::span<std::uint16_t const, 256> const r,
                             std::span<std::uint16_t const, 256> const g,
@@ -107,11 +107,11 @@ namespace TurnEngine {
 
         void set_grabbed(bool grabbed = true) noexcept;
 
-        bool set_hit_test(function_ref<SDL_HitTestResult(window &, point<int>)> const fn) noexcept;
+        bool set_hit_test(function_ref<SDL_HitTestResult(Window &, Point<int>)> const fn) noexcept;
 
-        bool set_hit_test(function_ref<SDL_HitTestResult(window const &, point<int>)> const fn) noexcept;
+        bool set_hit_test(function_ref<SDL_HitTestResult(Window const &, Point<int>)> const fn) noexcept;
 
-        void set_icon(surface const &s) noexcept;
+        void set_icon(Surface const &s) noexcept;
 
         bool set_input_focus() noexcept;
 
@@ -119,7 +119,7 @@ namespace TurnEngine {
 
         void set_minimum_size(wh<int> const wh) noexcept;
 
-        bool set_modal_for(window const &parent) noexcept;
+        bool set_modal_for(Window const &parent) noexcept;
 
         bool set_opacity(float const opacity) noexcept;
 
@@ -131,14 +131,14 @@ namespace TurnEngine {
 
         void set_title(null_term_string const title) noexcept;
 
-        bool show_simple_message_box(message_box_flags const flags, null_term_string const title,
+        bool show_simple_message_box(MessageBoxFlags const flags, null_term_string const title,
                                      null_term_string const message) noexcept;
 
         void show() noexcept;
 
         bool update_surface() noexcept;
 
-        bool update_surface_rects(std::span<rect < int> const
+        bool update_surface_rects(std::span<Rect < int> const
 
         > const rects) noexcept;
     };

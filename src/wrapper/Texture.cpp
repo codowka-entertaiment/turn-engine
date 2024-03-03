@@ -5,120 +5,120 @@
 
 using namespace TurnEngine;
 
-texture::texture(renderer& r, pixel_format_enum const format, texture_access const access, wh<int> const wh) noexcept
+Texture::Texture(Renderer& r, PixelFormatEnum const format, TextureAccess const access, wh<int> const wh) noexcept
         : texture_{SDL_CreateTexture(r.native_handle(), static_cast<std::uint32_t>(format), static_cast<int>(access), wh.width, wh.height)}
 {}
 
-texture::texture(renderer& r, surface const& s) noexcept
+Texture::Texture(Renderer& r, Surface const& s) noexcept
         : texture_{SDL_CreateTextureFromSurface(r.native_handle(), s.native_handle())}
 {}
 
-texture::texture(renderer& r, null_term_string const file) noexcept
+Texture::Texture(Renderer& r, null_term_string const file) noexcept
         : texture_{[&r, &file]() -> SDL_Texture* {
-    if (surface s{file}; s)
+    if (Surface s{file}; s)
         return SDL_CreateTextureFromSurface(r.native_handle(), s.native_handle());
     return nullptr;
 }()}
 {}
 
-texture::~texture() noexcept {
+Texture::~Texture() noexcept {
     if (texture_)
         SDL_DestroyTexture(texture_);
 }
 
-void texture::destroy() noexcept {
+void Texture::destroy() noexcept {
     SDL_DestroyTexture(texture_);
     texture_ = nullptr;
 }
 
-texture_lock texture::lock() noexcept {
-    SDL2_ASSERT(access() == texture_access::STREAMING);
+TextureLock Texture::lock() noexcept {
+    SDL2_ASSERT(access() == TextureAccess::STREAMING);
     std::byte* pixels{};
     int pitch{};
     SDL_LockTexture(texture_, nullptr, reinterpret_cast<void**>(&pixels), &pitch);
     return {texture_, pixels, pitch};
 }
 
-texture_lock texture::lock(rect<int> const& rect) noexcept {
-    SDL2_ASSERT(access() == texture_access::STREAMING);
+TextureLock Texture::lock(Rect<int> const& rect) noexcept {
+    SDL2_ASSERT(access() == TextureAccess::STREAMING);
     std::byte* pixels{};
     int pitch{};
     SDL_LockTexture(texture_, rect.native_handle(), reinterpret_cast<void**>(&pixels), &pitch);
     return {texture_, pixels, pitch};
 }
 
-std::uint8_t texture::alpha_mod() const noexcept {
+std::uint8_t Texture::alpha_mod() const noexcept {
     std::uint8_t alpha{};
     [[maybe_unused]] auto const err = SDL_GetTextureAlphaMod(texture_, &alpha);
     SDL2_ASSERT(err == 0);
     return alpha;
 }
 
-TurnEngine::blend_mode texture::blend_mode() const noexcept {
-    SDL_BlendMode bm = static_cast<SDL_BlendMode>(TurnEngine::blend_mode::INVALID);
+TurnEngine::BlendMode Texture::blend_mode() const noexcept {
+    SDL_BlendMode bm = static_cast<SDL_BlendMode>(TurnEngine::BlendMode::INVALID);
     [[maybe_unused]] auto const err = SDL_GetTextureBlendMode(texture_, &bm);
     SDL2_ASSERT(err == 0);
-    return static_cast<TurnEngine::blend_mode>(bm);
+    return static_cast<TurnEngine::BlendMode>(bm);
 }
 
-rgb<std::uint8_t> texture::color_mod() const noexcept {
+rgb<std::uint8_t> Texture::color_mod() const noexcept {
     rgb<std::uint8_t> values;
     [[maybe_unused]] auto const err = SDL_GetTextureColorMod(texture_, &values.r, &values.g, &values.b);
     SDL2_ASSERT(err == 0);
     return values;
 }
 
-texture::texture_query texture::query() const noexcept {
+Texture::texture_query Texture::query() const noexcept {
     std::uint32_t format{};
     int access{}, width{}, height{};
     texture_query ret;
     [[maybe_unused]] auto const err = SDL_QueryTexture(texture_, &format, &access, &width, &height);
     SDL2_ASSERT(err == 0);
-    return texture_query{static_cast<pixel_format_enum>(format), static_cast<texture_access>(access), width, height};
+    return texture_query{static_cast<PixelFormatEnum>(format), static_cast<TextureAccess>(access), width, height};
 }
 
-wh<int> texture::size() const noexcept {
+wh<int> Texture::size() const noexcept {
     wh<int> ret;
     [[maybe_unused]] auto const err = SDL_QueryTexture(texture_, nullptr, nullptr, &ret.width, &ret.height);
     SDL2_ASSERT(err == 0);
     return ret;
 }
 
-pixel_format_enum texture::format() const noexcept {
+PixelFormatEnum Texture::format() const noexcept {
     std::uint32_t format{};
     [[maybe_unused]] auto const err = SDL_QueryTexture(texture_, &format, nullptr, nullptr, nullptr);
     SDL2_ASSERT(err == 0);
-    return static_cast<pixel_format_enum>(format);
+    return static_cast<PixelFormatEnum>(format);
 }
 
-texture_access texture::access() const noexcept {
+TextureAccess Texture::access() const noexcept {
     int access{};
     [[maybe_unused]] auto const err = SDL_QueryTexture(texture_, nullptr, &access, nullptr, nullptr);
     SDL2_ASSERT(err == 0);
-    return static_cast<texture_access>(access);
+    return static_cast<TextureAccess>(access);
 }
 
-bool texture::set_alpha_mod(std::uint8_t const alpha) noexcept {
+bool Texture::set_alpha_mod(std::uint8_t const alpha) noexcept {
     return SDL_SetTextureAlphaMod(texture_, alpha) == 0;
 }
 
-bool texture::set_blend_mode(TurnEngine::blend_mode const mode) noexcept {
+bool Texture::set_blend_mode(TurnEngine::BlendMode const mode) noexcept {
     return SDL_SetTextureBlendMode(texture_, static_cast<SDL_BlendMode>(mode)) == 0;
 }
 
-bool texture::set_color_mod(rgb<> const& mod) noexcept {
+bool Texture::set_color_mod(rgb<> const& mod) noexcept {
     return SDL_SetTextureColorMod(texture_, mod.r, mod.g, mod.b);
 }
 
-bool texture::update(rect<int> const& rect, std::span<std::byte const> const pixels, int const pitch) noexcept {
+bool Texture::update(Rect<int> const& rect, std::span<std::byte const> const pixels, int const pitch) noexcept {
     return SDL_UpdateTexture(texture_, rect.native_handle(), pixels.data(), pitch) == 0;
 }
 
-bool texture::update(std::span<std::byte const> const pixels, int const pitch) noexcept {
+bool Texture::update(std::span<std::byte const> const pixels, int const pitch) noexcept {
     return SDL_UpdateTexture(texture_, nullptr, pixels.data(), pitch) == 0;
 }
 
-bool texture::update_yuv(rect<int> const& rect,
+bool Texture::update_yuv(Rect<int> const& rect,
                          std::span<std::byte const> yplane, int const ypitch,
                          std::span<std::byte const> uplane, int const upitch,
                          std::span<std::byte const> vplane, int const vpitch) noexcept
@@ -128,7 +128,7 @@ bool texture::update_yuv(rect<int> const& rect,
                                 reinterpret_cast<std::uint8_t const*>(vplane.data()), vpitch) == 0;
 }
 
-bool texture::update_yuv(std::span<std::byte const> yplane, int const ypitch,
+bool Texture::update_yuv(std::span<std::byte const> yplane, int const ypitch,
                          std::span<std::byte const> uplane, int const upitch,
                          std::span<std::byte const> vplane, int const vpitch) noexcept
 {

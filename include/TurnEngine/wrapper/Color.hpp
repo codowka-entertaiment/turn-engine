@@ -10,7 +10,7 @@
 #include "Enums.hpp"
 #include "Utils.hpp"
 
-namespace TurnEngine::colors {
+namespace TurnEngine::Color {
     inline constexpr auto red = rgba<>{255, 0, 0, 255};
     inline constexpr auto orange = rgba<>{255, 165, 0, 255};
     inline constexpr auto yellow = rgba<>{255, 255, 0, 255};

@@ -10,33 +10,33 @@
 #include "Utils.hpp"
 
 namespace TurnEngine {
-    class surface {
+    class Surface {
         SDL_Surface* surface_;
 
     public:
 
-        constexpr explicit surface(SDL_Surface* s) noexcept
+        constexpr explicit Surface(SDL_Surface* s) noexcept
                 : surface_(s) {}
 
-        surface(surface const&) = delete;
+        Surface(Surface const&) = delete;
 
-        surface& operator=(surface const&) = delete;
+        Surface& operator=(Surface const&) = delete;
 
-        surface& operator=(surface&&) = delete;
+        Surface& operator=(Surface&&) = delete;
 
-        constexpr surface(surface&& other) noexcept;
+        constexpr Surface(Surface&& other) noexcept;
 
-        surface(wh<int> wh, int depth, rgba<std::uint32_t> masks) noexcept;
+        Surface(wh<int> wh, int depth, rgba<std::uint32_t> masks) noexcept;
 
-        surface(void* pixels, int pitch, wh<int> wh, int depth, rgba<std::uint32_t> masks) noexcept;
+        Surface(void* pixels, int pitch, wh<int> wh, int depth, rgba<std::uint32_t> masks) noexcept;
 
-        surface(pixel_format_enum fmt, int depth, wh<int> wh) noexcept;
+        Surface(PixelFormatEnum fmt, int depth, wh<int> wh) noexcept;
 
-        surface(void* pixels, int pitch, pixel_format_enum fmt, int depth, wh<int> wh) noexcept;
+        Surface(void* pixels, int pitch, PixelFormatEnum fmt, int depth, wh<int> wh) noexcept;
 
-        explicit surface(null_term_string file) noexcept;
+        explicit Surface(null_term_string file) noexcept;
 
-        ~surface() noexcept;
+        ~Surface() noexcept;
 
         constexpr auto native_handle() const noexcept { return surface_; }
 
@@ -64,7 +64,7 @@ namespace TurnEngine {
 
         constexpr void set_userdata(void* userdata) noexcept;
 
-        constexpr rect<int> clip_rect() const noexcept;
+        constexpr Rect<int> clip_rect() const noexcept;
 
         constexpr int refcount() const noexcept;
 
@@ -84,65 +84,65 @@ namespace TurnEngine {
 
         bool must_lock() const noexcept;
 
-        bool blit(rect<int> const& srcrect, surface& dst, rect<int>& dstrect) noexcept;
+        bool blit(Rect<int> const& srcrect, Surface& dst, Rect<int>& dstrect) noexcept;
 
-        bool blit(surface& dst, rect<int>& dstrect) noexcept;
+        bool blit(Surface& dst, Rect<int>& dstrect) noexcept;
 
-        bool blit(surface& dst) noexcept;
+        bool blit(Surface& dst) noexcept;
 
-        bool blit(rect<int> const& srcrect, surface& dst) noexcept;
+        bool blit(Rect<int> const& srcrect, Surface& dst) noexcept;
 
-        bool blit_scaled(rect<int> const& srcrect, surface& dst, rect<int>& dstrect) noexcept;
+        bool blit_scaled(Rect<int> const& srcrect, Surface& dst, Rect<int>& dstrect) noexcept;
 
-        bool blit_scaled(surface& dst, rect<int>& dstrect) noexcept;
+        bool blit_scaled(Surface& dst, Rect<int>& dstrect) noexcept;
 
-        bool blit_scaled(surface& dst) noexcept;
+        bool blit_scaled(Surface& dst) noexcept;
 
-        bool blit_scaled(rect<int> const& srcrect, surface& dst) noexcept;
+        bool blit_scaled(Rect<int> const& srcrect, Surface& dst) noexcept;
 
-        bool lower_blit(rect<int> const& srcrect, surface& dst, rect<int>& dstrect) noexcept;
+        bool lower_blit(Rect<int> const& srcrect, Surface& dst, Rect<int>& dstrect) noexcept;
 
-        bool lower_blit(surface& dst, rect<int>& dstrect) noexcept;
+        bool lower_blit(Surface& dst, Rect<int>& dstrect) noexcept;
 
-        bool lower_blit(surface& dst) noexcept;
+        bool lower_blit(Surface& dst) noexcept;
 
-        bool lower_blit(rect<int> const& srcrect, surface& dst) noexcept;
+        bool lower_blit(Rect<int> const& srcrect, Surface& dst) noexcept;
 
-        bool lower_blit_scaled(rect<int> const& srcrect, surface& dst, rect<int>& dstrect) noexcept;
+        bool lower_blit_scaled(Rect<int> const& srcrect, Surface& dst, Rect<int>& dstrect) noexcept;
 
-        bool lower_blit_scaled(surface& dst, rect<int>& dstrect) noexcept;
+        bool lower_blit_scaled(Surface& dst, Rect<int>& dstrect) noexcept;
 
-        bool lower_blit_scaled(surface& dst) noexcept;
+        bool lower_blit_scaled(Surface& dst) noexcept;
 
-        bool lower_blit_scaled(rect<int> const& srcrect, surface& dst) noexcept;
+        bool lower_blit_scaled(Rect<int> const& srcrect, Surface& dst) noexcept;
 
-        bool fill_rect(rect<int> const& rect, pixel_value color) noexcept;
+        bool fill_rect(Rect<int> const& rect, PixelValue color) noexcept;
 
-        bool fill(pixel_value color) noexcept;
+        bool fill(PixelValue color) noexcept;
 
-        bool fill_rects(std::span<rect<int> const> rects, pixel_value color) noexcept;
+        bool fill_rects(std::span<Rect<int> const> rects, PixelValue color) noexcept;
 
-        bool convert(TurnEngine::pixel_format const& fmt) noexcept;
+        bool convert(TurnEngine::PixelFormat const& fmt) noexcept;
 
-        surface convert_to_new(TurnEngine::pixel_format const& fmt) const noexcept;
+        Surface convert_to_new(TurnEngine::PixelFormat const& fmt) const noexcept;
 
-        std::optional<pixel_value> color_key() const noexcept;
+        std::optional<PixelValue> color_key() const noexcept;
 
         std::uint8_t alpha_mod() const noexcept;
 
-        TurnEngine::blend_mode blend_mode() const noexcept;
+        TurnEngine::BlendMode blend_mode() const noexcept;
 
         rgb<std::uint8_t> color_mod() const noexcept;
 
-        bool set_clip_rect(rect<int> const& rect) noexcept;
+        bool set_clip_rect(Rect<int> const& rect) noexcept;
 
         bool disable_clipping() noexcept;
 
-        bool set_color_key(bool enable, pixel_value color) noexcept;
+        bool set_color_key(bool enable, PixelValue color) noexcept;
 
         bool set_alpha_mod(std::uint8_t const alpha) noexcept;
 
-        bool set_blend_mode(TurnEngine::blend_mode mode) noexcept;
+        bool set_blend_mode(TurnEngine::BlendMode mode) noexcept;
 
         bool set_color_mode(rgb<std::uint8_t> rgb) noexcept;
 
@@ -153,6 +153,6 @@ namespace TurnEngine {
         bool save_bmp_to_file(null_term_string file) const noexcept;
     };
 
-    bool convert_pixels(wh<int> wh, surface const& src, surface& dst) noexcept;
+    bool convert_pixels(wh<int> wh, Surface const& src, Surface& dst) noexcept;
 
 }

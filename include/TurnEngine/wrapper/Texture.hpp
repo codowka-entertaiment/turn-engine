@@ -11,56 +11,56 @@
 
 namespace TurnEngine {
 
-    class renderer;
-    class texture;
+    class Renderer;
+    class Texture;
 
-    class texture_lock {
+    class TextureLock {
         SDL_Texture* const texture_;
         std::byte* const pixels_;
         int const pitch_;
 
-        friend class texture;
+        friend class Texture;
 
-        constexpr texture_lock(SDL_Texture* const t, std::byte* const pix, int const pitch) noexcept
+        constexpr TextureLock(SDL_Texture* const t, std::byte* const pix, int const pitch) noexcept
                 : texture_(t), pixels_(pix), pitch_(pitch) {}
 
     public:
-        texture_lock(texture_lock const&) = delete;
+        TextureLock(TextureLock const&) = delete;
 
-        texture_lock& operator=(texture_lock const&) = delete;
+        TextureLock& operator=(TextureLock const&) = delete;
 
         constexpr int pitch() const noexcept { return pitch_; }
 
         constexpr std::byte* pixels() const noexcept { return pixels_; }
 
-        ~texture_lock() noexcept {
+        ~TextureLock() noexcept {
             SDL_UnlockTexture(texture_);
         }
     };
 
-    class texture {
+    class Texture {
         SDL_Texture* texture_;
 
     public:
-        constexpr explicit texture(SDL_Texture* t) noexcept
+        constexpr explicit Texture(SDL_Texture* t) noexcept
                 : texture_(t) {}
 
-        texture(renderer& r, pixel_format_enum const format, texture_access const access, wh<int> const wh) noexcept;
+        Texture(Renderer& r, PixelFormatEnum const format, TextureAccess const access, wh<int> const wh) noexcept;
 
-        texture(renderer& r, surface const& s) noexcept;
+        Texture(Renderer& r, Surface const& s) noexcept;
 
-        texture(renderer& r, null_term_string file) noexcept;
+        Texture(Renderer& r, null_term_string file) noexcept;
 
-        texture(texture const&) = delete;
+        Texture(Texture const&) = delete;
 
-        texture& operator=(texture const&) = delete;
+        Texture& operator=(Texture const&) = delete;
 
-        texture& operator=(texture&&) = delete;
+        Texture& operator=(Texture&&) = delete;
 
-        constexpr texture(texture&& other) noexcept
+        constexpr Texture(Texture&& other) noexcept
                 : texture_(std::exchange(other.texture_, nullptr)) {}
 
-        ~texture() noexcept;
+        ~Texture() noexcept;
 
         void destroy() noexcept;
 
@@ -70,19 +70,19 @@ namespace TurnEngine {
 
         constexpr bool is_ok() const noexcept { return texture_ != nullptr; }
 
-        texture_lock lock() noexcept;
+        TextureLock lock() noexcept;
 
-        texture_lock lock(rect<int> const& rect) noexcept;
+        TextureLock lock(Rect<int> const& rect) noexcept;
 
         std::uint8_t alpha_mod() const noexcept;
 
-        TurnEngine::blend_mode blend_mode() const noexcept;
+        TurnEngine::BlendMode blend_mode() const noexcept;
 
         rgb<std::uint8_t> color_mod() const noexcept;
 
         struct texture_query {
-            pixel_format_enum format = pixel_format_enum::UNKNOWN;
-            texture_access access{};
+            PixelFormatEnum format = PixelFormatEnum::UNKNOWN;
+            TextureAccess access{};
             int width = 0, height = 0;
         };
 
@@ -90,21 +90,21 @@ namespace TurnEngine {
 
         wh<int> size() const noexcept;
 
-        pixel_format_enum format() const noexcept;
+        PixelFormatEnum format() const noexcept;
 
-        texture_access access() const noexcept;
+        TextureAccess access() const noexcept;
 
         bool set_alpha_mod(std::uint8_t alpha) noexcept;
 
-        bool set_blend_mode(TurnEngine::blend_mode mode) noexcept;
+        bool set_blend_mode(TurnEngine::BlendMode mode) noexcept;
 
         bool set_color_mod(rgb<> const& mod) noexcept;
 
-        bool update(rect<int> const& rect, std::span<std::byte const> pixels, int pitch) noexcept;
+        bool update(Rect<int> const& rect, std::span<std::byte const> pixels, int pitch) noexcept;
 
         bool update(std::span<std::byte const> pixels, int pitch) noexcept;
 
-        bool update_yuv(rect<int> const& rect,
+        bool update_yuv(Rect<int> const& rect,
                         std::span<std::byte const> yplane, int ypitch,
                         std::span<std::byte const> uplane, int upitch,
                         std::span<std::byte const> vplane, int vpitch) noexcept;

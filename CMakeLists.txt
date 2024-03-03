@@ -47,7 +47,13 @@ add_executable(TurnEngine main.cpp
         src/wrapper/Renderer.cpp
         src/wrapper/Surface.cpp
         src/wrapper/Texture.cpp
-        src/wrapper/Window.cpp)
+        src/wrapper/Window.cpp
+        src/core/Object.cpp
+        include/TurnEngine/core/Object.hpp
+        include/TurnEngine/core/Object2D.hpp
+        include/TurnEngine/core/Observer.hpp
+        include/TurnEngine/core/Subject.hpp
+        src/core/Subject.cpp)
 
 target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
 

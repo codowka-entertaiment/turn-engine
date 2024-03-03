@@ -4,15 +4,17 @@
 using namespace TurnEngine;
 
 int main(int, char**) {
-    SDL2 const sdl(sdl2_init_flags::EVERYTHING);
+    SDL2 const sdl(SDLInitFlags::EVERYTHING);
     if (!sdl)
         return EXIT_FAILURE;
     int W = 800;
     int H = 800;
-    window win("TurnEngine", window::pos_centered, {W, H}, window_flags::RESIZABLE);
+    Window win("TurnEngine", Window::pos_centered, {W, H}, WindowFlags::RESIZABLE);
     if (!win)
         return EXIT_FAILURE;
-    renderer ren(win, renderer_flags::ACCELERATED);
+    Renderer ren(win, RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC);
+    Texture *text = new Texture(ren, "../assets/test1.png");
+    Rect<int> player = {W / 2, H / 2, 50, 50};
     if (!ren)
         return EXIT_FAILURE;
     bool quit = false;
@@ -27,10 +29,15 @@ int main(int, char**) {
             for (auto const &event: event_queue) {
                 if (event.type == SDL_QUIT)
                     quit = true;
+                if (event.type == SDL_MOUSEMOTION) {
+                    player.x() = event.motion.x - player.w() / 2;
+                    player.y() = event.motion.y - player.h() / 2;
+                }
             }
             // update
             // render/draw
             ren.set_draw_color(rgba<>{0xff, 0x00, 0x00, 0xff});
+            ren.copy_ex(player, *text, 0);
             ren.present();
         }
     }

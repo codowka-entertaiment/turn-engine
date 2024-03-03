@@ -20,7 +20,7 @@ namespace TurnEngine {
 
         constexpr SDL2(SDL2&& other) noexcept = default;
 
-        SDL2(sdl2_init_flags const& flgs) noexcept
+        SDL2(SDLInitFlags const& flgs) noexcept
                 : valid_{SDL_Init(static_cast<std::uint32_t>(flgs)) == 0}
         {}
 
@@ -47,7 +47,7 @@ namespace TurnEngine {
         constexpr IMG(IMG&& other) noexcept
                 : valid_(std::exchange(other.valid_, false)) {}
 
-        IMG(img_init_flags const& flgs) noexcept
+        IMG(IMGInitFlags const& flgs) noexcept
                 : valid_{IMG_Init(static_cast<int>(flgs)) == 0}
         {}
 

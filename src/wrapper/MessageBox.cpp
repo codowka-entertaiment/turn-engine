@@ -2,8 +2,8 @@
 
 using namespace TurnEngine;
 
-constexpr message_box::message_box(message_box_flags const flgs, std::span<SDL_MessageBoxButtonData const> const buttons, null_term_string const title,
-                                   null_term_string const message) noexcept
+constexpr MessageBox::MessageBox(MessageBoxFlags const flgs, std::span<SDL_MessageBoxButtonData const> const buttons, null_term_string const title,
+                                 null_term_string const message) noexcept
         : data_{.flags = static_cast<std::uint32_t>(flgs),
         .window = nullptr,
         .title = title.data(),
@@ -13,8 +13,8 @@ constexpr message_box::message_box(message_box_flags const flgs, std::span<SDL_M
         .colorScheme = nullptr}
 {}
 
-constexpr message_box::message_box(message_box_flags const flgs, std::span<SDL_MessageBoxButtonData const> const buttons, null_term_string const title,
-                                   null_term_string const message, window const& win) noexcept
+constexpr MessageBox::MessageBox(MessageBoxFlags const flgs, std::span<SDL_MessageBoxButtonData const> const buttons, null_term_string const title,
+                                 null_term_string const message, Window const& win) noexcept
         : data_{.flags = static_cast<std::uint32_t>(flgs),
         .window = win.native_handle(),
         .title = title.data(),
@@ -24,8 +24,8 @@ constexpr message_box::message_box(message_box_flags const flgs, std::span<SDL_M
         .colorScheme = nullptr}
 {}
 
-constexpr message_box::message_box(message_box_flags const flgs, std::span<SDL_MessageBoxButtonData const> const buttons, null_term_string const title,
-                                   null_term_string const message, std::span<SDL_MessageBoxColorScheme const> const scheme) noexcept
+constexpr MessageBox::MessageBox(MessageBoxFlags const flgs, std::span<SDL_MessageBoxButtonData const> const buttons, null_term_string const title,
+                                 null_term_string const message, std::span<SDL_MessageBoxColorScheme const> const scheme) noexcept
         : data_{.flags = static_cast<std::uint32_t>(flgs),
         .window = nullptr,
         .title = title.data(),
@@ -36,8 +36,8 @@ constexpr message_box::message_box(message_box_flags const flgs, std::span<SDL_M
 {}
 
 template<std::size_t N>
-constexpr message_box::message_box(message_box_flags const flgs, std::span<SDL_MessageBoxButtonData const, N> const buttons, null_term_string const title,
-                                   null_term_string const message, window const& win, std::span<SDL_MessageBoxColorScheme const, N> const scheme) noexcept
+constexpr MessageBox::MessageBox(MessageBoxFlags const flgs, std::span<SDL_MessageBoxButtonData const, N> const buttons, null_term_string const title,
+                                 null_term_string const message, Window const& win, std::span<SDL_MessageBoxColorScheme const, N> const scheme) noexcept
         : data_{.flags = static_cast<std::uint32_t>(flgs),
         .window = win.native_handle(),
         .title = title.data(),

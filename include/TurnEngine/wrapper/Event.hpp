@@ -141,7 +141,7 @@ namespace TurnEngine {
 
         static bool has_screen_support() noexcept;
 
-        static bool is_screen_shown(window const& win) noexcept;
+        static bool is_screen_shown(Window const& win) noexcept;
     };
 
     inline constexpr keyboard_t keyboard{};
