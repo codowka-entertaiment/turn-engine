@@ -13,10 +13,11 @@ namespace TurnEngine::render {
 
     }
 
-    void Drawer::drawPoints(std::vector<Point<int>> points) {
-        std::span<Point<int> const> const span = std::span<Point<int>>(points);
-        this->renderer->set_draw_color(Color::green);
-        this->renderer->draw_points(span);
+    void Drawer::drawPoints(std::vector<Point<int>> points, rgba<> color) {
+        this->renderer->set_draw_color(color);
+        for (int i = 0; i < points.size(); i++) {
+            this->renderer->draw_point(points[i]);
+        }
     }
 
     void Drawer::renderAll() {

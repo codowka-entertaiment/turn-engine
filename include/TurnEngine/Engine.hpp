@@ -36,6 +36,8 @@ namespace TurnEngine {
         Uint32 ticks;
         void poll();
         bool isQuited;
+        int height;
+        int width;
     public:
         ~Engine();
         bool initSDL(SDLInitFlags sdl_flags);
@@ -48,5 +50,7 @@ namespace TurnEngine {
         Window* getWindow();
         Renderer* getRenderer();
         render::Drawer* getDrawer();
+        int getHeight();
+        int getWidth();
     };
 }

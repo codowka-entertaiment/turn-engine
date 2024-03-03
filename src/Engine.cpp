@@ -10,6 +10,8 @@ namespace TurnEngine {
     }
 
     bool Engine::createWindow(const std::string &title, int width, int height) {
+        this->height = height;
+        this->width = width;
         this->window = new Window("TurnEngine", Window::pos_centered, {width, height}, WindowFlags::RESIZABLE);
         if (this->window == nullptr)
             return false;
@@ -28,8 +30,9 @@ namespace TurnEngine {
         onPollEvents();
         onUpdate();
         if (currentTicks - this->ticks > 1000 / this->fps) {
-            onDraw();
+            getRenderer()->set_draw_color(Color::black);
             getRenderer()->clear();
+            onDraw();
             this->ticks = currentTicks;
             getRenderer()->present();
         }
@@ -58,5 +61,13 @@ namespace TurnEngine {
     Engine::~Engine() {
         window->destroy();
         drawer->destroy();
+    }
+
+    int Engine::getHeight() {
+        return this->height;
+    }
+
+    int Engine::getWidth() {
+        return this->width;
     }
 }

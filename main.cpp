@@ -17,15 +17,40 @@ void Engine::onUpdate() {
 
 }
 
+int func(int x) {
+    return sqrt(pow(100, 2) - pow(x, 2));
+}
+
+int func1(int x) {
+    return x * sin(1 / (3.14 / 180 * (x - 50)));
+}
+
 void Engine::onDraw() {
-    drawer->getRenderer()->set_draw_color(Color::white);
     std::vector<Point<int>> points;
-    for (int i = 0; i < 100; i++) {
-        for (int j = 0; j < 100; j++) {
-            points.emplace_back(i, j);
-        }
+    for (int i = -100; i < getWidth(); i++) {
+        points.emplace_back(i + 1100, func(i) + height / 2 + 100);
     }
-    drawer->drawPoints(points);
+    drawer->drawPoints(points, Color::yellow);
+    for (int i = -100; i < getWidth(); i++) {
+        points.emplace_back(i + 1100, -func(i) + height / 2 + 100);
+    }
+    drawer->drawPoints(points, Color::yellow);
+    for (int i = -100; i < getWidth(); i++) {
+        points.emplace_back(i + 1100, func(i) + height / 2 - 100);
+    }
+    drawer->drawPoints(points, Color::yellow);
+    for (int i = -100; i < getWidth(); i++) {
+        points.emplace_back(i + 1100, -func(i) + height / 2 - 100);
+    }
+    drawer->drawPoints(points, Color::yellow);
+    for (int i = 0; i < getWidth(); i++) {
+        points.emplace_back(i, -(func1(i)) + height / 2);
+    }
+    drawer->drawPoints(points, Color::yellow);
+    for (int i = 0; i < getWidth(); i++) {
+        points.emplace_back(i, (func1(i)) + height / 2);
+    }
+    drawer->drawPoints(points, Color::yellow);
 }
 
 int main(int, char**) {
@@ -33,7 +58,7 @@ int main(int, char**) {
     if (!engine.initSDL(SDLInitFlags::EVERYTHING)) {
         return EXIT_FAILURE;
     }
-    if (!engine.createWindow("Testing", 800, 600)) {
+    if (!engine.createWindow("Testing", 1200, 800)) {
         return EXIT_FAILURE;
     }
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {

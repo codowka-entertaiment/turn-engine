@@ -28,14 +28,7 @@ FetchContent_Declare(
         GIT_PROGRESS TRUE
 )
 
-FetchContent_Declare(
-        SDL2_mixer
-        GIT_REPOSITORY https://github.com/libsdl-org/SDL_mixer
-        GIT_TAG release-2.8.0
-        GIT_PROGRESS TRUE
-)
-
-FetchContent_MakeAvailable(SDL2 SDL2_Image SDL2_ttf SDL2_mixer)
+FetchContent_MakeAvailable(SDL2 SDL2_Image SDL2_ttf)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -50,7 +43,7 @@ file(GLOB_RECURSE INCLUDES
 
 add_executable(TurnEngine main.cpp ${SOURCES} ${INCLUDES})
 
-target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static SDL2_ttf SDL2_mixer)
+target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static SDL2_ttf)
 
 target_include_directories(TurnEngine PRIVATE src)
 

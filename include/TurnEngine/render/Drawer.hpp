@@ -20,7 +20,7 @@ namespace TurnEngine::render {
         void drawLine();
         void drawRect();
         void drawCircle();
-        void drawPoints(std::vector<Point<int>> points);
+        void drawPoints(std::vector<Point<int>> points, rgba<> color);
         void renderAll();
         void destroy();
         Renderer* getRenderer();
