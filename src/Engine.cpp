@@ -34,16 +34,16 @@ namespace TurnEngine {
             onDraw();
             this->ticks = currentTicks;
             getRenderer()->present();
-            currentFrame++;
+            currentTicks++;
         }
     }
 
     void Engine::start(int fps) {
-        this->currentFrame = 0;
+        this->currentTicks = 0;
         this->ticks = 0;
         this->fps = fps;
         while (!isQuited) {
-            if (currentFrame > fps) currentFrame = 1;
+            if (currentTicks > fps) currentTicks = 1;
             poll();
         }
     }

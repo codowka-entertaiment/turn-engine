@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "TurnEngine/core/Object2D.hpp"
 #include "TurnEngine/core/Drawable.hpp"
 #include "TurnEngine/core/Responsible.hpp"
 #include "TurnEngine/render/Drawer.hpp"
