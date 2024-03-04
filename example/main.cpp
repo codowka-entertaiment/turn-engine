@@ -1,7 +1,6 @@
 #include "TurnEngine/Engine.hpp"
 #include "TurnEngine/gui/Widget.hpp"
 
-
 using namespace TurnEngine;
 
 void Engine::onPollEvents() {
@@ -65,5 +64,26 @@ int main(int, char **) {
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {
         return EXIT_FAILURE;
     }
-    engine.start(60);
+
+    // Create subjects
+
+    auto *subject = new core::Subject;
+    auto *subject1 = new core::Subject;
+
+    // Observers are subscribing subjects
+
+    auto *observer1 = new core::Observer();
+    observer1->subscribe(subject);
+    observer1->subscribe(subject1);
+    auto *observer2 = new core::Observer();
+    observer2->subscribe(subject);
+    observer2->subscribe(subject1);
+    observer2->unsubscribe(subject);
+    auto *observer3 = new core::Observer();
+    observer3->subscribe(subject);
+
+    // Subjects send signal
+    subject->signal("click");
+    subject1->signal("jump");
+//    engine.start(60);
 }

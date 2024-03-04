@@ -19,12 +19,8 @@ namespace TurnEngine::core {
         }
     }
 
-    void Subject::createMessage(std::string message) {
-        this->message_ = std::move(message);
-        notify();
-    }
-
-    void Subject::signal() {
+    void Subject::signal(std::string message) {
+        this->message_ = message;
         notify();
     }
 }

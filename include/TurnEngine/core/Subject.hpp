@@ -7,7 +7,7 @@
 namespace TurnEngine::core {
     class Subject: public ISubject {
     public:
-        ~Subject() override = 0;
+        ~Subject() override {};
 
         void attach(IObserver *observer) override;
 
@@ -15,9 +15,7 @@ namespace TurnEngine::core {
 
         void notify() override;
 
-        void createMessage(std::string message = "Empty");
-
-        void signal();
+        void signal(std::string message = "Empty");
 
     private:
         std::list<IObserver *> list_observer_;

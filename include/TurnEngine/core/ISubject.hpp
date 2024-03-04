@@ -5,7 +5,7 @@
 namespace TurnEngine::core {
     class ISubject {
     public:
-        virtual ~ISubject() = 0;
+        virtual ~ISubject() {};
 
         virtual void attach(IObserver *observer) = 0;
 
