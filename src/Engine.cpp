@@ -31,17 +31,19 @@ namespace TurnEngine {
         onUpdate();
         if (currentTicks - this->ticks > 1000 / this->fps) {
             getRenderer()->set_draw_color(Color::black);
-            getRenderer()->clear();
             onDraw();
             this->ticks = currentTicks;
             getRenderer()->present();
+            currentFrame++;
         }
     }
 
-    void Engine::start() {
+    void Engine::start(int fps) {
+        this->currentFrame = 0;
         this->ticks = 0;
-        this->fps = 60;
+        this->fps = fps;
         while (!isQuited) {
+            if (currentFrame > fps) currentFrame = 1;
             poll();
         }
     }

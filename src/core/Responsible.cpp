@@ -7,11 +7,11 @@ namespace TurnEngine::core {
     }
 
     bool Responsible::doRequest() {
-        return numResponsible != -1;
+        return responsible != "_";
     }
 
-    void Responsible::setResponsible(Responsible *_successor, int _numResponsible) {
+    void Responsible::setResponsible(Responsible *_successor, std::string _responsible) {
         successor = _successor;
-        numResponsible = _numResponsible;
+        responsible = _responsible;
     }
 }

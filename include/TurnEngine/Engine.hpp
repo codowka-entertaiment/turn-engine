@@ -15,15 +15,13 @@
 
 #include "ext/Math.hpp"
 
-#include "geo2d/Vector.hpp"
-#include "geo2d/Shapes.hpp"
-
 #include "core/Object.hpp"
 #include "core/Object2D.hpp"
 #include "core/Observer.hpp"
 #include "core/Subject.hpp"
 #include "core/Responsible.hpp"
 #include "core/event/Event.hpp"
+#include "core/event/Command.hpp"
 
 #include "render/Drawer.hpp"
 
@@ -33,6 +31,7 @@ namespace TurnEngine {
         Window* window;
         render::Drawer* drawer;
         int fps;
+        int currentFrame;
         Uint32 ticks;
         void poll();
         bool isQuited;
@@ -46,7 +45,7 @@ namespace TurnEngine {
         void onPollEvents();
         void onUpdate();
         void onDraw();
-        void start();
+        void start(int fps = 60);
         Window* getWindow();
         Renderer* getRenderer();
         render::Drawer* getDrawer();

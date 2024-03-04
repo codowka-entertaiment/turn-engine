@@ -1,7 +1,45 @@
 #include "TurnEngine/Engine.hpp"
+#include "TurnEngine/gui/Widget.hpp"
 #include <vector>
+#include <map>
+
+int line = 0;
+int col = 0;
+double s_time = 0;
+int x = 100;
+int y = 100;
 
 using namespace TurnEngine;
+
+std::map<KB_KEYS, bool> keystates;
+
+void move() {
+    if (keystates[KB_KEYS::W]) {
+        int movement = 10;
+        while (movement--) {
+            y -= 1;
+        }
+    }
+    if (keystates[KB_KEYS::S]) {
+        int movement = 10;
+        while (movement--) {
+            y += 1;
+        }
+    }
+
+    if (keystates[KB_KEYS::A]) {
+        int movement = 10;
+        while (movement--) {
+            x -= 1;
+        }
+    }
+    if (keystates[KB_KEYS::D]) {
+        int movement = 10;
+        while (movement--) {
+            x += 1;
+        }
+    }
+}
 
 void Engine::onPollEvents() {
     for (auto const &event: event_queue) {
@@ -10,6 +48,34 @@ void Engine::onPollEvents() {
         if (event.type == SDL_MOUSEMOTION) {
 
         }
+        if (event.type == SDL_KEYDOWN) {
+            if (event.key.keysym.sym == SDLK_w) {
+                line = 3;
+                keystates[KB_KEYS::W] = true;
+            } else if (event.key.keysym.sym == SDLK_s) {
+                line = 0;
+                keystates[KB_KEYS::S] = true;
+            } else if (event.key.keysym.sym == SDLK_a) {
+                line = 1;
+                keystates[KB_KEYS::A] = true;
+            } else if (event.key.keysym.sym == SDLK_d) {
+                line = 2;
+                keystates[KB_KEYS::D] = true;
+            }
+            keystates[KB_KEYS::NONE] = false;
+        }
+        if (event.type == SDL_KEYUP) {
+            if (event.key.keysym.sym == SDLK_w) {
+                keystates[KB_KEYS::W] = false;
+            } else if (event.key.keysym.sym == SDLK_s) {
+                keystates[KB_KEYS::S] = false;
+            } else if (event.key.keysym.sym == SDLK_a) {
+                keystates[KB_KEYS::A] = false;
+            } else if (event.key.keysym.sym == SDLK_d) {
+                keystates[KB_KEYS::D] = false;
+            }
+            keystates[KB_KEYS::NONE] = true;
+        }
     }
 }
 
@@ -17,43 +83,50 @@ void Engine::onUpdate() {
 
 }
 
-int func(int x) {
-    return sqrt(pow(100, 2) - pow(x, 2));
-}
-
-int func1(int x) {
-    return x * sin(1 / (3.14 / 180 * (x - 50)));
-}
-
 void Engine::onDraw() {
-    std::vector<Point<int>> points;
-    for (int i = -100; i < getWidth(); i++) {
-        points.emplace_back(i + 1100, func(i) + height / 2 + 100);
+    Texture *texture = new Texture(*getRenderer(), "../assets/animation.png");
+    core::Drawable player
+            {
+                    2,
+                    true,
+                    {x, y},
+                    64,
+                    64,
+                    texture,
+                    {64 * (col % 4), 64 * (line % 4), 64, 64},
+                    0,
+                    RendererFlip::NONE
+            };
+    texture = new Texture(*getRenderer(), "../assets/test.bmp");
+    gui::Widget background
+            {
+                    1,
+                    {0, 0},
+                    width,
+                    height,
+                    nullptr,
+                    0,
+                    RendererFlip::NONE,
+                    Color::green
+            };
+    if (col >= 4) {
+        col = 0;
     }
-    drawer->drawPoints(points, Color::yellow);
-    for (int i = -100; i < getWidth(); i++) {
-        points.emplace_back(i + 1100, -func(i) + height / 2 + 100);
+    s_time += 1 / (double) fps;
+    if (s_time >= 0.25) {
+        s_time = 0;
+        if (!keystates[KB_KEYS::NONE]) col += 1;
+        move();
     }
-    drawer->drawPoints(points, Color::yellow);
-    for (int i = -100; i < getWidth(); i++) {
-        points.emplace_back(i + 1100, func(i) + height / 2 - 100);
-    }
-    drawer->drawPoints(points, Color::yellow);
-    for (int i = -100; i < getWidth(); i++) {
-        points.emplace_back(i + 1100, -func(i) + height / 2 - 100);
-    }
-    drawer->drawPoints(points, Color::yellow);
-    for (int i = 0; i < getWidth(); i++) {
-        points.emplace_back(i, -(func1(i)) + height / 2);
-    }
-    drawer->drawPoints(points, Color::yellow);
-    for (int i = 0; i < getWidth(); i++) {
-        points.emplace_back(i, (func1(i)) + height / 2);
-    }
-    drawer->drawPoints(points, Color::yellow);
+    getRenderer()->clear();
+    drawer->draw(player);
+    drawer->draw(background);
+    drawer->renderAll();
+    texture->destroy();
 }
 
-int main(int, char**) {
+int main(int, char **) {
+    keystates[KB_KEYS::NONE] = true;
     Engine engine{};
     if (!engine.initSDL(SDLInitFlags::EVERYTHING)) {
         return EXIT_FAILURE;
@@ -64,5 +137,5 @@ int main(int, char**) {
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {
         return EXIT_FAILURE;
     }
-    engine.start();
+    engine.start(60);
 }

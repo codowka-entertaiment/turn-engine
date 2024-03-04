@@ -1,38 +1,67 @@
 #include "TurnEngine/render/Drawer.hpp"
 
 namespace TurnEngine::render {
-    void Drawer::drawLine() {
 
+    /// @brief
+    /// That function puts Drawable inside queue
+    void Drawer::draw(const core::Drawable &drawable) {
+        this->drawQueue.push(drawable);
     }
 
-    void Drawer::drawRect() {
-
-    }
-
-    void Drawer::drawCircle() {
-
-    }
-
-    void Drawer::drawPoints(std::vector<Point<int>> points, rgba<> color) {
-        this->renderer->set_draw_color(color);
-        for (int i = 0; i < points.size(); i++) {
-            this->renderer->draw_point(points[i]);
+    /// @brief
+    /// That function pops all loaded Drawables in queue and renders it to the window
+    void Drawer::renderAll() {
+        while (!this->drawQueue.empty()) {
+            core::Drawable drawable = this->drawQueue.top();
+            if (drawable.texture == nullptr) {
+                getRenderer()->set_draw_color(drawable.color);
+                Rect<int> rect = {drawable.position.x(), drawable.position.y(), drawable.width, drawable.height};
+                getRenderer()->fill_rect(rect);
+                this->drawQueue.pop();
+                continue;
+            }
+            if (drawable.isAnimated) {
+                getRenderer()->copy_ex(
+                        Rect<int>{
+                                drawable.position.x(),
+                                drawable.position.y(),
+                                drawable.width,
+                                drawable.height
+                        },
+                        *drawable.texture,
+                        drawable.rect,
+                        drawable.angle,
+                        drawable.position,
+                        drawable.flip);
+            } else {
+                getRenderer()->copy_ex(
+                        Rect<int>{
+                                drawable.position.x(),
+                                drawable.position.y(),
+                                drawable.width,
+                                drawable.height
+                        },
+                        *drawable.texture,
+                        drawable.angle,
+                        drawable.flip);
+            }
+            this->drawQueue.pop();
         }
     }
 
-    void Drawer::renderAll() {
-
-    }
-
-    Drawer::Drawer(Renderer* _renderer) {
+    Drawer::Drawer(Renderer *_renderer) {
         this->renderer = _renderer;
     }
 
-    Renderer* Drawer::getRenderer() {
+    Renderer *Drawer::getRenderer() {
         return this->renderer;
     }
 
     void Drawer::destroy() {
         this->renderer->destroy();
+    }
+
+    void draw(const core::Drawable &drawable) {
+
     }
 }

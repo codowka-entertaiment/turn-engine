@@ -7,6 +7,8 @@
 
 namespace TurnEngine {
 
+    /// @brief
+    /// An enumeration of SDL initialisation flags.
     enum class SDLInitFlags : std::uint32_t {
         TIMER = SDL_INIT_TIMER,
         AUDIO = SDL_INIT_AUDIO,
@@ -19,10 +21,12 @@ namespace TurnEngine {
         NOPARACHUTE = SDL_INIT_NOPARACHUTE,
     };
 
-    inline constexpr SDLInitFlags operator|(SDLInitFlags const& a, SDLInitFlags const& b) noexcept {
+    inline constexpr SDLInitFlags operator|(SDLInitFlags const &a, SDLInitFlags const &b) noexcept {
         return static_cast<SDLInitFlags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
     }
 
+    /// @brief
+    /// Enumeration for SDL images
     enum class IMGInitFlags : int {
         JPG = IMG_INIT_JPG,
         PNG = IMG_INIT_PNG,
@@ -31,16 +35,20 @@ namespace TurnEngine {
         ALL = JPG | PNG | TIF | WEBP,
     };
 
-    inline constexpr IMGInitFlags operator|(IMGInitFlags const& a, IMGInitFlags const& b) noexcept {
+    inline constexpr IMGInitFlags operator|(IMGInitFlags const &a, IMGInitFlags const &b) noexcept {
         return static_cast<IMGInitFlags>(static_cast<int>(a) | static_cast<int>(b));
     }
 
+    /// @brief
+    /// Enumeration for message boxes such like info, warning or error boxes.
     enum class MessageBoxFlags : std::uint32_t {
         ERROR = SDL_MESSAGEBOX_ERROR,
         WARNING = SDL_MESSAGEBOX_WARNING,
         INFORMATION = SDL_MESSAGEBOX_INFORMATION,
     };
 
+    /// @brief
+    /// Enumeration of window flags
     enum class WindowFlags : std::uint32_t {
         NONE = 0,
         FULLSCREEN = SDL_WINDOW_FULLSCREEN,
@@ -56,29 +64,34 @@ namespace TurnEngine {
         ALLOW_HIGHDPI = SDL_WINDOW_ALLOW_HIGHDPI,
     };
 
-    inline constexpr WindowFlags operator|(WindowFlags const& a, WindowFlags const& b) noexcept {
+    inline constexpr WindowFlags operator|(WindowFlags const &a, WindowFlags const &b) noexcept {
         return static_cast<WindowFlags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
     }
 
-    inline constexpr bool operator&(WindowFlags const& a, WindowFlags const& b) noexcept {
+    inline constexpr bool operator&(WindowFlags const &a, WindowFlags const &b) noexcept {
         return static_cast<bool>(static_cast<std::uint32_t>(a) & static_cast<std::uint32_t>(b));
     }
 
-    enum class RendererFlags : std::uint32_t  {
+    /// @brief
+    /// An enumeration of renderer flags.
+    /// Recommended to use ACCELERATED and PESENTVSYNC flags
+    enum class RendererFlags : std::uint32_t {
         SOFTWARE = SDL_RENDERER_SOFTWARE,
         ACCELERATED = SDL_RENDERER_ACCELERATED,
         PRESENTVSYNC = SDL_RENDERER_PRESENTVSYNC,
         TARGETTEXTURE = SDL_RENDERER_TARGETTEXTURE,
     };
 
-    inline constexpr RendererFlags operator|(RendererFlags const& a, RendererFlags const& b) noexcept {
+    inline constexpr RendererFlags operator|(RendererFlags const &a, RendererFlags const &b) noexcept {
         return static_cast<RendererFlags>(static_cast<std::uint32_t>(a) | static_cast<std::uint32_t>(b));
     }
 
-    inline constexpr bool operator&(RendererFlags const& a, RendererFlags const& b) noexcept {
+    inline constexpr bool operator&(RendererFlags const &a, RendererFlags const &b) noexcept {
         return static_cast<bool>(static_cast<std::uint32_t>(a) & static_cast<std::uint32_t>(b));
     }
 
+    /// @brief
+    /// An enumeration of blend modes used in SDL_RenderCopy() and drawing operations.
     enum class BlendMode : int {
         INVALID = SDL_BLENDMODE_INVALID,
         NONE = SDL_BLENDMODE_NONE,
@@ -88,18 +101,30 @@ namespace TurnEngine {
         MUL = SDL_BLENDMODE_MUL,
     };
 
+    /// @brief
+    /// An enumeration of window types.
     enum class FullscreenFlags : std::uint32_t {
         WINDOWED = 0,
         FULLSCREEN = SDL_WINDOW_FULLSCREEN,
         FULLSCREEN_DESKTOP = SDL_WINDOW_FULLSCREEN_DESKTOP
     };
 
+    /// @brief
+    /// An enumeration of texture access patterns.
+    /// @param
+    /// SDL_TEXTUREACCESS_STATIC - changes rarely, not lockable
+    /// @param
+    /// SDL_TEXTUREACCESS_STREAMING - changes frequently, lockable
+    /// @param
+    /// SDL_TEXTUREACCESS_TARGET - can be used as a render target
     enum class TextureAccess : int {
         STATIC = SDL_TEXTUREACCESS_STATIC,
         STREAMING = SDL_TEXTUREACCESS_STREAMING,
         TARGET = SDL_TEXTUREACCESS_TARGET,
     };
 
+    /// @brief
+    /// An enumeration of pixel formats
     enum class PixelFormatEnum : std::uint32_t {
         UNKNOWN = SDL_PIXELFORMAT_UNKNOWN,
         INDEX1LSB = SDL_PIXELFORMAT_INDEX1LSB,
@@ -145,6 +170,8 @@ namespace TurnEngine {
         NV21 = SDL_PIXELFORMAT_NV21,
     };
 
+    /// @brief
+    /// The type of the pixel format
     enum class PixelType : std::uint32_t {
         UNKNOWN = SDL_PIXELTYPE_UNKNOWN,
         INDEX1 = SDL_PIXELTYPE_INDEX1,
@@ -160,6 +187,8 @@ namespace TurnEngine {
         ARRAYF32 = SDL_PIXELTYPE_ARRAYF32,
     };
 
+    /// @brief
+    /// The ordering of channels or bits in the pixel format
     enum class PixelOrder : std::uint32_t {
         BITMAP_NONE = SDL_BITMAPORDER_NONE,
         BITMAP_4321 = SDL_BITMAPORDER_4321,
@@ -182,6 +211,8 @@ namespace TurnEngine {
         ARRAY_ABGR = SDL_ARRAYORDER_ABGR,
     };
 
+    /// @brief
+    /// The channel bit pattern of the pixel format
     enum class PixelLayout : std::uint32_t {
         NONE = SDL_PACKEDLAYOUT_NONE,
         PACKED_332 = SDL_PACKEDLAYOUT_332,
@@ -194,50 +225,112 @@ namespace TurnEngine {
         PACKED_1010102 = SDL_PACKEDLAYOUT_1010102,
     };
 
-    inline constexpr TurnEngine::PixelType pixel_type_for(PixelFormatEnum const& format) noexcept {
+    inline constexpr TurnEngine::PixelType pixel_type_for(PixelFormatEnum const &format) noexcept {
         return static_cast<PixelType>(SDL_PIXELTYPE(static_cast<std::uint32_t>(format)));
     }
 
-    inline constexpr PixelOrder pixel_order_for(PixelFormatEnum const& format) noexcept {
+    inline constexpr PixelOrder pixel_order_for(PixelFormatEnum const &format) noexcept {
         return static_cast<PixelOrder>(SDL_PIXELORDER(static_cast<std::uint32_t>(format)));
     }
 
-    inline constexpr PixelLayout pixel_layout_for(PixelFormatEnum const& format) noexcept {
+    inline constexpr PixelLayout pixel_layout_for(PixelFormatEnum const &format) noexcept {
         return static_cast<PixelLayout>(SDL_PIXELORDER(static_cast<std::uint32_t>(format)));
     }
 
-    inline constexpr std::uint32_t bits_per_pixel_for(PixelFormatEnum const& format) noexcept {
+    inline constexpr std::uint32_t bits_per_pixel_for(PixelFormatEnum const &format) noexcept {
         return SDL_BITSPERPIXEL(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr std::uint32_t bytes_per_pixel_for(PixelFormatEnum const& format) noexcept {
+    inline constexpr std::uint32_t bytes_per_pixel_for(PixelFormatEnum const &format) noexcept {
         return SDL_BYTESPERPIXEL(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr bool is_pixel_format_indexed(PixelFormatEnum const& format) noexcept {
+    inline constexpr bool is_pixel_format_indexed(PixelFormatEnum const &format) noexcept {
         return SDL_ISPIXELFORMAT_INDEXED(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr bool is_pixel_format_alpha(PixelFormatEnum const& format) noexcept {
+    inline constexpr bool is_pixel_format_alpha(PixelFormatEnum const &format) noexcept {
         return SDL_ISPIXELFORMAT_ALPHA(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr bool is_pixel_format_four_cc(PixelFormatEnum const& format) noexcept {
+    inline constexpr bool is_pixel_format_four_cc(PixelFormatEnum const &format) noexcept {
         return SDL_ISPIXELFORMAT_FOURCC(static_cast<std::uint32_t>(format));
     }
 
-    inline constexpr bool is_pixel_format_array(PixelFormatEnum const& format) noexcept {
+    inline constexpr bool is_pixel_format_array(PixelFormatEnum const &format) noexcept {
         return SDL_ISPIXELFORMAT_ARRAY(static_cast<std::uint32_t>(format));
     }
 
-    inline std::string_view pixel_format_name_for(PixelFormatEnum const& format) noexcept {
+    inline std::string_view pixel_format_name_for(PixelFormatEnum const &format) noexcept {
         return SDL_GetPixelFormatName(static_cast<std::uint32_t>(format));
     }
 
+    /// @brief
+    /// Enumeration for Texture flip.
+    /// You can pass that argument to drawer and it will
+    /// flip passed texture.
     enum class RendererFlip {
         NONE = SDL_FLIP_NONE,
         HORIZONTAL = SDL_FLIP_HORIZONTAL,
         VERTICAL = SDL_FLIP_VERTICAL,
+    };
+
+    /// @brief
+    /// Enumeration for keyboard keys
+    enum class KB_KEYS {
+        NONE = -1,
+        n0 = SDLK_0,
+        n1 = SDLK_1,
+        n2 = SDLK_2,
+        n3 = SDLK_3,
+        n4 = SDLK_4,
+        n5 = SDLK_5,
+        n6 = SDLK_6,
+        n7 = SDLK_7,
+        n8 = SDLK_8,
+        n9 = SDLK_9,
+        Q = SDLK_q,
+        W = SDLK_w,
+        E = SDLK_e,
+        R = SDLK_r,
+        T = SDLK_t,
+        Y = SDLK_y,
+        U = SDLK_u,
+        I = SDLK_i,
+        O = SDLK_o,
+        P = SDLK_p,
+        A = SDLK_a,
+        S = SDLK_s,
+        D = SDLK_d,
+        F = SDLK_f,
+        G = SDLK_g,
+        H = SDLK_h,
+        J = SDLK_j,
+        K = SDLK_k,
+        L = SDLK_l,
+        Z = SDLK_z,
+        X = SDLK_x,
+        C = SDLK_c,
+        V = SDLK_v,
+        B = SDLK_b,
+        N = SDLK_n,
+        M = SDLK_m,
+        GREATER = SDLK_GREATER,
+        LESS = SDLK_LESS,
+        TAB = SDLK_TAB,
+        ENTER = SDLK_KP_ENTER,
+        ESC = SDLK_ESCAPE,
+        RETURN = SDLK_RETURN,
+        RETURN2 = SDLK_RETURN2,
+        SPACE = SDLK_SPACE,
+        SEMICOLON = SDLK_SEMICOLON,
+        BACKSPACE = SDLK_BACKSPACE,
+        LSHIFT = SDLK_LSHIFT,
+        RSHIFT = SDLK_RSHIFT,
+        UP = SDLK_UP,
+        DOWN = SDLK_m,
+        LEFT = SDLK_LEFT,
+        RIGHT = SDLK_RIGHT
     };
 
 }
