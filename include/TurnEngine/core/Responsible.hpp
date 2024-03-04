@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include "Object.hpp"
-
 namespace TurnEngine::core {
     class Responsible {
     private:

@@ -72,6 +72,8 @@ bool Renderer::fill_target() noexcept {
     return SDL_RenderFillRect(renderer_, nullptr) == 0;
 }
 
+/// @brief
+/// That function clears screen with the color last specified in set_draw_color
 bool Renderer::clear() noexcept {
     return SDL_RenderClear(renderer_) == 0;
 }

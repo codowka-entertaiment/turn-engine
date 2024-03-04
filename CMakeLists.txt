@@ -41,7 +41,10 @@ file(GLOB_RECURSE INCLUDES
         "include/*.hpp"
 )
 
-add_executable(TurnEngine main.cpp ${SOURCES} ${INCLUDES})
+add_executable(TurnEngine example/main.cpp ${SOURCES} ${INCLUDES}
+        include/TurnEngine/gui/Sprite.hpp
+        example/entities/Camera.cpp
+        example/entities/Camera.hpp)
 
 target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static SDL2_ttf)
 

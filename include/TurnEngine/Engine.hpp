@@ -15,13 +15,8 @@
 
 #include "ext/Math.hpp"
 
-#include "core/Object.hpp"
-#include "core/Object2D.hpp"
-#include "core/Observer.hpp"
-#include "core/Subject.hpp"
 #include "core/Responsible.hpp"
-#include "core/event/Event.hpp"
-#include "core/event/Command.hpp"
+#include "core/Drawable.hpp"
 
 #include "render/Drawer.hpp"
 
@@ -31,7 +26,7 @@ namespace TurnEngine {
         Window* window;
         render::Drawer* drawer;
         int fps;
-        int currentFrame;
+        int currentTicks;
         Uint32 ticks;
         void poll();
         bool isQuited;

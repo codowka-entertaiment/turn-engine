@@ -63,6 +63,7 @@ namespace TurnEngine {
     Engine::~Engine() {
         window->destroy();
         drawer->destroy();
+        SDL_Quit();
     }
 
     int Engine::getHeight() {
