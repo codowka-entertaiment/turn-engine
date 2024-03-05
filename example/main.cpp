@@ -1,10 +1,11 @@
 #include "TurnEngine/Engine.hpp"
-#include "TurnEngine/gui/BaseWidget.hpp"
-#include "TurnEngine/core/Drawable.hpp"
 #include <vector>
 
 using namespace TurnEngine;
-std::vector<core::Drawable*> map;
+std::vector<gui::BaseWidget *> map;
+Texture *texture1, *texture2;
+gui::BaseWidget* widget;
+
 // Define that method to handle events
 void Engine::onPollEvents() {
     for (auto event: event_queue) {
@@ -22,15 +23,26 @@ void Engine::onPollEvents() {
         }
         if (event.type == SDL_MOUSEMOTION) {
             // Handle mouse motion inside window
-            printf("Moved: x:%d y:%d\n", event.motion.x, event.motion.y);
         }
         if (event.type == SDL_MOUSEBUTTONDOWN) {
             // Handle mouse button click
             if (event.button.button == SDL_BUTTON_LEFT) {
                 printf("LMB DOWN: x:%d y:%d\n", event.button.x, event.motion.y);
+                geo2d::PositionInt pos{event.motion.x, event.motion.y};
+                for (int i = 0; i < map.size(); i++) {
+                    if (map[i]->shape->contains(pos)) {
+                        map[i]->texture = texture2;
+                    }
+                }
             }
             if (event.button.button == SDL_BUTTON_RIGHT) {
                 printf("RMB DOWN: x:%d y:%d\n", event.button.x, event.motion.y);
+                geo2d::PositionInt pos{event.motion.x, event.motion.y};
+                for (int i = 0; i < map.size(); i++) {
+                    if (map[i]->shape->contains(pos)) {
+                        map[i]->texture = texture1;
+                    }
+                }
             }
         }
         if (event.type == SDL_MOUSEBUTTONUP) {
@@ -51,12 +63,13 @@ void Engine::onUpdate() {
 
 // Define that method to implement drawer logic (IDK somebody try to use it with threads)
 void Engine::onDraw() {
-    for (auto tile : map) {
+    for (auto tile: map) {
         // Possible two ways to draw Drawable object
         // 1. Call draw from Drawable object
         tile->draw(getDrawer());
+        widget->draw(getDrawer());
         // 2. Call draw from Drawer object
-        getDrawer()->draw(*tile);
+        // getDrawer()->draw(*tile);
     }
     getDrawer()->renderAll();
 }
@@ -78,11 +91,40 @@ int launchGame() {
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {
         return EXIT_FAILURE;
     }
-    auto texture = new Texture(*engine.getRenderer(), "../example/assets/hexagon.png");
+    int c1 = 50;
+    engine.getRenderer()->set_draw_blend_mode(BlendMode::BLEND);
+    widget = new gui::BaseWidget(0,
+                                 {0, 0},
+                                 c1 / 2 + c1 * 18,
+                                 c1 / 2 + c1 * 14 - 14 * c1 / 5,
+                                 new Texture(*engine.getRenderer(), "../example/assets/grass.jpeg"),
+                                 geo2d::RectangleInt::init_uncheck({20, 20}, 20, 20),
+                                 0,
+                                 RendererFlip::NONE,
+                                 rgba<>{0x00, 0xff, 0x00, 0xff});
+    texture1 = new Texture(*engine.getRenderer(), "../example/assets/hexagon_blue.png");
+    texture1->set_alpha_mod(90);
+    texture1->set_color_mod({0x00, 0x00, 0x00});
+    texture2 = new Texture(*engine.getRenderer(), "../example/assets/hexagon_orange.png");
+    texture2->set_alpha_mod(70);
+    texture2->set_color_mod({0x00, 0x50, 0x00});
     int m = 1;
     for (int i = 0; i < 14; i++) {
-        for (int j = 0; j < 14; j++) {
-            map.push_back(new gui::BaseWidget(1, {j * 50 + (m + 1) * 25 / 2, i * 50 - i * 10}, 50, 50, texture, 0, RendererFlip::NONE, Color::red));
+        for (int j = 0; j < 18; j++) {
+            geo2d::PositionInt pos{j * c1 + (m + 1) * c1 / 4 + 25, i * c1 - i * c1 / 5 + c1 / 2};
+            Point point{j * c1 + (m + 1) * c1 / 4, i * c1 - i * c1 / 5};
+            map.push_back(new gui::BaseWidget(
+                                  1, // depthIndex
+                                  point, // Position
+                                  c1,
+                                  c1,
+                                  texture1,
+                                  geo2d::HexagonInt::init_uncheck(pos, (int)(c1 / 2.5)),
+                                  90,
+                                  RendererFlip::NONE,
+                                  Color::red
+                          )
+            );
         }
         m *= -1;
     }
@@ -114,8 +156,8 @@ class Enemy : public core::Observer {
 void testObserverPattern() {
 
     // Create subjects
-    Button* startButton = new Button();
-    Button* exitButton = new Button();
+    Button *startButton = new Button();
+    Button *exitButton = new Button();
 
     // Create observers
     Player *player = new Player();

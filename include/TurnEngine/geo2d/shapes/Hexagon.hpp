@@ -24,8 +24,8 @@ namespace geo2d
                 return Hexagon(center, side);
         }
 
-        constexpr static Hexagon<T> init_uncheck(Position<T> center, T side) {  // take away, clang-format
-            return Hexagon(center, side);
+        constexpr static Hexagon<T>* init_uncheck(Position<T> center, T side) {  // take away, clang-format
+            return new Hexagon(center, side);
         }
 
         constexpr const Position<T> &center() const { return m_center; }
@@ -37,7 +37,6 @@ namespace geo2d
 
             constexpr auto const1 = ext::math::sqrt(3);
             constexpr auto const2 = const1 / 2.0;
-
             return (pos.y <= +const2 * m_side) &&            // F1
                    (pos.y <= -const1 * (pos.x - m_side)) &&  // F2
                    (pos.y >= +const1 * (pos.x - m_side)) &&  // F3

@@ -5,6 +5,7 @@
 #include "TurnEngine/core/Drawable.hpp"
 #include "TurnEngine/core/Responsible.hpp"
 #include "TurnEngine/render/Drawer.hpp"
+#include "TurnEngine/geo2d/shapes/Shape.hpp"
 
 namespace TurnEngine::gui {
 
@@ -18,16 +19,18 @@ namespace TurnEngine::gui {
     private:
         std::vector<core::Drawable *> children;
     public:
+        geo2d::Shape<int>* shape;
         BaseWidget(int _depthIndex,
-               Point<int> _position,
-               int _width,
-               int _height,
-               Texture *_texture,
-               int _angle,
-               RendererFlip _flip,
-               rgba<> color);
+                   Point<int> _position,
+                   int _width,
+                   int _height,
+                   Texture *_texture,
+                   geo2d::Shape<int>* _shape,
+                   int _angle,
+                   RendererFlip _flip,
+                   rgba<> color);
 
-        BaseWidget(core::Drawable* drawable);
+        BaseWidget(core::Drawable *drawable, geo2d::Shape<int>* _shape);
 
         ~BaseWidget();
 

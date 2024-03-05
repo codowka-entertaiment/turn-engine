@@ -24,6 +24,9 @@
 #include "gui/BaseButton.hpp"
 #include "gui/Sprite.hpp"
 
+#include "geo2d/Shapes.hpp"
+#include "geo2d/Vector.hpp"
+
 namespace TurnEngine {
     class Engine {
     private:
