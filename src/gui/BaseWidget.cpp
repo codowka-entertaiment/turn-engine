@@ -1,7 +1,7 @@
-#include "TurnEngine/gui/Widget.hpp"
+#include "TurnEngine/gui/BaseWidget.hpp"
 
 namespace TurnEngine::gui {
-    Widget::Widget(int _depthIndex,
+    BaseWidget::BaseWidget(int _depthIndex,
                    Point<int> _position,
                    int _width,
                    int _height,
@@ -11,12 +11,12 @@ namespace TurnEngine::gui {
                    rgba<> color = Color::black
     ) : core::Drawable({_depthIndex, false, _position, _width, _height, _texture, {0, 0, 0, 0}, _angle, _flip, color}) {}
 
-    Widget::~Widget() = default;
+    BaseWidget::~BaseWidget() = default;
 
-    void Widget::addChild(core::Drawable *child) {
+    void BaseWidget::addChild(core::Drawable *child) {
         children.push_back(child);
     }
 
-    Widget::Widget(core::Drawable *drawable) :
+    BaseWidget::BaseWidget(core::Drawable *drawable) :
             core::Drawable(*drawable){}
 }

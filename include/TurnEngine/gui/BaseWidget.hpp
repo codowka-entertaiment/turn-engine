@@ -14,11 +14,11 @@ namespace TurnEngine::gui {
     /// It can be without texture, texture must be nullptr and color must be not null
     /// @param
     /// Widget(int _depthIndex, Point<int> _position, int _width, int _height, Texture *_texture, int _angle, RendererFlip _flip)
-    class Widget : public core::Drawable {
+    class BaseWidget : public core::Drawable {
     private:
         std::vector<core::Drawable *> children;
     public:
-        Widget(int _depthIndex,
+        BaseWidget(int _depthIndex,
                Point<int> _position,
                int _width,
                int _height,
@@ -27,9 +27,9 @@ namespace TurnEngine::gui {
                RendererFlip _flip,
                rgba<> color);
 
-        Widget(core::Drawable* drawable);
+        BaseWidget(core::Drawable* drawable);
 
-        ~Widget();
+        ~BaseWidget();
 
         /// @brief
         /// That function adds children to widget

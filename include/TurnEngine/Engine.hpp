@@ -20,6 +20,10 @@
 
 #include "render/Drawer.hpp"
 
+#include "gui/BaseWidget.hpp"
+#include "gui/BaseButton.hpp"
+#include "gui/Sprite.hpp"
+
 namespace TurnEngine {
     class Engine {
     private:

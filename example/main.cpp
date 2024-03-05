@@ -1,5 +1,5 @@
 #include "TurnEngine/Engine.hpp"
-#include "TurnEngine/gui/Widget.hpp"
+#include "TurnEngine/gui/BaseWidget.hpp"
 
 using namespace TurnEngine;
 
