@@ -104,15 +104,22 @@ void testObserverPattern() {
     Button* startButton = new Button();
     Button* exitButton = new Button();
 
-    // Observers are subscribing subjects
+    // Create observers
     Player *player = new Player();
     Enemy *enemy1 = new Enemy();
     Enemy *enemy2 = new Enemy();
+
+    // Observers subscribing subject
     player->subscribe(startButton);
     enemy1->subscribe(startButton);
     enemy2->subscribe(startButton);
+    player->subscribe(exitButton);
     enemy1->subscribe(exitButton);
     enemy2->subscribe(exitButton);
+
+    // Observers unsubscribing subject
+    enemy1->unsubscribe(exitButton);
+    enemy2->unsubscribe(exitButton);
 
     // Subjects send signal
     startButton->signal("start_game");
@@ -120,6 +127,6 @@ void testObserverPattern() {
 }
 
 int main(int, char **) {
-    // testObserverPattern();
+    testObserverPattern();
     //return launchGame();
 }
