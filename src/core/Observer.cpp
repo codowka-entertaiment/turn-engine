@@ -8,12 +8,12 @@ namespace TurnEngine::core {
         printf("%s\n", message_from_subject_.c_str());
     }
 
-    void Observer::unsubscribe(Subject* subject) {
+    void Observer::disconnect(Subject* subject) {
         subject->detach(this);
         subjects.erase(std::remove(subjects.begin(), subjects.end(), subject), subjects.end());
     }
 
-    void Observer::subscribe(Subject* subject) {
+    void Observer::connect(Subject* subject) {
         subjects.push_back(subject);
         subject->attach(this);
     }

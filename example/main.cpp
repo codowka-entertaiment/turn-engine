@@ -1,8 +1,10 @@
 #include "TurnEngine/Engine.hpp"
 #include "TurnEngine/gui/BaseWidget.hpp"
+#include "TurnEngine/core/Drawable.hpp"
+#include <vector>
 
 using namespace TurnEngine;
-
+std::vector<core::Drawable*> map;
 // Define that method to handle events
 void Engine::onPollEvents() {
     for (auto event: event_queue) {
@@ -45,15 +47,18 @@ void Engine::onPollEvents() {
 
 // Define that method to implement game logic, which updates state of your game
 void Engine::onUpdate() {
-
 }
 
 // Define that method to implement drawer logic (IDK somebody try to use it with threads)
 void Engine::onDraw() {
-    Uint32 start = SDL_GetTicks();
-    if (start - currentTicks > 1000 / fps) {
-        currentTicks = start;
+    for (auto tile : map) {
+        // Possible two ways to draw Drawable object
+        // 1. Call draw from Drawable object
+        tile->draw(getDrawer());
+        // 2. Call draw from Drawer object
+        getDrawer()->draw(*tile);
     }
+    getDrawer()->renderAll();
 }
 
 // Steps to launch game
@@ -72,6 +77,14 @@ int launchGame() {
     }
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {
         return EXIT_FAILURE;
+    }
+    auto texture = new Texture(*engine.getRenderer(), "../example/assets/hexagon.png");
+    int m = 1;
+    for (int i = 0; i < 14; i++) {
+        for (int j = 0; j < 14; j++) {
+            map.push_back(new gui::BaseWidget(1, {j * 50 + (m + 1) * 25 / 2, i * 50 - i * 10}, 50, 50, texture, 0, RendererFlip::NONE, Color::red));
+        }
+        m *= -1;
     }
     engine.start(60);
     return 0;
@@ -110,16 +123,16 @@ void testObserverPattern() {
     Enemy *enemy2 = new Enemy();
 
     // Observers subscribing subject
-    player->subscribe(startButton);
-    enemy1->subscribe(startButton);
-    enemy2->subscribe(startButton);
-    player->subscribe(exitButton);
-    enemy1->subscribe(exitButton);
-    enemy2->subscribe(exitButton);
+    player->connect(startButton);
+    enemy1->connect(startButton);
+    enemy2->connect(startButton);
+    player->connect(exitButton);
+    enemy1->connect(exitButton);
+    enemy2->connect(exitButton);
 
     // Observers unsubscribing subject
-    enemy1->unsubscribe(exitButton);
-    enemy2->unsubscribe(exitButton);
+    enemy1->disconnect(exitButton);
+    enemy2->disconnect(exitButton);
 
     // Subjects send signal
     startButton->signal("start_game");
@@ -127,6 +140,6 @@ void testObserverPattern() {
 }
 
 int main(int, char **) {
-    testObserverPattern();
-    //return launchGame();
+    //testObserverPattern();
+    return launchGame();
 }

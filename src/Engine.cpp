@@ -31,6 +31,7 @@ namespace TurnEngine {
         onUpdate();
         if (currentTicks - this->ticks > 1000 / this->fps) {
             getRenderer()->set_draw_color(Color::black);
+            getRenderer()->clear();
             onDraw();
             this->ticks = currentTicks;
             getRenderer()->present();

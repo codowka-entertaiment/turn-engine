@@ -4,7 +4,7 @@ namespace TurnEngine::render {
 
     /// @brief
     /// That function puts Drawable inside queue
-    void Drawer::draw(const core::Drawable &drawable) {
+    void Drawer::draw(const core::IDrawable &drawable) {
         this->drawQueue.push(drawable);
     }
 
@@ -12,7 +12,7 @@ namespace TurnEngine::render {
     /// That function pops all loaded Drawables in queue and renders it to the window
     void Drawer::renderAll() {
         while (!this->drawQueue.empty()) {
-            core::Drawable drawable = this->drawQueue.top();
+            core::IDrawable drawable = this->drawQueue.top();
             if (drawable.texture == nullptr) {
                 getRenderer()->set_draw_color(drawable.color);
                 Rect<int> rect = {drawable.position.x(), drawable.position.y(), drawable.width, drawable.height};
@@ -59,9 +59,5 @@ namespace TurnEngine::render {
 
     void Drawer::destroy() {
         this->renderer->destroy();
-    }
-
-    void draw(const core::Drawable &drawable) {
-
     }
 }

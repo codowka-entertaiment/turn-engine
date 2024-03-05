@@ -1,10 +1,10 @@
 #pragma once
 
-#include "TurnEngine/core/Drawable.hpp"
+#include "TurnEngine/core/IDrawable.hpp"
 
 namespace TurnEngine::render {
     class DrawComparator {
     public:
-        bool operator()(const core::Drawable& below, const core::Drawable& above) const;
+        bool operator()(const core::IDrawable& below, const core::IDrawable& above) const;
     };
 }

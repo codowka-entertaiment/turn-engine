@@ -22,11 +22,11 @@ namespace TurnEngine::core {
 
         /// @brief
         /// That func detaches Observer class from Subject
-        void unsubscribe(Subject* subject);
+        void disconnect(Subject* subject);
 
         /// @brief
         /// That func attaches Observer class to Subject
-        void subscribe(Subject* subject);
+        void connect(Subject* subject);
 
         std::string getMessage();
 
