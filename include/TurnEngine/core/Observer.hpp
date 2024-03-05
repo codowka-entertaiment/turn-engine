@@ -20,7 +20,7 @@ namespace TurnEngine::core {
 
         std::string getMessage();
 
-    private:
+    protected:
         std::string message_from_subject_;
         std::vector<Subject*> subjects;
         int number_;

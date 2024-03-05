@@ -3,6 +3,7 @@
 
 using namespace TurnEngine;
 
+// Define that method to handle events
 void Engine::onPollEvents() {
     for (auto event: event_queue) {
         if (event.type == SDL_QUIT) {
@@ -42,10 +43,12 @@ void Engine::onPollEvents() {
     }
 }
 
+// Define that method to implement game logic, which updates state of your game
 void Engine::onUpdate() {
 
 }
 
+// Define that method to implement drawer logic (IDK somebody try to use it with threads)
 void Engine::onDraw() {
     Uint32 start = SDL_GetTicks();
     if (start - currentTicks > 1000 / fps) {
@@ -53,7 +56,13 @@ void Engine::onDraw() {
     }
 }
 
-int main(int, char **) {
+// Steps to launch game
+// 1. Initialize Engine class
+// 2. Call initSDL method
+// 3. Call createWindow method
+// 4. Call createDrawer method
+// 5. Call start method
+int launchGame() {
     Engine engine{};
     if (!engine.initSDL(SDLInitFlags::EVERYTHING)) {
         return EXIT_FAILURE;
@@ -64,26 +73,53 @@ int main(int, char **) {
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {
         return EXIT_FAILURE;
     }
+    engine.start(60);
+    return 0;
+}
+
+// Observable class must be inherited by core::Subject (No methods needed to be overridden)
+class Button : public core::Subject {
+};
+
+// Observer class must be inherited by core::Observer (Override method update to use it with your game logic)
+class Player : public core::Observer {
+    void update(const std::string &message_from_subject) override {
+        message_from_subject_ = message_from_subject;
+        printf("Player: Subject notified about %s\n", message_from_subject.c_str());
+    }
+};
+
+// Observer class must be inherited by core::Observer (Override method update to use it with your game logic)
+class Enemy : public core::Observer {
+    void update(const std::string &message_from_subject) override {
+        message_from_subject_ = message_from_subject;
+        printf("Enemy: Subject notified about %s\n", message_from_subject.c_str());
+    }
+};
+
+// Observer pattern usage example
+void testObserverPattern() {
 
     // Create subjects
-
-    auto *subject = new core::Subject;
-    auto *subject1 = new core::Subject;
+    Button* startButton = new Button();
+    Button* exitButton = new Button();
 
     // Observers are subscribing subjects
-
-    auto *observer1 = new core::Observer();
-    observer1->subscribe(subject);
-    observer1->subscribe(subject1);
-    auto *observer2 = new core::Observer();
-    observer2->subscribe(subject);
-    observer2->subscribe(subject1);
-    observer2->unsubscribe(subject);
-    auto *observer3 = new core::Observer();
-    observer3->subscribe(subject);
+    Player *player = new Player();
+    Enemy *enemy1 = new Enemy();
+    Enemy *enemy2 = new Enemy();
+    player->subscribe(startButton);
+    enemy1->subscribe(startButton);
+    enemy2->subscribe(startButton);
+    enemy1->subscribe(exitButton);
+    enemy2->subscribe(exitButton);
 
     // Subjects send signal
-    subject->signal("click");
-    subject1->signal("jump");
-//    engine.start(60);
+    startButton->signal("start_game");
+    exitButton->signal("exit_game");
+}
+
+int main(int, char **) {
+    // testObserverPattern();
+    //return launchGame();
 }
