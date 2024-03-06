@@ -32,6 +32,8 @@ namespace TurnEngine::gui {
 
         BaseWidget(core::Drawable *drawable, geo2d::Shape<int>* _shape);
 
+        BaseWidget(BaseWidget* widget);
+
         ~BaseWidget();
 
         /// @brief

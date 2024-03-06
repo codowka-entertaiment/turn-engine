@@ -22,6 +22,8 @@
 
 #include "gui/BaseWidget.hpp"
 #include "gui/BaseButton.hpp"
+#include "gui/GridRectangle.hpp"
+#include "gui/GridHexagon.hpp"
 #include "gui/Sprite.hpp"
 
 #include "geo2d/Shapes.hpp"

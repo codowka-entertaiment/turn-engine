@@ -19,16 +19,26 @@ namespace TurnEngine::core {
         RendererFlip flip;
         rgba<> color;
 
-        IDrawable(int depthIndex, bool isAnimated, Point<int> position, int width, int height, Texture *texture,
-                  Rect<int> rect, int angle, RendererFlip flip, rgba<> color) : depthIndex(depthIndex),
-                                                                                isAnimated(isAnimated),
-                                                                                position(position),
-                                                                                width(width),
-                                                                                height(height),
-                                                                                texture(texture),
-                                                                                rect(rect),
-                                                                                angle(angle),
-                                                                                flip(flip),
-                                                                                color(color){}
+        IDrawable(
+                int depthIndex,
+                bool isAnimated,
+                Point<int> position,
+                int width,
+                int height,
+                Texture *texture,
+                Rect<int> rect,
+                int angle,
+                RendererFlip flip,
+                rgba<> color
+        ) : depthIndex(depthIndex),
+            isAnimated(isAnimated),
+            position(position),
+            width(width),
+            height(height),
+            texture(texture),
+            rect(rect),
+            angle(angle),
+            flip(flip),
+            color(color) {}
     };
 }
