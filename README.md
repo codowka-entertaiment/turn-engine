@@ -1,4 +1,4 @@
-# turn-engine
+# TurnEngine
 
 Minimalist 2D game engine
 
