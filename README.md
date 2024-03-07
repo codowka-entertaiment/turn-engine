@@ -54,3 +54,57 @@ Most of the most used SDL2 functions are wrapped in C++ classes.
 | PixelOrder           | enum      | Enumeration with pixel order types. That means ordering channels or bits in the pixel format                              | Yes          | Yes                      |
 | PixelLayout          | enum      | Enumeration with bit patterns of the pixel format                                                                         | Yes          | Yes                      |
 | RendererFlip         | enum      | Enumeration with texture flip flags                                                                                       | Yes          | Yes                      |
+
+## Core
+
+Main objects and some patterns implementation
+
+| Name        | Type  | Description                                                                                                                                               | Implemented? | constexpr implementation? |
+|-------------|-------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|---------------------------|
+| IDrawable   | class | Interface used to describe Drawable                                                                                                                       | Yes          | No                        |
+| Drawable    | class | Class used to describe any drawable object                                                                                                                | Yes          | No                        |
+| IObserver   | class | Interface used to describe Observer                                                                                                                       | Yes          | No                        |
+| Observer    | class | Class which implements Observer pattern. That class can observe class which is derived by Subject.  Google it if you are not familiar with it             | Yes          | No                        |
+| ISubject    | class | Inteface used to describe Subject                                                                                                                         | Yes          | No                        |
+| Subject     | class | Class which implements Observer pattern. That class can send messages to classes which is derived by Observer.  Google it if you are not familiar with it | Yes          | No                        |
+| Responsible | class | Class which implements Chain of responsibility pattern. That class can send action to next responsible class.  Google it if you are not familiar with it  | Yes          | No                        |
+
+## Extension
+
+Game engine extensions
+
+| Name | Type      | Description                                                  | Implemented? | constexpr implemantation |
+|------|-----------|--------------------------------------------------------------|--------------|--------------------------|
+| math | namespace | Implemantation of some most used in gamedev maths functions  | Partly       | Yes                      |
+
+## Geo2d
+
+2D Geometry shapes
+
+| Name      | Type  | Description                           | Implemented? | constexpr implementation |
+|-----------|-------|---------------------------------------|--------------|--------------------------|
+| Vector    | class | Class which describes maths vector    | Yes          | Yes                      |
+| Shape     | class | Abstract class for different shapes   | Yes          | Yes                      |
+| Rectangle | class | Class which describes rectangle shape | Yes          | Yes                      |
+| Hexagon   | class | Class which describes hexagon shape   | Yes          | Yes                      |
+
+## GUI
+
+Implementation of some GUI objects
+
+| Name          | Type  | Description                                  | Implemented? | constexpr implementation |
+|---------------|-------|----------------------------------------------|--------------|--------------------------|
+| BaseButton    | class | Class for implementing custom buttons        | Partly       | No                       |
+| BaseWidget    | class | Class for implementing custom widgets        | Yes          | No                       |
+| GridHexagon   | class | Class for creating hexagon maps              | No           | No                       |
+| GridRectangle | class | Class for creating rectangle maps            | No           | No                       |
+| Sprite        | class | Class which describes sprites (animated too) | Yes          | No                       |
+
+## Render
+
+Classes that are participating in rendering 
+
+| Name           | Type  | Description                                                  | Implemented? | constexpr implementation |
+|----------------|-------|--------------------------------------------------------------|--------------|--------------------------|
+| Drawer         | class | That class stands for drawing any object derived by Drawable | Yes          | No                       |
+| DrawComparator | class | That class compare two Drawables by its depth index          | Yes          | No                       |
