@@ -2,15 +2,18 @@
 
 #include <SDL_ttf.h>
 #include <string>
+#include "TurnEngine/wrapper/Surface.hpp"
 
 namespace TurnEngine {
     class Font {
-    private:
+    public:
         TTF_Font* font;
         int fontSize;
-    public:
-        Font(const std::string& font, int _fontSize);
-        void setFontSize(int _fontSize);
-        ~Font();
+        constexpr Font(const std::string& font, int _fontSize);
+        constexpr void setFontSize(int _fontSize);
+        constexpr ~Font();
     };
+    Surface* renderSolid(Font* font, const std::string& text, rgba<> color);
+    Surface* renderBlended(Font* font, const std::string& text, rgba<> color);
+    Surface* renderShaded(Font* font, const std::string& text, rgba<> foreground, rgba<> background);
 }
