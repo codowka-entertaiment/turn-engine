@@ -7,6 +7,10 @@ Minimalist 2D game engine
 Please locate public headers (that might be included in game project) in `turn-engine/include` folder.
 Private headers (used only in that library) and their implementation must be located in `turn-engine/src`
 
+## Installation
+
+Not implemented for now
+
 ## Docs
 
 ### SDL2 Wrapper
