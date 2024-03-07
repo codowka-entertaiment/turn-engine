@@ -11,7 +11,7 @@ Private headers (used only in that library) and their implementation must be loc
 
 ### SDL2 Wrapper
 
-Most of the most recent SDL2 functions are wrapped in C++ classes.
+Most of the most used SDL2 functions are wrapped in C++ classes.
 
 | Name                 | Type      | Description                                                                                                               | Implemented? | constexpr implementation |
 |----------------------|-----------|---------------------------------------------------------------------------------------------------------------------------|--------------|--------------------------|
