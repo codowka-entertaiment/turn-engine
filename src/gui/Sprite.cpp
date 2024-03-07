@@ -30,7 +30,6 @@ namespace TurnEngine::gui {
     void Sprite::draw(render::Drawer* _drawer) {
         if (isAnimated) {
             if (SDL_GetTicks() - currentTick >= animationTime / maxFrames) {
-                printf("CT: %d, SDL: %d, delta: %d\n", currentTick, SDL_GetTicks(), SDL_GetTicks() - currentTick);
                 if (isPlaying) currentFrame += 1;
                 if (currentFrame >= maxFrames) currentFrame = 0;
                 rect.x() = currentFrame * rect.w();

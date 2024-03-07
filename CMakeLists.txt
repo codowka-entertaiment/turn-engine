@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
+set(CMAKE_OSX_ARCHITECTURES x86_64)
 project(TurnEngine)
 
 include(FetchContent)
@@ -24,7 +25,7 @@ FetchContent_Declare(
 FetchContent_Declare(
         SDL2_ttf
         GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf
-        GIT_TAG release-2.22.0
+        GIT_TAG release-2.20.2
         GIT_PROGRESS TRUE
 )
 
@@ -45,7 +46,7 @@ add_executable(
         TurnEngine example/main.cpp ${SOURCES} ${INCLUDES}
 )
 
-target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static SDL2_ttf)
+target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static SDL2_ttf::SDL2_ttf-static)
 
 target_include_directories(TurnEngine PRIVATE src)
 

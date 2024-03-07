@@ -2,6 +2,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 
 #include "Enums.hpp"
 
@@ -25,6 +26,31 @@ namespace TurnEngine {
         {}
 
         ~SDL2() noexcept { if (valid_) SDL_Quit(); }
+
+        constexpr explicit operator bool() const noexcept { return valid_; }
+
+        constexpr bool is_ok() const noexcept { return valid_; }
+
+        static std::string_view get_error() noexcept {
+            return SDL_GetError();
+        }
+    };
+
+    class TTF {
+        bool valid_ = true;
+
+    public:
+        TTF(TTF const&) = delete;
+        TTF& operator=(TTF const&) = delete;
+        TTF& operator=(TTF&&) = delete;
+
+        constexpr TTF(TTF&& other) noexcept = default;
+
+        TTF() noexcept
+                : valid_{TTF_Init() == 0}
+        {}
+
+        ~TTF() noexcept { if (valid_) TTF_Quit(); }
 
         constexpr explicit operator bool() const noexcept { return valid_; }
 

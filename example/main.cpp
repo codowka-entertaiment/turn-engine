@@ -95,33 +95,12 @@ int launchGame() {
     tile->setAnimationFrameStep({0, 0, 64, 64}, 4);
     tile->setAnimationRow(0);
     tile->setTexture(texture);
-    tile->setAnimationTime(1000);
+    tile->setAnimationTime(500);
     tile->startAnimation();
     engine.start(60);
     return 0;
 }
 
-// Observable class must be inherited by core::Subject (No methods needed to be overridden)
-class Button : public core::Subject {
-};
-
-// Observer class must be inherited by core::Observer (Override method update to use it with your game logic)
-class Player : public core::Observer {
-    void update(const std::string &message_from_subject) override {
-        message_from_subject_ = message_from_subject;
-        printf("Player: Subject notified about %s\n", message_from_subject.c_str());
-    }
-};
-
-// Observer class must be inherited by core::Observer (Override method update to use it with your game logic)
-class Enemy : public core::Observer {
-    void update(const std::string &message_from_subject) override {
-        message_from_subject_ = message_from_subject;
-        printf("Enemy: Subject notified about %s\n", message_from_subject.c_str());
-    }
-};
-
 int main(int, char **) {
-    //testObserverPattern();
     return launchGame();
 }
