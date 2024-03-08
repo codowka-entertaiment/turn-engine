@@ -6,9 +6,7 @@ namespace TurnEngine {
         SDL2 const sdl(SDLInitFlags::EVERYTHING);
         if (!sdl)
             return false;
-        TTF const ttf;
-        if (!ttf)
-            return false;
+        TTF_Init();
         return true;
     }
 

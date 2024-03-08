@@ -40,8 +40,8 @@ constexpr const_pixel_format_view Surface::pixel_format() const noexcept {
     return {surface_->format};
 }
 
-constexpr int Surface::width() const noexcept { return surface_->w; }
-constexpr int Surface::height() const noexcept { return surface_->h; }
+//constexpr int Surface::width() const noexcept { return surface_->w; }
+//constexpr int Surface::height() const noexcept { return surface_->h; }
 constexpr int Surface::pitch() const noexcept { return surface_->pitch; }
 constexpr void const* Surface::pixels() const noexcept { return surface_->pixels; }
 constexpr void* Surface::pixels() noexcept { return surface_->pixels; }
@@ -60,13 +60,13 @@ constexpr int Surface::refcount_sub(int const amt) noexcept {
     return surface_->refcount;
 }
 
-//int surface::refcount_atomic_load(std::memory_order const order) const noexcept {
+//int Surface::refcount_atomic_load(std::memory_order const order) const noexcept {
 //    return std::atomic_ref{surface_->refcount}.load(order);
 //}
-//int surface::refcount_atomic_fetch_add(int const amt, std::memory_order const order) noexcept {
+//int Surface::refcount_atomic_fetch_add(int const amt, std::memory_order const order) noexcept {
 //    return std::atomic_ref{surface_->refcount}.fetch_add(amt, order);
 //}
-//int surface::refcount_atomic_fetch_sub(int const amt, std::memory_order const order) noexcept {
+//int Surface::refcount_atomic_fetch_sub(int const amt, std::memory_order const order) noexcept {
 //    return std::atomic_ref{surface_->refcount}.fetch_sub(amt, order);
 //}
 

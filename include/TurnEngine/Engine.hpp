@@ -25,6 +25,7 @@
 #include "gui/GridRectangle.hpp"
 #include "gui/GridHexagon.hpp"
 #include "gui/Sprite.hpp"
+#include "gui/Label.hpp"
 
 #include "geo2d/Shapes.hpp"
 #include "geo2d/Vector.hpp"

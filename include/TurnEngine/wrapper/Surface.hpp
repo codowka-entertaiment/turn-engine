@@ -11,10 +11,10 @@
 
 namespace TurnEngine {
     class Surface {
-        SDL_Surface* surface_;
+
 
     public:
-
+        SDL_Surface* surface_;
         constexpr explicit Surface(SDL_Surface* s) noexcept
                 : surface_(s) {}
 
@@ -46,9 +46,9 @@ namespace TurnEngine {
 
         constexpr const_pixel_format_view pixel_format() const noexcept;
 
-        constexpr int width() const noexcept;
+        constexpr int width() const noexcept { return surface_->w; };
 
-        constexpr int height() const noexcept;
+        constexpr int height() const noexcept { return surface_->h; };
 
         constexpr int pitch() const noexcept;
 

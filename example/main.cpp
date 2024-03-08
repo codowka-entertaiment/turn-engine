@@ -61,6 +61,8 @@ void Engine::onUpdate() {
 
 // Define that method to implement drawer logic (IDK somebody try to use it with threads)
 void Engine::onDraw() {
+    gui::Label *label = new gui::Label(new Font("../example/assets/Roboto-Black.ttf", 30), "Леша шагает", {100, 100}, Color::white, 5);
+    label->draw(getDrawer());
     tile->draw(getDrawer());
     getDrawer()->renderAll();
 }
@@ -86,7 +88,7 @@ int launchGame() {
     auto query = texture->query();
     tile = new gui::Sprite(0,
                            true,
-                           {0, 0},
+                           {100, 100},
                            query.width,
                            query.height,
                            0,

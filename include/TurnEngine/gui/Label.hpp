@@ -5,17 +5,26 @@
 #include "TurnEngine/wrapper/Font.hpp"
 #include "TurnEngine/wrapper/Surface.hpp"
 #include "TurnEngine/render/Drawer.hpp"
+#include "TurnEngine/core/Drawable.hpp"
 
 namespace TurnEngine::gui {
-    class Label {
+    class Label : public core::Drawable {
     private:
         std::string text;
-        Font* font;
-        Texture* txr;
+        Font *font;
         rgba<> color;
         xy<int> pos;
     public:
-        Label(std::string _text, xy<int> _pos, rgba<> _color);
-        void draw(render::Drawer* drawer);
+        Label(
+                Font* _font,
+                std::string _text,
+                xy<int> _pos,
+                rgba<> _color,
+                int _depthIndex,
+                int _angle = 0,
+                RendererFlip _flip = RendererFlip::NONE
+        );
+
+        void draw(render::Drawer *drawer);
     };
 }
