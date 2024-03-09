@@ -4,10 +4,12 @@
 #include "TurnEngine/wrapper/Texture.hpp"
 #include "TurnEngine/wrapper/Utils.hpp"
 #include "TurnEngine/wrapper/Color.hpp"
+#include "TurnEngine/geo2d/Shapes.hpp"
 
 namespace TurnEngine::core {
     class IObject2D {
     public:
+        geo2d::Shape<int>* shape;
         int depthIndex;
         bool isAnimated;
         Point<int> position;
@@ -20,6 +22,7 @@ namespace TurnEngine::core {
         rgba<> color;
 
         IObject2D(
+                geo2d::Shape<int>* shape,
                 int depthIndex,
                 bool isAnimated,
                 Point<int> position,
@@ -30,7 +33,8 @@ namespace TurnEngine::core {
                 int angle,
                 RendererFlip flip,
                 rgba<> color
-        ) : depthIndex(depthIndex),
+        ) : shape(shape),
+            depthIndex(depthIndex),
             isAnimated(isAnimated),
             position(position),
             width(width),

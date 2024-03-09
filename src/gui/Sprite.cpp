@@ -3,6 +3,7 @@
 namespace TurnEngine::gui {
 
     Sprite::Sprite(
+            geo2d::Shape<int>* _shape,
             int _depthIndex,
             bool _isAnimated,
             Point<int> _position,
@@ -13,7 +14,7 @@ namespace TurnEngine::gui {
             rgba<> _color
     ) :
             core::Object2D(
-                    _depthIndex, _isAnimated, _position, _width, _height, nullptr, {0, 0, 0, 0}, _angle, _flip, _color
+                    _shape, _depthIndex, _isAnimated, _position, _width, _height, nullptr, {0, 0, 0, 0}, _angle, _flip, _color
             ) {}
 
     Sprite::Sprite(core::Object2D *drawable) :

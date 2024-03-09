@@ -3,6 +3,7 @@
 namespace TurnEngine::core {
 
     Object2D::Object2D(
+            geo2d::Shape<int>* shape,
             int depthIndex,
             bool isAnimated,
             Point<int> position,
@@ -14,6 +15,7 @@ namespace TurnEngine::core {
             RendererFlip flip,
             rgba<> color
     ) : IObject2D(
+            shape,
             depthIndex,
             isAnimated,
             position,
@@ -24,9 +26,10 @@ namespace TurnEngine::core {
             angle,
             flip,
             color
-    ) {}
+    ), Object() {}
 
     Object2D::Object2D(Object2D *drawable) : IObject2D(
+            drawable->shape,
             drawable->depthIndex,
             drawable->isAnimated,
             drawable->position,
@@ -37,7 +40,7 @@ namespace TurnEngine::core {
             drawable->angle,
             drawable->flip,
             drawable->color
-    ) {}
+    ), Object(drawable) {}
 
     void Object2D::draw(render::Drawer *drawer) {
         drawer->draw(*this);

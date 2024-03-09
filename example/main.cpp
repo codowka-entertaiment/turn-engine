@@ -2,8 +2,8 @@
 #include <vector>
 
 using namespace TurnEngine;
-gui::Sprite *tile;
-
+core::Scene* scene;
+core::Scene* inner;
 // Define that method to handle events
 void Engine::onPollEvents() {
     for (auto event: event_queue) {
@@ -26,12 +26,7 @@ void Engine::onPollEvents() {
             // Handle mouse button click
             if (event.button.button == SDL_BUTTON_LEFT) {
                 printf("LMB DOWN: x:%d y:%d\n", event.button.x, event.motion.y);
-//                geo2d::PositionInt pos{event.motion.x, event.motion.y};
-//                for (int i = 0; i < map.size(); i++) {
-//                    if (map[i]->shape->contains(pos)) {
-//                        map[i]->texture = texture2;
-//                    }
-//                }
+                printf("Scene contains: %s\n", scene->contains({event.button.x, event.button.y}) ? "true" : "false");
             }
             if (event.button.button == SDL_BUTTON_RIGHT) {
                 printf("RMB DOWN: x:%d y:%d\n", event.button.x, event.motion.y);
@@ -61,9 +56,7 @@ void Engine::onUpdate() {
 
 // Define that method to implement drawer logic (IDK somebody try to use it with threads)
 void Engine::onDraw() {
-    gui::Label *label = new gui::Label(new Font("../example/assets/Roboto-Black.ttf", 30), "Леша шагает", {100, 100}, Color::white, 5);
-    label->draw(getDrawer());
-    tile->draw(getDrawer());
+    scene->draw(getDrawer());
     getDrawer()->renderAll();
 }
 
@@ -84,21 +77,91 @@ int launchGame() {
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {
         return EXIT_FAILURE;
     }
-    auto texture = new Texture(*engine.getRenderer(), "../example/assets/animation.png");
-    auto query = texture->query();
-    tile = new gui::Sprite(0,
-                           true,
-                           {100, 100},
-                           query.width,
-                           query.height,
-                           0,
-                           RendererFlip::NONE,
-                           rgba<>{0x00, 0xff, 0x00, 0xff});
-    tile->setAnimationFrameStep({0, 0, 64, 64}, 4);
-    tile->setAnimationRow(0);
-    tile->setTexture(texture);
-    tile->setAnimationTime(500);
-    tile->startAnimation();
+    scene = new core::Scene({0, 0}, engine.getWidth(), engine.getHeight());
+    inner = new core::Scene({scene->width / 2, scene->height / 2}, scene->width / 2, scene->height / 2);
+    unsigned char r = 0xff;
+    unsigned char g = 0x00;
+    unsigned char b = 0x00;
+    int w = scene->width / 2 / 10;
+    int h = scene->height / 2 / 10;
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            geo2d::Shape<int> *shape = geo2d::RectangleInt::init_uncheck({j * w, i * h}, w, h);
+            auto *tile = new core::Object2D(
+                    shape,
+                    0,
+                    false,
+                    {j * w, i * h},
+                    w,
+                    h,
+                    nullptr,
+                    {0, 0, 0, 0},
+                    0,
+                    RendererFlip::NONE,
+                    rgba<>{r, g, b, 0xf0});
+            scene->addChild(tile);
+            if (r == 0xff) {
+                r = 0x00;
+                g = 0xff;
+            }
+            else if (g == 0xff) {
+                g = 0x00;
+                b = 0xff;
+            }
+            else if (b == 0xff) {
+                b = 0x00;
+                r = 0xff;
+            }
+        }
+    }
+    w = 10;
+    h = 10;
+    for (int i = 0; i < 10; i++) {
+        for (int j =  0; j < 10; j++) {
+            geo2d::Shape<int> *shape = geo2d::RectangleInt::init_uncheck({j * w + inner->position.x(), i * h + inner->position.y()}, w, h);
+            auto *tile = new core::Object2D(
+                    shape,
+                    0,
+                    false,
+                    {j * w + inner->position.x(), i * h + inner->position.y()},
+                    w,
+                    h,
+                    nullptr,
+                    {0, 0, 0, 0},
+                    0,
+                    RendererFlip::NONE,
+                    rgba<>{r, g, b, 0xf0});
+            inner->addChild(tile);
+            if (r == 0xff) {
+                r = 0x00;
+                g = 0xff;
+            }
+            else if (g == 0xff) {
+                g = 0x00;
+                b = 0xff;
+            }
+            else if (b == 0xff) {
+                b = 0x00;
+                r = 0xff;
+            }
+        }
+    }
+    scene->addChild(inner);
+//    auto texture = new Texture(*engine.getRenderer(), "../example/assets/animation.png");
+//    auto query = texture->query();
+//    tile = new gui::Sprite(0,
+//                           true,
+//                           {100, 100},
+//                           query.width,
+//                           query.height,
+//                           0,
+//                           RendererFlip::NONE,
+//                           rgba<>{0x00, 0xff, 0x00, 0xff});
+//    tile->setAnimationFrameStep({0, 0, 64, 64}, 4);
+//    tile->setAnimationRow(0);
+//    tile->setTexture(texture);
+//    tile->setAnimationTime(500);
+//    tile->startAnimation();
     engine.start(60);
     return 0;
 }
