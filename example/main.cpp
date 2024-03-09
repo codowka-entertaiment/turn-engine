@@ -30,12 +30,6 @@ void Engine::onPollEvents() {
             }
             if (event.button.button == SDL_BUTTON_RIGHT) {
                 printf("RMB DOWN: x:%d y:%d\n", event.button.x, event.motion.y);
-//                geo2d::PositionInt pos{event.motion.x, event.motion.y};
-//                for (int i = 0; i < map.size(); i++) {
-//                    if (map[i]->shape->contains(pos)) {
-//                        map[i]->texture = texture1;
-//                    }
-//                }
             }
         }
         if (event.type == SDL_MOUSEBUTTONUP) {
@@ -71,31 +65,32 @@ int launchGame() {
     if (!engine.initSDL(SDLInitFlags::EVERYTHING)) {
         return EXIT_FAILURE;
     }
-    if (!engine.createWindow("Testing", 1200, 800)) {
+    if (!engine.createWindow("Testing", WindowFlags::FULLSCREEN_DESKTOP)) {
         return EXIT_FAILURE;
     }
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {
         return EXIT_FAILURE;
     }
+    // Custom cursor
+    Cursor* cursor = new Cursor("../example/assets/cursor.png");
+    cursor->enable();
     scene = new core::Scene({0, 0}, engine.getWidth(), engine.getHeight());
     inner = new core::Scene({scene->width / 2, scene->height / 2}, scene->width / 2, scene->height / 2);
     unsigned char r = 0xff;
     unsigned char g = 0x00;
     unsigned char b = 0x00;
-    int w = scene->width / 2 / 10;
-    int h = scene->height / 2 / 10;
+    int w = scene->width / 10;
+    int h = scene->height / 10;
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
             geo2d::Shape<int> *shape = geo2d::RectangleInt::init_uncheck({j * w, i * h}, w, h);
-            auto *tile = new core::Object2D(
+            auto *tile = new gui::Sprite(
                     shape,
                     0,
                     false,
                     {j * w, i * h},
                     w,
                     h,
-                    nullptr,
-                    {0, 0, 0, 0},
                     0,
                     RendererFlip::NONE,
                     rgba<>{r, g, b, 0xf0});

@@ -12,6 +12,7 @@
 #include "wrapper/Texture.hpp"
 #include "wrapper/Utils.hpp"
 #include "wrapper/Window.hpp"
+#include "wrapper/Cursor.hpp"
 
 #include "ext/Math.hpp"
 
@@ -46,7 +47,7 @@ namespace TurnEngine {
     public:
         ~Engine();
         bool initSDL(SDLInitFlags sdl_flags);
-        bool createWindow(const std::string& title, int width = 800, int height = 600);
+        bool createWindow(const std::string& title, WindowFlags flags, int width = 800, int height = 600);
         bool createDrawer(RendererFlags renderer_init_flags);
         void onPollEvents();
         void onUpdate();

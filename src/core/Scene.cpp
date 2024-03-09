@@ -4,18 +4,12 @@ namespace TurnEngine::core {
 
     bool Scene::contains(Point<int> _pos) {
         if (shape->contains({_pos.x(), _pos.y()})) {
-            printf("Inside scene! ID: %llu\n", id);
-        }
-        for (const auto &obj: objects) {
-            if (obj->shape->contains({_pos.x(), _pos.y()})) {
-                return true;
-            }
+            return true;
         }
         return false;
     }
 
     void Scene::draw(render::Drawer *drawer) {
-        printf("Drawing %llu\n", id);
         for (auto obj: objects) {
             obj->draw(drawer);
         }
@@ -26,7 +20,7 @@ namespace TurnEngine::core {
     }
 
     void Scene::removeChild(Object2D *obj) {
-
+        objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
     }
 
     Scene::Scene(Point<int> pos, int width, int height) : Object2D(
@@ -38,7 +32,5 @@ namespace TurnEngine::core {
             height,
             nullptr,
             {0, 0, 0, 0}
-    ) {
-        printf("MINE ID: %llu\n", id);
-    }
+    ) {}
 }

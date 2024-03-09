@@ -10,12 +10,14 @@ namespace TurnEngine {
         return true;
     }
 
-    bool Engine::createWindow(const std::string &title, int width, int height) {
+    bool Engine::createWindow(const std::string &title, WindowFlags flags, int width, int height) {
         this->height = height;
         this->width = width;
-        this->window = new Window("TurnEngine", Window::pos_centered, {width, height}, WindowFlags::RESIZABLE);
+        this->window = new Window("TurnEngine", Window::pos_centered, {width, height}, flags);
         if (this->window == nullptr)
             return false;
+        this->height = this->window->size().height;
+        this->width = this->window->size().width;
         return true;
     }
 
