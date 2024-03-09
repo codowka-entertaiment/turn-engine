@@ -61,8 +61,8 @@ Main objects and some patterns implementation
 
 | Name        | Type  | Description                                                                                                                                               | Implemented? | constexpr implementation? |
 |-------------|-------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|---------------------------|
-| IDrawable   | class | Interface used to describe Drawable                                                                                                                       | Yes          | No                        |
-| Drawable    | class | Class used to describe any drawable object                                                                                                                | Yes          | No                        |
+| IObject2D   | class | Interface used to describe Object2D                                                                                                                       | Yes          | No                        |
+| Object2D    | class | Class used to describe any drawable object                                                                                                                | Yes          | No                        |
 | IObserver   | class | Interface used to describe Observer                                                                                                                       | Yes          | No                        |
 | Observer    | class | Class which implements Observer pattern. That class can observe class which is derived by Subject.  Google it if you are not familiar with it             | Yes          | No                        |
 | ISubject    | class | Inteface used to describe Subject                                                                                                                         | Yes          | No                        |
@@ -106,5 +106,5 @@ Classes that are participating in rendering
 
 | Name           | Type  | Description                                                  | Implemented? | constexpr implementation |
 |----------------|-------|--------------------------------------------------------------|--------------|--------------------------|
-| Drawer         | class | That class stands for drawing any object derived by Drawable | Yes          | No                       |
+| Drawer         | class | That class stands for drawing any object derived by Object2D | Yes          | No                       |
 | DrawComparator | class | That class compare two Drawables by its depth index          | Yes          | No                       |

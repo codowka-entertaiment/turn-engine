@@ -16,7 +16,7 @@
 #include "ext/Math.hpp"
 
 #include "core/Responsible.hpp"
-#include "core/Drawable.hpp"
+#include "core/Object2D.hpp"
 
 #include "render/Drawer.hpp"
 

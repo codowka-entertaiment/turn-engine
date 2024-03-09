@@ -28,7 +28,7 @@ namespace TurnEngine::gui {
         int m = 1;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                core::Drawable(
+                core::Object2D(
                         1,
                         false,
                         {start_pos.x + j * sprite_height + (m + 1) * sprite_height / 4,

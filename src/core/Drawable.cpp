@@ -1,8 +1,8 @@
-#include "TurnEngine/core/Drawable.hpp"
+#include "TurnEngine/core/Object2D.hpp"
 
 namespace TurnEngine::core {
 
-    Drawable::Drawable(
+    Object2D::Object2D(
             int depthIndex,
             bool isAnimated,
             Point<int> position,
@@ -13,7 +13,7 @@ namespace TurnEngine::core {
             int angle,
             RendererFlip flip,
             rgba<> color
-    ) : IDrawable(
+    ) : IObject2D(
             depthIndex,
             isAnimated,
             position,
@@ -26,7 +26,7 @@ namespace TurnEngine::core {
             color
     ) {}
 
-    Drawable::Drawable(Drawable *drawable) : IDrawable(
+    Object2D::Object2D(Object2D *drawable) : IObject2D(
             drawable->depthIndex,
             drawable->isAnimated,
             drawable->position,
@@ -39,7 +39,7 @@ namespace TurnEngine::core {
             drawable->color
     ) {}
 
-    void Drawable::draw(render::Drawer *drawer) {
+    void Object2D::draw(render::Drawer *drawer) {
         drawer->draw(*this);
     }
 

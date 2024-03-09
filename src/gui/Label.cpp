@@ -23,7 +23,7 @@ namespace TurnEngine::gui {
             int _depthIndex,
             int _angle,
             RendererFlip _flip
-    ): core::Drawable({_depthIndex, false, {_pos.x, _pos.y}, 0, 0, nullptr, {0, 0, 0, 0}, _angle, _flip, _color}) {
+    ): core::Object2D({_depthIndex, false, {_pos.x, _pos.y}, 0, 0, nullptr, {0, 0, 0, 0}, _angle, _flip, _color}) {
         font = _font;
         text = _text;
         color = _color;

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "TurnEngine/core/Drawable.hpp"
+#include "TurnEngine/core/Object2D.hpp"
 #include "TurnEngine/geo2d/shapes/Shape.hpp"
 
 namespace TurnEngine::gui {
-    class Sprite: core::Drawable {
+    class Sprite: core::Object2D {
     private:
         geo2d::Shape<int>* shape;
         bool isPlaying = false;
@@ -24,7 +24,7 @@ namespace TurnEngine::gui {
                RendererFlip _flip,
                rgba<> _color);
 
-        Sprite(core::Drawable *drawable);
+        Sprite(core::Object2D *drawable);
         void startAnimation();
         void stopAnimation();
         void setTexture(Texture* _texture);

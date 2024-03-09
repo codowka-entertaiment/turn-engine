@@ -6,7 +6,7 @@
 #include "TurnEngine/wrapper/Color.hpp"
 
 namespace TurnEngine::core {
-    class IDrawable {
+    class IObject2D {
     public:
         int depthIndex;
         bool isAnimated;
@@ -19,7 +19,7 @@ namespace TurnEngine::core {
         RendererFlip flip;
         rgba<> color;
 
-        IDrawable(
+        IObject2D(
                 int depthIndex,
                 bool isAnimated,
                 Point<int> position,

@@ -5,10 +5,10 @@
 #include "TurnEngine/wrapper/Font.hpp"
 #include "TurnEngine/wrapper/Surface.hpp"
 #include "TurnEngine/render/Drawer.hpp"
-#include "TurnEngine/core/Drawable.hpp"
+#include "TurnEngine/core/Object2D.hpp"
 
 namespace TurnEngine::gui {
-    class Label : public core::Drawable {
+    class Label : public core::Object2D {
     private:
         std::string text;
         Font *font;

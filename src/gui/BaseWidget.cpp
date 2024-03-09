@@ -10,20 +10,20 @@ namespace TurnEngine::gui {
                            int _angle = 0,
                            RendererFlip _flip = RendererFlip::NONE,
                            rgba<> color = Color::black
-    ) : core::Drawable({_depthIndex, false, _position, _width, _height, _texture, {0, 0, 0, 0}, _angle, _flip, color}) {
+    ) : core::Object2D({_depthIndex, false, _position, _width, _height, _texture, {0, 0, 0, 0}, _angle, _flip, color}) {
         shape = _shape;
     }
 
     BaseWidget::~BaseWidget() = default;
 
-    void BaseWidget::addChild(core::Drawable *child) {
+    void BaseWidget::addChild(core::Object2D *child) {
         children.push_back(child);
     }
 
-    BaseWidget::BaseWidget(core::Drawable *drawable, geo2d::Shape<int> *_shape) :
-            core::Drawable(*drawable), shape(_shape) {}
+    BaseWidget::BaseWidget(core::Object2D *drawable, geo2d::Shape<int> *_shape) :
+            core::Object2D(*drawable), shape(_shape) {}
 
-    BaseWidget::BaseWidget(BaseWidget *widget) : core::Drawable(
+    BaseWidget::BaseWidget(BaseWidget *widget) : core::Object2D(
             widget->depthIndex,
             false,
             widget->position,

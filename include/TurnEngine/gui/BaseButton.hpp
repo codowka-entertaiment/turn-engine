@@ -1,13 +1,13 @@
 #pragma once
 
-#include "TurnEngine/core/Drawable.hpp"
+#include "TurnEngine/core/Object2D.hpp"
 #include "TurnEngine/core/Subject.hpp"
 #include "TurnEngine/geo2d/shapes/Shape.hpp"
 
 namespace TurnEngine::gui {
-    class BaseButton : public core::Drawable, public core::Subject {
+    class BaseButton : public core::Object2D, public core::Subject {
     private:
-//        std::string text;
+
         geo2d::Shape<int> *shape;
         Texture* commonTexture;
         Texture* onHover;
@@ -16,14 +16,15 @@ namespace TurnEngine::gui {
                    Point<int> _position,
                    int _width,
                    int _height,
-                   Texture *_texture,
+                   Texture *_commonTexture,
+                   Texture *_onHoverTexture,
                    geo2d::Shape<int> *_shape,
                    int _angle,
                    RendererFlip _flip,
                    rgba<> color,
                    std::string _text);
 
-        BaseButton(core::Drawable *drawable, geo2d::Shape<int> *_shape, std::string _text);
+        BaseButton(core::Object2D *drawable, geo2d::Shape<int> *_shape, std::string _text);
 
 
 

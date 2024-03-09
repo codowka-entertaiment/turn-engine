@@ -12,12 +12,12 @@ namespace TurnEngine::gui {
             RendererFlip _flip,
             rgba<> _color
     ) :
-            core::Drawable(
+            core::Object2D(
                     _depthIndex, _isAnimated, _position, _width, _height, nullptr, {0, 0, 0, 0}, _angle, _flip, _color
             ) {}
 
-    Sprite::Sprite(core::Drawable *drawable) :
-            core::Drawable(drawable) {}
+    Sprite::Sprite(core::Object2D *drawable) :
+            core::Object2D(drawable) {}
 
     void Sprite::startAnimation() {
         this->isPlaying = true;
