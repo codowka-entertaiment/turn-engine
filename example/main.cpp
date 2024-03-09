@@ -72,7 +72,7 @@ int launchGame() {
         return EXIT_FAILURE;
     }
     // Custom cursor
-    Cursor* cursor = new Cursor("../example/assets/cursor.png");
+    auto cursor = new Cursor("../example/assets/cursor.png");
     cursor->enable();
     scene = new core::Scene({0, 0}, engine.getWidth(), engine.getHeight());
     inner = new core::Scene({scene->width / 2, scene->height / 2}, scene->width / 2, scene->height / 2);

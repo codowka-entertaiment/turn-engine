@@ -33,4 +33,12 @@ namespace TurnEngine::core {
             nullptr,
             {0, 0, 0, 0}
     ) {}
+
+    std::vector<Object2D*> Scene::getChildren() {
+        return objects;
+    }
+
+    Point<int> Scene::getPosition() {
+        return pos;
+    }
 }

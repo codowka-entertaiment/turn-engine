@@ -14,6 +14,8 @@ namespace TurnEngine::core {
         bool contains(Point<int> pos);
         void draw(render::Drawer* drawer) override;
         void addChild(Object2D* obj);
+        std::vector<Object2D*> getChildren();
+        Point<int> getPosition();
         void removeChild(Object2D* obj);
     };
 }
