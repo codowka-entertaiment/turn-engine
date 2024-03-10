@@ -49,6 +49,10 @@ namespace geo2d
             auto pos = position - m_vertex;
             return (pos.x >= 0 && pos.x <= m_width) && (pos.y >= 0 && pos.y <= m_height);
         }
+
+        void setPosition(const Position<T> &position) override {
+            m_vertex = position;
+        }
     };
 
     using RectangleInt = Rectangle<int>;

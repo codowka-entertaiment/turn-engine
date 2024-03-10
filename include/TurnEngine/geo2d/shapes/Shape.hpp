@@ -10,5 +10,6 @@ namespace geo2d
     template <Numeric T>
     struct Shape {
         constexpr virtual bool contains(const Position<T> &position) const noexcept = 0;
+        virtual void setPosition(const Position<T> &position) = 0;
     };
 }

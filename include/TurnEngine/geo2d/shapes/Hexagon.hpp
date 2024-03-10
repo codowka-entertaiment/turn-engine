@@ -44,6 +44,9 @@ namespace geo2d
                    (pos.y >= -const1 * (pos.x + m_side)) &&  // F5
                    (pos.y <= +const1 * (pos.x + m_side));    // F6
         }
+        void setPosition(const Position<T>& position) override {
+            m_center = position;
+        }
     };
 
     using HexagonInt = Hexagon<int>;

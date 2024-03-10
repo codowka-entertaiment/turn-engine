@@ -35,13 +35,17 @@ public:
             printf("I am clicked man!\n");
         }
         if (event->msg == "moveUp") {
-            position.y() -= 2;
+            position.y() -= height / 6;
+            shape->setPosition({position.x(), position.y()});
         } else if (event->msg == "moveDown") {
-            position.y() += 2;
+            position.y() += height / 6;
+            shape->setPosition({position.x(), position.y()});
         } else if (event->msg == "moveLeft") {
-            position.x() -= 2;
+            position.x() -= width / 6;
+            shape->setPosition({position.x(), position.y()});
         } else if (event->msg == "moveRight") {
-            position.x() += 2;
+            position.x() += width / 6;
+            shape->setPosition({position.x(), position.y()});
         }
     }
 };
@@ -89,16 +93,20 @@ void Engine::onPollEvents() {
         }
     }
     if (last_y <= 5) {
-        eventSender->signal(new core::Event("moveUp"));
-    }
-    if (last_y >= height - 5) {
+        if (inner->getChild("tile0")->position.y() <= inner->position.y())
         eventSender->signal(new core::Event("moveDown"));
     }
+    if (last_y >= height - 5) {
+        if (inner->getChild("tile10200")->position.y() >= inner->position.y() + height)
+        eventSender->signal(new core::Event("moveUp"));
+    }
     if (last_x <= 5) {
-        eventSender->signal(new core::Event("moveLeft"));
+        if (inner->getChild("tile0")->position.x() <= inner->position.x())
+        eventSender->signal(new core::Event("moveRight"));
     }
     if (last_x >= width - 5) {
-        eventSender->signal(new core::Event("moveRight"));
+        if (inner->getChild("tile10200")->position.x() >= inner->position.x() + width)
+        eventSender->signal(new core::Event("moveLeft"));
     }
 }
 
@@ -154,11 +162,18 @@ int launchGame() {
             0,
             RendererFlip::NONE,
             rgba<>{0xff, g, b, 0xf0});
-    border->setTexture(new Texture(*engine.getRenderer(), "../example/assets/border_dead.png"));
+    border->setTexture(new Texture(*engine.getRenderer(), "../example/assets/border1.png"));
     border->name = "border";
     inner->addChild(border);
     for (int i = 0; i < 101; i++) {
         for (int j = 0; j < 101; j++) {
+            if (j % 2 == 0) {
+                r = 0xff;
+                b = 0x00;
+            } else {
+                b = 0xff;
+                r = 0x00;
+            }
             geo2d::Shape<int> *shape = geo2d::RectangleInt::init_uncheck(
                     {j * w, i * h}, w, h);
             auto *tile = new Tile(
@@ -171,15 +186,10 @@ int launchGame() {
                     0,
                     RendererFlip::NONE,
                     rgba<>{r, g, b, 0xf0});
-            tile->setName(std::format("tile%d", tile->id));
+            tile->setName(std::format("tile{}", i * 101 + j));
+            printf("%s\n", tile->name.c_str());
             tile->connect(eventSender);
             inner->addChild(tile);
-            if (b == 0xff) {
-                b = 0x00;
-                g = 0xff;
-            } else {
-                b = 0xff;
-            }
         }
     }
     scene->addChild(inner);
