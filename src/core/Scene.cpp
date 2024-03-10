@@ -21,10 +21,12 @@ namespace TurnEngine::core {
     }
 
     void Scene::addChild(Object2D *obj) {
+        attach(obj);
         objects.emplace_back(obj);
     }
 
     void Scene::removeChild(Object2D *obj) {
+        detach(obj);
         objects.erase(std::remove(objects.begin(), objects.end(), obj), objects.end());
     }
 
@@ -52,5 +54,14 @@ namespace TurnEngine::core {
             if (child->name == _name) return child;
         }
         return nullptr;
+    }
+
+    void Scene::update(Event *_event) {
+        for (auto obj : objects) {
+            if (!(_event->pos.x() - obj->position.x() > obj->width ||
+                _event->pos.y() - obj->position.y() > obj->height) ||
+                (_event->pos.x() == -1 && _event->pos.y() == -1))
+            obj->update(_event);
+        }
     }
 }

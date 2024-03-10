@@ -3,7 +3,6 @@
 #include <vector>
 #include "TurnEngine/geo2d/Vector.hpp"
 #include "TurnEngine/geo2d/Shapes.hpp"
-#include "TurnEngine/gui/BaseWidget.hpp"
 
 namespace TurnEngine::gui {
 //    class GridHexagon {

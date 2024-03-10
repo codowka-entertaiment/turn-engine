@@ -18,5 +18,6 @@ namespace TurnEngine::core {
         Object2D* getChild(std::string _name) override;
         Point<int> getPosition();
         void removeChild(Object2D* obj);
+        void update(Event* _event) override;
     };
 }

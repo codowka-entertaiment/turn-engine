@@ -23,7 +23,6 @@
 
 #include "render/Drawer.hpp"
 
-#include "gui/BaseWidget.hpp"
 #include "gui/BaseButton.hpp"
 #include "gui/GridRectangle.hpp"
 #include "gui/GridHexagon.hpp"

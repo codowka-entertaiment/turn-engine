@@ -3,8 +3,13 @@
 
 using namespace TurnEngine;
 core::Scene *scene;
-core::Scene *inner;
-core::Subject* eventSender;
+core::Scene *field;
+core::Scene *GUI;
+core::Subject *eventSender;
+
+void handler() {
+    exit(0);
+}
 
 class Tile : public gui::Sprite {
 public:
@@ -29,7 +34,8 @@ public:
             _flip,
             _color
     ) {}
-    void update(core::Event* event) override {
+
+    void update(core::Event *event) override {
         if (event->msg == "click" && shape->contains({event->pos.x(), event->pos.y()})) {
             color = rgba<>{0xff, 0xff, 0xff, 0xff};
             printf("I am clicked man!\n");
@@ -93,20 +99,20 @@ void Engine::onPollEvents() {
         }
     }
     if (last_y <= 5) {
-        if (inner->getChild("tile0")->position.y() <= inner->position.y())
-        eventSender->signal(new core::Event("moveDown"));
+        if (field->getChild("tile0")->position.y() <= field->position.y())
+            eventSender->signal(new core::Event("moveDown"));
     }
     if (last_y >= height - 5) {
-        if (inner->getChild("tile10200")->position.y() >= inner->position.y() + height)
-        eventSender->signal(new core::Event("moveUp"));
+        if (field->getChild("tile10200")->position.y() >= field->position.y() + height)
+            eventSender->signal(new core::Event("moveUp"));
     }
     if (last_x <= 5) {
-        if (inner->getChild("tile0")->position.x() <= inner->position.x())
-        eventSender->signal(new core::Event("moveRight"));
+        if (field->getChild("tile0")->position.x() <= field->position.x())
+            eventSender->signal(new core::Event("moveRight"));
     }
     if (last_x >= width - 5) {
-        if (inner->getChild("tile10200")->position.x() >= inner->position.x() + width)
-        eventSender->signal(new core::Event("moveLeft"));
+        if (field->getChild("tile10200")->position.x() >= field->position.x() + width)
+            eventSender->signal(new core::Event("moveLeft"));
     }
 }
 
@@ -142,29 +148,51 @@ int launchGame() {
     cursor->enable();
     scene = new core::Scene({0, 0}, engine.getWidth(), engine.getHeight());
     scene->texture = new Texture(*engine.getRenderer(), "../example/assets/background.jpeg");
-    inner = new core::Scene({50, 50}, scene->width / 10 * 8, scene->height / 10 * 8);
-    inner->color = {0x00, 0x00, 0x00, 0x00};
-    inner->depthIndex = scene->depthIndex - 1;
+    field = new core::Scene({50, 50}, scene->width / 10 * 8, scene->height / 10 * 8);
+    GUI = new core::Scene({scene->width / 10 * 8 + 50, 50}, scene->width / 10 * 1.5, scene->height / 10 * 8);
+    field->depthIndex = scene->depthIndex + 1;
+    GUI->depthIndex = scene->depthIndex - 1;
+    scene->setName("Scene");
+    GUI->setName("GUI");
+    field->setName("field");
     eventSender = new core::Subject();
     unsigned char r = 0x00;
     unsigned char g = 0x00;
     unsigned char b = 0x00;
     int w = 20;
     int h = 20;
+    auto button = new gui::BaseButton(
+            geo2d::RectangleInt::init_uncheck(
+                    {GUI->position.x(), GUI->position.y()}, GUI->width, 100),
+            5,
+            {GUI->position.x(), GUI->position.y()},
+            GUI->width,
+            100,
+            new Texture(*engine.getRenderer(), "../example/assets/button.png"),
+            nullptr,
+            0,
+            RendererFlip::NONE,
+            rgba<>{0xff, g, b, 0xf0},
+            "Exit",
+            "../example/assets/Roboto-Black.ttf",
+            20
+    );
+    button->setHandler(handler);
+    GUI->addChild(button);
     auto border = new gui::Sprite(
             geo2d::RectangleInt::init_uncheck(
-                    {inner->position.x(), inner->position.y()}, w, h),
+                    {field->position.x(), field->position.y()}, w, h),
             10000,
             false,
-            {inner->position.x(), inner->position.y()},
-            inner->width,
-            inner->height,
+            {field->position.x(), field->position.y()},
+            field->width,
+            field->height,
             0,
             RendererFlip::NONE,
             rgba<>{0xff, g, b, 0xf0});
     border->setTexture(new Texture(*engine.getRenderer(), "../example/assets/border1.png"));
     border->name = "border";
-    inner->addChild(border);
+    field->addChild(border);
     for (int i = 0; i < 101; i++) {
         for (int j = 0; j < 101; j++) {
             if (j % 2 == 0) {
@@ -187,12 +215,12 @@ int launchGame() {
                     RendererFlip::NONE,
                     rgba<>{r, g, b, 0xf0});
             tile->setName(std::format("tile{}", i * 101 + j));
-            printf("%s\n", tile->name.c_str());
-            tile->connect(eventSender);
-            inner->addChild(tile);
+            field->addChild(tile);
         }
     }
-    scene->addChild(inner);
+    scene->connect(eventSender);
+    scene->addChild(field);
+    scene->addChild(GUI);
 //    auto texture = new Texture(*engine.getRenderer(), "../example/assets/animation.png");
 //    auto query = texture->query();
 //    tile = new gui::Sprite(0,

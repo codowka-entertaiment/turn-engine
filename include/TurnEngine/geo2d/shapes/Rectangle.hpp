@@ -47,7 +47,7 @@ namespace geo2d
 
         constexpr bool contains(const Position<T> &position) const noexcept override {
             auto pos = position - m_vertex;
-            return (pos.x >= 0 && pos.x <= m_width) && (pos.y >= 0 && pos.y <= m_height);
+            return (pos.x > 0 && pos.x < m_width) && (pos.y > 0 && pos.y < m_height);
         }
 
         void setPosition(const Position<T> &position) override {

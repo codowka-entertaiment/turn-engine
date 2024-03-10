@@ -44,7 +44,6 @@ file(GLOB_RECURSE INCLUDES
 
 add_executable(
         TurnEngine example/main.cpp ${SOURCES} ${INCLUDES}
-        src/core/Event.cpp
 )
 
 target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static SDL2_ttf::SDL2_ttf-static)
