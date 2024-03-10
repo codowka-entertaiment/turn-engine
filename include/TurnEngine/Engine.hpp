@@ -18,14 +18,13 @@
 
 #include "core/Responsible.hpp"
 #include "core/Object2D.hpp"
+#include "core/Area2D.hpp"
 #include "core/Scene.hpp"
 #include "core/Event.hpp"
 
 #include "render/Drawer.hpp"
 
 #include "gui/BaseButton.hpp"
-#include "gui/GridRectangle.hpp"
-#include "gui/GridHexagon.hpp"
 #include "gui/Sprite.hpp"
 #include "gui/Label.hpp"
 
