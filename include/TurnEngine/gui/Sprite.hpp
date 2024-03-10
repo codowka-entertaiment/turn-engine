@@ -4,7 +4,7 @@
 #include "TurnEngine/geo2d/shapes/Shape.hpp"
 
 namespace TurnEngine::gui {
-    class Sprite : public core::Object2D, public core::Subject, public core::Observer {
+    class Sprite : public core::Object2D {
     private:
         bool isPlaying = false;
         int currentFrame = 0;

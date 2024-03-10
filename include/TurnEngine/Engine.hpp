@@ -19,6 +19,7 @@
 #include "core/Responsible.hpp"
 #include "core/Object2D.hpp"
 #include "core/Scene.hpp"
+#include "core/Event.hpp"
 
 #include "render/Drawer.hpp"
 

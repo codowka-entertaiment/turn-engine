@@ -10,8 +10,13 @@ namespace TurnEngine::core {
     }
 
     void Scene::draw(render::Drawer *drawer) {
+        drawer->draw(*this);
         for (auto obj: objects) {
-            obj->draw(drawer);
+            if (obj->position.x() + obj->width <= position.x() + width &&
+                obj->position.x() >= position.x() &&
+                obj->position.y() + obj->height <= position.y() + height &&
+                obj->position.y() >= position.y())
+                obj->draw(drawer);
         }
     }
 
@@ -34,11 +39,18 @@ namespace TurnEngine::core {
             {0, 0, 0, 0}
     ) {}
 
-    std::vector<Object2D*> Scene::getChildren() {
+    std::vector<Object2D *> Scene::getChildren() {
         return objects;
     }
 
     Point<int> Scene::getPosition() {
         return pos;
+    }
+
+    Object2D *Scene::getChild(std::string _name) {
+        for (auto child: objects) {
+            if (child->name == _name) return child;
+        }
+        return nullptr;
     }
 }

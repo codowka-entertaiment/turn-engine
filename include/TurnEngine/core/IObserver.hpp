@@ -1,11 +1,12 @@
 #pragma once
 
 #include <iostream>
+#include "TurnEngine/core/Event.hpp"
 
 namespace TurnEngine::core {
     class IObserver {
     public:
         virtual ~IObserver(){};
-        virtual void update(const std::string &message_from_subject) = 0;
+        virtual void update(Event* event) = 0;
     };
 }

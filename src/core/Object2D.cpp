@@ -26,7 +26,7 @@ namespace TurnEngine::core {
             angle,
             flip,
             color
-    ), Object() {}
+    ), Object("") {}
 
     Object2D::Object2D(Object2D *drawable) : IObject2D(
             drawable->shape,
@@ -44,6 +44,11 @@ namespace TurnEngine::core {
 
     void Object2D::draw(render::Drawer *drawer) {
         drawer->draw(*this);
+    }
+
+    Object2D* Object2D::getChild(std::string _name) {
+        if (_name == name) return this;
+        return nullptr;
     }
 
 }

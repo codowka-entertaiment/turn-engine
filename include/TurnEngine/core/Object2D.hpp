@@ -24,5 +24,7 @@ namespace TurnEngine::core {
         Object2D(Object2D *drawable);
 
         virtual void draw(render::Drawer *drawer);
+
+        virtual Object2D* getChild(std::string _name);
     };
 }

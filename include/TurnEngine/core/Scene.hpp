@@ -15,6 +15,7 @@ namespace TurnEngine::core {
         void draw(render::Drawer* drawer) override;
         void addChild(Object2D* obj);
         std::vector<Object2D*> getChildren();
+        Object2D* getChild(std::string _name) override;
         Point<int> getPosition();
         void removeChild(Object2D* obj);
     };

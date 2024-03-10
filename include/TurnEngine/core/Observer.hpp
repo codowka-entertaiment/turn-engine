@@ -18,7 +18,7 @@ namespace TurnEngine::core {
         /// @brief
         /// That func is used by Subject, don't call it explicitly.
         /// Derived classes must override that method to use it with game logic
-        void update(const std::string &message_from_subject) override;
+        void update(Event* _event) override;
 
         /// @brief
         /// That func detaches Observer class from Subject
@@ -28,11 +28,10 @@ namespace TurnEngine::core {
         /// That func attaches Observer class to Subject
         void connect(Subject* subject);
 
-        std::string getMessage();
+        Event* getEvent();
 
     protected:
-        std::string message_from_subject_;
+        Event* event;
         std::vector<Subject*> subjects;
-        int number_;
     };
 }

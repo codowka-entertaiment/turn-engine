@@ -2,10 +2,54 @@
 #include <vector>
 
 using namespace TurnEngine;
-core::Scene* scene;
-core::Scene* inner;
+core::Scene *scene;
+core::Scene *inner;
+core::Subject* eventSender;
+
+class Tile : public gui::Sprite {
+public:
+    Tile(
+            geo2d::Shape<int> *_shape,
+            int _depthIndex,
+            bool _isAnimated,
+            Point<int> _position,
+            int _width,
+            int _height,
+            int _angle,
+            RendererFlip _flip,
+            rgba<> _color
+    ) : gui::Sprite(
+            _shape,
+            _depthIndex,
+            _isAnimated,
+            _position,
+            _width,
+            _height,
+            _angle,
+            _flip,
+            _color
+    ) {}
+    void update(core::Event* event) override {
+        if (event->msg == "click" && shape->contains({event->pos.x(), event->pos.y()})) {
+            color = rgba<>{0xff, 0xff, 0xff, 0xff};
+            printf("I am clicked man!\n");
+        }
+        if (event->msg == "moveUp") {
+            position.y() -= 2;
+        } else if (event->msg == "moveDown") {
+            position.y() += 2;
+        } else if (event->msg == "moveLeft") {
+            position.x() -= 2;
+        } else if (event->msg == "moveRight") {
+            position.x() += 2;
+        }
+    }
+};
+
 // Define that method to handle events
 void Engine::onPollEvents() {
+    int last_x = 0, last_y = 0;
+    SDL_GetMouseState(&last_x, &last_y);
     for (auto event: event_queue) {
         if (event.type == SDL_QUIT) {
             isQuited = true;
@@ -20,17 +64,19 @@ void Engine::onPollEvents() {
             // Handle keyboard release buttons
         }
         if (event.type == SDL_MOUSEMOTION) {
-            // Handle mouse motion inside window
+            last_x = event.motion.x;
+            last_y = event.motion.y;
         }
         if (event.type == SDL_MOUSEBUTTONDOWN) {
             // Handle mouse button click
             if (event.button.button == SDL_BUTTON_LEFT) {
-                printf("LMB DOWN: x:%d y:%d\n", event.button.x, event.motion.y);
+                printf("LMB DOWN: x:%d y:%d\n", event.button.x, event.button.y);
                 printf("Scene contains: %s\n", scene->contains({event.button.x, event.button.y}) ? "true" : "false");
             }
             if (event.button.button == SDL_BUTTON_RIGHT) {
-                printf("RMB DOWN: x:%d y:%d\n", event.button.x, event.motion.y);
+                printf("RMB DOWN: x:%d y:%d\n", event.button.x, event.button.y);
             }
+            eventSender->signal(new core::Event("click", {event.button.x, event.button.y}));
         }
         if (event.type == SDL_MOUSEBUTTONUP) {
             // Handle mouse button release
@@ -41,6 +87,18 @@ void Engine::onPollEvents() {
                 printf("RMB UP: x:%d y:%d\n", event.button.x, event.motion.y);
             }
         }
+    }
+    if (last_y <= 5) {
+        eventSender->signal(new core::Event("moveUp"));
+    }
+    if (last_y >= height - 5) {
+        eventSender->signal(new core::Event("moveDown"));
+    }
+    if (last_x <= 5) {
+        eventSender->signal(new core::Event("moveLeft"));
+    }
+    if (last_x >= width - 5) {
+        eventSender->signal(new core::Event("moveRight"));
     }
 }
 
@@ -75,18 +133,37 @@ int launchGame() {
     auto cursor = new Cursor("../example/assets/cursor.png");
     cursor->enable();
     scene = new core::Scene({0, 0}, engine.getWidth(), engine.getHeight());
-    inner = new core::Scene({scene->width / 2, scene->height / 2}, scene->width / 2, scene->height / 2);
-    unsigned char r = 0xff;
+    scene->texture = new Texture(*engine.getRenderer(), "../example/assets/background.jpeg");
+    inner = new core::Scene({50, 50}, scene->width / 10 * 8, scene->height / 10 * 8);
+    inner->color = {0x00, 0x00, 0x00, 0x00};
+    inner->depthIndex = scene->depthIndex - 1;
+    eventSender = new core::Subject();
+    unsigned char r = 0x00;
     unsigned char g = 0x00;
     unsigned char b = 0x00;
-    int w = scene->width / 10;
-    int h = scene->height / 10;
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            geo2d::Shape<int> *shape = geo2d::RectangleInt::init_uncheck({j * w, i * h}, w, h);
-            auto *tile = new gui::Sprite(
+    int w = 20;
+    int h = 20;
+    auto border = new gui::Sprite(
+            geo2d::RectangleInt::init_uncheck(
+                    {inner->position.x(), inner->position.y()}, w, h),
+            10000,
+            false,
+            {inner->position.x(), inner->position.y()},
+            inner->width,
+            inner->height,
+            0,
+            RendererFlip::NONE,
+            rgba<>{0xff, g, b, 0xf0});
+    border->setTexture(new Texture(*engine.getRenderer(), "../example/assets/border_dead.png"));
+    border->name = "border";
+    inner->addChild(border);
+    for (int i = 0; i < 101; i++) {
+        for (int j = 0; j < 101; j++) {
+            geo2d::Shape<int> *shape = geo2d::RectangleInt::init_uncheck(
+                    {j * w, i * h}, w, h);
+            auto *tile = new Tile(
                     shape,
-                    0,
+                    -1,
                     false,
                     {j * w, i * h},
                     w,
@@ -94,50 +171,14 @@ int launchGame() {
                     0,
                     RendererFlip::NONE,
                     rgba<>{r, g, b, 0xf0});
-            scene->addChild(tile);
-            if (r == 0xff) {
-                r = 0x00;
-                g = 0xff;
-            }
-            else if (g == 0xff) {
-                g = 0x00;
-                b = 0xff;
-            }
-            else if (b == 0xff) {
-                b = 0x00;
-                r = 0xff;
-            }
-        }
-    }
-    w = 10;
-    h = 10;
-    for (int i = 0; i < 10; i++) {
-        for (int j =  0; j < 10; j++) {
-            geo2d::Shape<int> *shape = geo2d::RectangleInt::init_uncheck({j * w + inner->position.x(), i * h + inner->position.y()}, w, h);
-            auto *tile = new core::Object2D(
-                    shape,
-                    0,
-                    false,
-                    {j * w + inner->position.x(), i * h + inner->position.y()},
-                    w,
-                    h,
-                    nullptr,
-                    {0, 0, 0, 0},
-                    0,
-                    RendererFlip::NONE,
-                    rgba<>{r, g, b, 0xf0});
+            tile->setName(std::format("tile%d", tile->id));
+            tile->connect(eventSender);
             inner->addChild(tile);
-            if (r == 0xff) {
-                r = 0x00;
-                g = 0xff;
-            }
-            else if (g == 0xff) {
-                g = 0x00;
-                b = 0xff;
-            }
-            else if (b == 0xff) {
+            if (b == 0xff) {
                 b = 0x00;
-                r = 0xff;
+                g = 0xff;
+            } else {
+                b = 0xff;
             }
         }
     }

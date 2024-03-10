@@ -3,6 +3,7 @@
 #include <list>
 
 #include "TurnEngine/core/ISubject.hpp"
+#include "TurnEngine/core/Event.hpp"
 
 namespace TurnEngine::core {
     class Subject: public ISubject {
@@ -15,10 +16,10 @@ namespace TurnEngine::core {
 
         void notify() override;
 
-        void signal(std::string message = "Empty");
+        void signal(Event* _event);
 
     private:
-        std::list<IObserver *> list_observer_;
-        std::string message_;
+        std::list<IObserver *> list_observer;
+        Event* event;
     };
 }

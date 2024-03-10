@@ -3,9 +3,8 @@
 namespace TurnEngine::core {
     Observer::Observer() {}
 
-    void Observer::update(const std::string &message_from_subject) {
-        message_from_subject_ = message_from_subject;
-        printf("%s\n", message_from_subject_.c_str());
+    void Observer::update(Event* _event) {
+        event = _event;
     }
 
     void Observer::disconnect(Subject* subject) {
@@ -18,7 +17,7 @@ namespace TurnEngine::core {
         subject->attach(this);
     }
 
-    std::string Observer::getMessage() {
-        return message_from_subject_;
+    Event* Observer::getEvent() {
+        return event;
     }
 }
