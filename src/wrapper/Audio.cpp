@@ -6,8 +6,7 @@ namespace TurnEngine {
     }
 
     void Music::play(int loops) {
-        printf("%d\n", Mix_PlayMusic(music, loops));
-        printf("%s\n", SDL_GetError());
+        Mix_PlayMusic(music, loops);
     }
 
     void Music::pause() {
