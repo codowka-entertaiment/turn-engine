@@ -13,6 +13,7 @@
 #include "wrapper/Utils.hpp"
 #include "wrapper/Window.hpp"
 #include "wrapper/Cursor.hpp"
+#include "wrapper/Audio.hpp"
 
 #include "ext/Math.hpp"
 
@@ -45,7 +46,8 @@ namespace TurnEngine {
         int width;
     public:
         ~Engine();
-        bool initSDL(SDLInitFlags sdl_flags);
+        bool initSDL(SDLInitFlags sdl_flags, int audioFlags = MIX_INIT_WAVPACK | MIX_INIT_OPUS | MIX_INIT_OGG | MIX_INIT_MP3 | MIX_INIT_MOD | MIX_INIT_MID | MIX_INIT_FLAC);
+        bool openAudio();
         bool createWindow(const std::string& title, WindowFlags flags, int width = 800, int height = 600);
         bool createDrawer(RendererFlags renderer_init_flags);
         void onPollEvents();

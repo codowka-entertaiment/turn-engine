@@ -6,6 +6,7 @@ core::Scene *scene;
 core::Scene *field;
 core::Scene *GUI;
 core::Subject *eventSender;
+Sample *clickSound;
 
 void handler() {
     exit(0);
@@ -37,6 +38,7 @@ public:
 
     void update(core::Event *event) override {
         if (event->msg == "click" && shape->contains({event->pos.x(), event->pos.y()})) {
+            clickSound->play();
             color = rgba<>{0xff, 0xff, 0xff, 0xff};
             printf("I am clicked man!\n");
         }
@@ -143,6 +145,9 @@ int launchGame() {
     if (!engine.createDrawer(RendererFlags::ACCELERATED | RendererFlags::PRESENTVSYNC)) {
         return EXIT_FAILURE;
     }
+    if (!engine.openAudio()) {
+        return EXIT_FAILURE;
+    }
     // Custom cursor
     auto cursor = new Cursor("../example/assets/cursor.png");
     cursor->enable();
@@ -192,7 +197,7 @@ int launchGame() {
             rgba<>{0xff, g, b, 0xf0});
     border->setTexture(new Texture(*engine.getRenderer(), "../example/assets/border1.png"));
     border->name = "border";
-    field->addChild(border);
+    //field->addChild(border);
     for (int i = 0; i < 101; i++) {
         for (int j = 0; j < 101; j++) {
             if (j % 2 == 0) {
@@ -221,6 +226,9 @@ int launchGame() {
     scene->connect(eventSender);
     scene->addChild(field);
     scene->addChild(GUI);
+    clickSound = new Sample("../example/assets/click.wav");
+    Music* music = new Music("../example/assets/music.mp3");
+//    music->play();
 //    auto texture = new Texture(*engine.getRenderer(), "../example/assets/animation.png");
 //    auto query = texture->query();
 //    tile = new gui::Sprite(0,

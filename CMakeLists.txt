@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.27)
 set(CMAKE_OSX_ARCHITECTURES x86_64)
+set(CMAKE_CXX_STANDARD 23)
 project(TurnEngine)
 
 include(FetchContent)
@@ -13,6 +14,7 @@ FetchContent_Declare(
         GIT_TAG release-2.28.5
         GIT_SHALLOW TRUE
         GIT_PROGRESS TRUE
+        OVERRIDE_FIND_PACKAGE
 )
 
 FetchContent_Declare(
@@ -29,9 +31,14 @@ FetchContent_Declare(
         GIT_PROGRESS TRUE
 )
 
-FetchContent_MakeAvailable(SDL2 SDL2_Image SDL2_ttf)
+FetchContent_Declare(
+        SDL2_mixer
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_mixer
+        GIT_TAG release-2.8.0
+        GIT_PROGRESS TRUE
+)
 
-set(CMAKE_CXX_STANDARD 23)
+FetchContent_MakeAvailable(SDL2 SDL2_Image SDL2_ttf SDL2_mixer)
 
 file(GLOB_RECURSE SOURCES
         "src/*.cpp"
@@ -42,11 +49,16 @@ file(GLOB_RECURSE INCLUDES
         "include/*.hpp"
 )
 
-add_executable(
-        TurnEngine example/main.cpp ${SOURCES} ${INCLUDES}
-)
+add_executable(TurnEngine example/main.cpp ${SOURCES} ${INCLUDES})
 
-target_link_libraries(TurnEngine PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static SDL2_ttf::SDL2_ttf-static)
+target_link_libraries(
+        TurnEngine PUBLIC
+        SDL2::SDL2main
+        SDL2::SDL2-static
+        SDL2_image
+        SDL2_ttf
+        SDL2_mixer
+)
 
 target_include_directories(TurnEngine PRIVATE src)
 

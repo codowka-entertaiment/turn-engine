@@ -1,13 +1,17 @@
 #include "TurnEngine/Engine.hpp"
 
-
 namespace TurnEngine {
-    bool Engine::initSDL(SDLInitFlags sdl_flags) {
-        SDL2 const sdl(SDLInitFlags::EVERYTHING);
+    bool Engine::initSDL(SDLInitFlags sdl_flags, int audioFlags) {
+        SDL2 const sdl(sdl_flags);
         if (!sdl)
             return false;
         TTF_Init();
+        Audio::init(audioFlags);
         return true;
+    }
+
+    bool Engine::openAudio() {
+        return Audio::open();
     }
 
     bool Engine::createWindow(const std::string &title, WindowFlags flags, int width, int height) {
@@ -67,6 +71,10 @@ namespace TurnEngine {
     Engine::~Engine() {
         window->destroy();
         drawer->destroy();
+        TTF_Quit();
+        Audio::close();
+        Mix_Quit();
+        IMG_Quit();
         SDL_Quit();
     }
 
