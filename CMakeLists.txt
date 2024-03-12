@@ -14,7 +14,6 @@ FetchContent_Declare(
         GIT_TAG release-2.28.5
         GIT_SHALLOW TRUE
         GIT_PROGRESS TRUE
-        OVERRIDE_FIND_PACKAGE
 )
 
 FetchContent_Declare(
