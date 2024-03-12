@@ -39,6 +39,7 @@ public:
     void update(core::Event *event) override {
         if (event->msg == "click" && shape->contains({event->pos.x(), event->pos.y()})) {
             clickSound->play();
+            Audio::setVolume(Audio::getVolume() - 5);
             color = rgba<>{0xff, 0xff, 0xff, 0xff};
             printf("I am clicked man!\n");
         }

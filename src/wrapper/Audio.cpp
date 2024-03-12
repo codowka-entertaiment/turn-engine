@@ -17,6 +17,14 @@ namespace TurnEngine {
         return Mix_PlayingMusic();
     }
 
+    void Music::resume() {
+        Mix_ResumeMusic();
+    }
+
+    void Music::rewind() {
+        Mix_RewindMusic();
+    }
+
     Music::~Music() {
         Mix_FreeMusic(music);
     }
@@ -33,6 +41,10 @@ namespace TurnEngine {
         Mix_Pause(channel);
     }
 
+    void Sample::resume() {
+        Mix_Resume(channel);
+    }
+
     bool Sample::isPlaying() {
         return Mix_Playing(channel);
     }
@@ -47,6 +59,14 @@ namespace TurnEngine {
 
     bool Audio::open(int freq, int channels, int chunksize) {
         return Mix_OpenAudio(freq, MIX_DEFAULT_FORMAT, channels, chunksize) == 0;
+    }
+
+    void Audio::setVolume(int volume) {
+        Mix_MasterVolume((int) (volume / 100.0 * MIX_MAX_VOLUME));
+    }
+
+    int Audio::getVolume() {
+        return (int) (Mix_MasterVolume(-1) * 100.0 / MIX_MAX_VOLUME);
     }
 
     void Audio::close() {

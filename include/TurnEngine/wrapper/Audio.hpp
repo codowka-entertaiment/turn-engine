@@ -10,6 +10,10 @@ namespace TurnEngine {
 
         static bool open(int freq = 44100, int channels = 2, int chunksize = 2048);
 
+        static void setVolume(int volume);
+
+        static int getVolume();
+
         static void close();
     };
 
@@ -21,6 +25,8 @@ namespace TurnEngine {
         ~Music();
         void play(int loops = -1);
         void pause();
+        void resume();
+        void rewind();
         bool isPlaying();
     };
 
@@ -32,6 +38,7 @@ namespace TurnEngine {
         Sample(std::string filePath);
         ~Sample();
         void play(int loops = 0, int _channel = -1);
+        void resume();
         void pause();
         bool isPlaying();
     };
