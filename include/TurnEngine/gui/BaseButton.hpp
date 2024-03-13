@@ -6,6 +6,8 @@
 #include "TurnEngine/gui/Label.hpp"
 
 namespace TurnEngine::gui {
+    /// @brief
+    /// Class represents base button class
     class BaseButton : public core::Object2D {
     private:
         Texture *commonTexture;
@@ -15,6 +17,21 @@ namespace TurnEngine::gui {
         Label* label;
         void emptyFunc() {};
     public:
+        /// @brief
+        /// the constructor
+        /// @param geo2d::Shape<int> *_shape
+        /// @param int _depthIndex
+        /// @param Point<int> _position
+        /// @param int _width
+        /// @param int _height
+        /// @param Texture *_commonTexture
+        /// @param Texture *_onHoverTexture
+        /// @param int _angle
+        /// @param RendererFlip _flip
+        /// @param rgba<> color
+        /// @param std::string _text
+        /// @param std::string _font
+        /// @param int _fontSize
         BaseButton(geo2d::Shape<int> *_shape,
                    int _depthIndex,
                    Point<int> _position,
@@ -29,10 +46,19 @@ namespace TurnEngine::gui {
                    std::string _font,
                    int _fontSize);
 
+        /// @brief
+        /// method calls handler on event
+        /// @param Event* _event
         void update(core::Event* _event) override;
 
+        /// @brief
+        /// method draws button and text inside it
+        /// @param Drawer* drawer
         void draw(render::Drawer* drawer) override;
 
+        /// @brief
+        /// button handler setter
+        /// @param std::function<void(void)> _func
         void setHandler(std::function<void(void)> _func);
 
     };
