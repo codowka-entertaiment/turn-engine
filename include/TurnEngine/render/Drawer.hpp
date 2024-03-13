@@ -10,15 +10,33 @@
 #include "TurnEngine/render/DrawComparator.hpp"
 
 namespace TurnEngine::render {
+    /// @brief
+    /// Class represents engine drawer
     class Drawer {
     private:
-        Renderer* renderer;
+        Renderer *renderer;
         std::priority_queue<core::IObject2D, std::vector<core::IObject2D>, DrawComparator> drawQueue;
     public:
-        explicit Drawer(Renderer* _renderer);
-        void draw(const core::IObject2D& drawable);
+        /// @brief
+        /// the constructor
+        /// @param Renderer* _renderer
+        explicit Drawer(Renderer *_renderer);
+
+        /// @brief
+        /// method which puts Object2D into priority_queue
+        /// @param const IObject2D &drawable
+        void draw(const core::IObject2D &drawable);
+
+        /// @brief
+        /// method which pops out and draw all 2D objects from priority_queue
         void renderAll();
+
+        /// @brief
+        /// method destroys drawer and hardware renderer
         void destroy();
-        Renderer* getRenderer();
+
+        /// @brief
+        /// getter for renderer
+        Renderer *getRenderer();
     };
 }
