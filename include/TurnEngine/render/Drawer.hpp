@@ -37,6 +37,7 @@ namespace TurnEngine::render {
 
         /// @brief
         /// getter for renderer
+        /// @return Renderer*
         Renderer *getRenderer();
     };
 }

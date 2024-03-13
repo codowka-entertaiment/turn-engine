@@ -39,7 +39,8 @@ public:
     void update(core::Event *event) override {
         if (event->msg == "click" && shape->contains({event->pos.x(), event->pos.y()})) {
             clickSound->play();
-            Audio::setVolume(Audio::getVolume() - 5);
+            Audio::setSampleVolume(Audio::getSampleVolume() - 5);
+            Audio::setMusicVolume(10);
             color = rgba<>{0xff, 0xff, 0xff, 0xff};
             printf("I am clicked man!\n");
         }
@@ -230,7 +231,7 @@ int launchGame() {
     scene->addChild(GUI);
     clickSound = new Sample("../example/assets/click.wav");
     Music* music = new Music("../example/assets/music.mp3");
-//    music->play();
+    music->play();
 //    auto texture = new Texture(*engine.getRenderer(), "../example/assets/animation.png");
 //    auto query = texture->query();
 //    tile = new gui::Sprite(0,

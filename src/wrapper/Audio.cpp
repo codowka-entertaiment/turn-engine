@@ -29,6 +29,10 @@ namespace TurnEngine {
         Mix_FreeMusic(music);
     }
 
+    Mix_Music *Music::native_handle() {
+        return music;
+    }
+
     Sample::Sample(std::string filePath) {
         sample = Mix_LoadWAV(filePath.c_str());
     }
@@ -61,12 +65,20 @@ namespace TurnEngine {
         return Mix_OpenAudio(freq, MIX_DEFAULT_FORMAT, channels, chunksize) == 0;
     }
 
-    void Audio::setVolume(int volume) {
+    void Audio::setSampleVolume(int volume) {
         Mix_MasterVolume((int) (volume / 100.0 * MIX_MAX_VOLUME));
     }
 
-    int Audio::getVolume() {
+    int Audio::getSampleVolume() {
         return (int) (Mix_MasterVolume(-1) * 100.0 / MIX_MAX_VOLUME);
+    }
+
+    void Audio::setMusicVolume(int volume) {
+        Mix_VolumeMusic((int) (volume / 100.0 * MIX_MAX_VOLUME));
+    }
+
+    int Audio::getMusicVolume(Music* music) {
+        return (int) (Mix_GetMusicVolume(music->native_handle()) * 100.0 / MIX_MAX_VOLUME);
     }
 
     void Audio::close() {

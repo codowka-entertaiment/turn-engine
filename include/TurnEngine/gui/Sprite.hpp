@@ -60,7 +60,6 @@ namespace TurnEngine::gui {
         /// @param int _row
         void setAnimationRow(int _row);
 
-
         /// @brief
         /// method sets size of texture and max frames in spritesheet
         /// @param Rect<int> _frameStep
