@@ -3,6 +3,8 @@
 #include "TurnEngine/core/Object2D.hpp"
 
 namespace TurnEngine::core {
+    /// @brief
+    /// Class stands for grouping objects
     class Area2D: public Object2D {
     private:
         std::vector<Object2D*> objects;

@@ -28,6 +28,8 @@ namespace TurnEngine::core {
         /// That func attaches Observer class to Subject
         void connect(Subject* subject);
 
+        /// @brief
+        /// Getter for current event
         Event* getEvent();
 
     protected:

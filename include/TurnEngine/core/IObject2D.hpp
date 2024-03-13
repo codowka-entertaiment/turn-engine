@@ -7,6 +7,8 @@
 #include "TurnEngine/geo2d/Shapes.hpp"
 
 namespace TurnEngine::core {
+    /// @brief
+    /// Interface for Object2D
     class IObject2D {
     public:
         geo2d::Shape<int>* shape;
