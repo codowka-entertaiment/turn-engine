@@ -10,14 +10,13 @@ namespace TurnEngine::core {
     }
 
     void Scene::draw(render::Drawer *drawer) {
+        drawer->getRenderer()->set_clip_rect({position.x(), position.y(), width, height});
         drawer->draw(*this);
+        drawer->renderAll();
         for (auto obj: objects) {
-            if (obj->position.x() + obj->width <= position.x() + width &&
-                obj->position.x() >= position.x() &&
-                obj->position.y() + obj->height <= position.y() + height &&
-                obj->position.y() >= position.y())
-                obj->draw(drawer);
+            obj->draw(drawer);
         }
+        drawer->renderAll();
     }
 
     void Scene::addChild(Object2D *obj) {

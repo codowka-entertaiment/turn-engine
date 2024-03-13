@@ -44,16 +44,16 @@ public:
             printf("I am clicked man!\n");
         }
         if (event->msg == "moveUp") {
-            position.y() -= height / 6;
+            position.y() -= height / 5;
             shape->setPosition({position.x(), position.y()});
         } else if (event->msg == "moveDown") {
-            position.y() += height / 6;
+            position.y() += height / 5;
             shape->setPosition({position.x(), position.y()});
         } else if (event->msg == "moveLeft") {
-            position.x() -= width / 6;
+            position.x() -= width / 5;
             shape->setPosition({position.x(), position.y()});
         } else if (event->msg == "moveRight") {
-            position.x() += width / 6;
+            position.x() += width / 5;
             shape->setPosition({position.x(), position.y()});
         }
     }
@@ -158,6 +158,7 @@ int launchGame() {
     GUI = new core::Scene({scene->width / 10 * 8 + 50, 50}, scene->width / 10 * 1.5, scene->height / 10 * 8);
     field->depthIndex = scene->depthIndex + 1;
     GUI->depthIndex = scene->depthIndex - 1;
+    GUI->color = {0xff, 0x00, 0x00, 0xff};
     scene->setName("Scene");
     GUI->setName("GUI");
     field->setName("field");
