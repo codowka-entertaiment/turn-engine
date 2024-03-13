@@ -22,14 +22,14 @@ Most of the most used SDL2 functions are wrapped in C++ classes.
 | SDL2                 | class     | Class made for SDL2 initialization                                                                                        | Yes          | Yes                      |
 | TTF                  | class     | Class made for SDL2 fonts extension                                                                                       | Yes          | Yes                      |
 | IMG                  | class     | Class made for SDL2 images extension                                                                                      | Yes          | Yes                      |
-| Font                 | class     | Class that wraps SDL_ttf extension                                                                                        | Partly       | No                       |
-| Audio?               | class     | Class that wraps SDL_mixer extension                                                                                      | No           | No                       |
+| Font                 | class     | Class that wraps SDL_ttf extension                                                                                        | Yes          | No                       |
+| Audio                | class     | Class that wraps SDL_mixer extension                                                                                      | Yes          | No                       |
 | MessageBox           | class     | Class that wraps SDL_MessageBox and functions related to it                                                               | Yes          | Yes                      |
 | BasicPaletteView     | class     | Class which wraps SDL_Palette. It used when colors are coded with 1 byte. Don't use it                                    | Yes          | Yes                      |
 | BasicPixelFormatView | class     | Class which wraps SDL_PixelFormat. Used to describe pixel format                                                          | Yes          | Yes                      |
 | Surface              | class     | Class which wraps SDL_Surface and all functions related to it                                                             | Yes          | Yes                      |
 | Texture              | class     | Class which wraps SDL_Texture and all functions related to it                                                             | Yes          | Yes                      |
-| RendererInfo         | class     | Class which return information anout renderer                                                                             | Yes          | Yes                      |
+| RendererInfo         | class     | Class which return information about renderer                                                                             | Yes          | Yes                      |
 | Renderer             | class     | Class which wraps renderer and all functions related to it.  Renderer is used in Drawer                                   | Yes          | Yes                      |
 | Rect                 | class     | Class which wraps SDL_Rect and implements some rectangle specific funcs                                                   | Yes          | Yes                      |
 | Point                | class     | Class which wraps SDL_Point and implements some point specific funcs                                                      | Yes          | Yes                      |
@@ -67,15 +67,14 @@ Main objects and some patterns implementation
 | Observer    | class | Class which implements Observer pattern. That class can observe class which is derived by Subject.  Google it if you are not familiar with it             | Yes          | No                        |
 | ISubject    | class | Inteface used to describe Subject                                                                                                                         | Yes          | No                        |
 | Subject     | class | Class which implements Observer pattern. That class can send messages to classes which is derived by Observer.  Google it if you are not familiar with it | Yes          | No                        |
-| Responsible | class | Class which implements Chain of responsibility pattern. That class can send action to next responsible class.  Google it if you are not familiar with it  | Yes          | No                        |
 
 ## Extension
 
 Game engine extensions
 
-| Name | Type      | Description                                                  | Implemented? | constexpr implemantation |
-|------|-----------|--------------------------------------------------------------|--------------|--------------------------|
-| math | namespace | Implemantation of some most used in gamedev maths functions  | Partly       | Yes                      |
+| Name | Type      | Description                                                 | Implemented? | constexpr implemantation |
+|------|-----------|-------------------------------------------------------------|--------------|--------------------------|
+| math | namespace | Implementation of some most used in gamedev maths functions | Partly       | Yes                      |
 
 ## Geo2d
 
@@ -92,13 +91,11 @@ Game engine extensions
 
 Implementation of some GUI objects
 
-| Name          | Type  | Description                                  | Implemented? | constexpr implementation |
-|---------------|-------|----------------------------------------------|--------------|--------------------------|
-| BaseButton    | class | Class for implementing custom buttons        | Partly       | No                       |
-| BaseWidget    | class | Class for implementing custom widgets        | Yes          | No                       |
-| GridHexagon   | class | Class for creating hexagon maps              | No           | No                       |
-| GridRectangle | class | Class for creating rectangle maps            | No           | No                       |
-| Sprite        | class | Class which describes sprites (animated too) | Yes          | No                       |
+| Name       | Type  | Description                                  | Implemented? | constexpr implementation |
+|------------|-------|----------------------------------------------|--------------|--------------------------|
+| BaseButton | class | Class for implementing custom buttons        | Yes          | No                       |
+| Sprite     | class | Class which describes sprites (animated too) | Yes          | No                       |
+| Label      | class | Class which describes labels                 | Yes          | No                       |
 
 ## Render
 
