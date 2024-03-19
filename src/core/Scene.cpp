@@ -50,7 +50,7 @@ namespace TurnEngine::core {
 
     Object2D *Scene::getChild(std::string _name) {
         for (auto child: objects) {
-            if (child->name == _name) return child;
+            if (child->getName() == _name) return child;
         }
         return nullptr;
     }

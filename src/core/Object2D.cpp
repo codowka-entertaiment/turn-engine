@@ -47,7 +47,7 @@ namespace TurnEngine::core {
     }
 
     Object2D* Object2D::getChild(std::string _name) {
-        if (_name == name) return this;
+        if (_name == getName()) return this;
         return nullptr;
     }
 

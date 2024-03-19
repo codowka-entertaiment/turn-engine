@@ -199,7 +199,7 @@ int launchGame() {
             RendererFlip::NONE,
             rgba<>{0xff, g, b, 0xf0});
     border->setTexture(new Texture(*engine.getRenderer(), "../example/assets/border1.png"));
-    border->name = "border";
+    border->setName("border");
     //field->addChild(border);
     for (int i = 0; i < 101; i++) {
         for (int j = 0; j < 101; j++) {
