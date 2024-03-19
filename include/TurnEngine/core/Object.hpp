@@ -34,7 +34,7 @@ namespace TurnEngine::core {
         std::string getName();
 
         /// @brief
-        /// Object name getter
+        /// Object id getter
         /// @return object id
         uint64_t getId();
     };
